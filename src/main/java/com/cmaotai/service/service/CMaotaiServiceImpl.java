@@ -13,8 +13,11 @@ import com.cmaotai.service.model.DataResult;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.io.Files;
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -153,7 +156,11 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     }
 
     protected static void signUp(String pwd) throws IOException {
-        List<String> mobiles = Mobile.MOBILES.stream()
+        String path = System.getProperty("path");
+        if(Strings.isBlank(path)){
+            System.out.println("请在命令行中输入路劲，比如-Dpath=http");
+        }
+        List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
             .filter(Strings::isNotBlank).collect(
                 Collectors.toList());
         AtomicInteger atomicInteger = new AtomicInteger(0);
@@ -182,7 +189,11 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     }
 
     protected static void getOrderStatus(String pwd) throws IOException {
-        List<String> mobiles = Mobile.MOBILES.stream()
+        String path = System.getProperty("path");
+        if(Strings.isBlank(path)){
+            System.out.println("请在命令行中输入路劲，比如-Dpath=http");
+        }
+        List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
             .filter(Strings::isNotBlank).collect(
                 Collectors.toList());
         AtomicInteger WAIT_PAY = new AtomicInteger(0);
@@ -227,7 +238,11 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     }
 
     protected static void changePwd(String pwd, String newPwd) throws IOException {
-        List<String> mobiles = Mobile.MOBILES.stream()
+        String path = System.getProperty("path");
+        if(Strings.isBlank(path)){
+            System.out.println("请在命令行中输入路劲，比如-Dpath=http");
+        }
+        List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
             .filter(Strings::isNotBlank).collect(
                 Collectors.toList());
         List<String> failMobiles = Lists.newArrayList();
@@ -256,7 +271,11 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     }
 
     protected static void addDefaultAddress(String pwd) throws IOException {
-        List<String> mobiles = Mobile.ADDRESS_MOBILES.stream()
+        String path = System.getProperty("path");
+        if(Strings.isBlank(path)){
+            System.out.println("请在命令行中输入路劲，比如-Dpath=http");
+        }
+        List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
             .filter(Strings::isNotBlank).collect(
                 Collectors.toList());
         List<String> failMobiles = Lists.newArrayList();
