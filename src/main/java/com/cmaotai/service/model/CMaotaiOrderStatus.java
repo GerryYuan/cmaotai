@@ -4,11 +4,6 @@ import java.io.Serializable;
 import lombok.Data;
 import lombok.Getter;
 
-/**
- * @author gerry
- * @version 1.0, 2018-05-12 17:03
- * @since com.hujiang 1.0.0
- */
 @Data
 public class CMaotaiOrderStatus implements Serializable {
 
