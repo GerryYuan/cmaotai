@@ -6,11 +6,6 @@ import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.Random;
 
-/**
- * @author gerry
- * @version 1.0, 2018-05-13 22:06
- * @since com.hujiang 1.0.0
- */
 public class Address {
 
     private static List<CMotaiDefaultAddress> ADDRESS = Lists.newArrayList();
