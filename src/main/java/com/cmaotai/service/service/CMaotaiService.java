@@ -29,7 +29,9 @@ public interface CMaotaiService {
 
     HttpHeaders parseHeader(HttpHeaders httpHeaders);
 
-    boolean signup(String mobile, String pwd) throws Exception;
+    boolean defaultSignup(String mobile, String pwd) throws Exception;
+
+    boolean invoiceSignup(String mobile, String pwd) throws Exception;
 
     void loginBefore();
 

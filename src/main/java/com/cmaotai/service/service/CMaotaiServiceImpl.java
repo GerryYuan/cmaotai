@@ -50,10 +50,18 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     }
 
     @Override
-    public boolean signup(String mobile, String pwd) throws Exception {
+    public boolean defaultSignup(String mobile, String pwd) throws Exception {
         loginBefore();
         login(mobile, pwd);
         return defaultSubmit(getDefualtAdd());
+    }
+
+
+    @Override
+    public boolean invoiceSignup(String mobile, String pwd) throws Exception {
+        loginBefore();
+        login(mobile, pwd);
+        return invoiceSubmit(getDefualtAdd());
     }
 
     @Override
@@ -196,7 +204,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         return dataResult.isState();
     }
 
-    protected static void signUp(String pwd) throws IOException {
+    protected static void defaultSignup(String pwd) throws IOException {
         String path = System.getProperty("path");
         if (Strings.isBlank(path)) {
             System.out.println("请在命令行中输入路劲，比如-Dpath=http");
@@ -210,7 +218,40 @@ public class CMaotaiServiceImpl implements CMaotaiService {
             CMaotaiServiceImpl cMaotaiService = new CMaotaiServiceImpl();
             try {
                 System.out.println("开始，登记手机号【" + s + "】");
-                if (cMaotaiService.signup(s, pwd)) {
+                if (cMaotaiService.defaultSignup(s, pwd)) {
+                    System.out.println("最后，手机号【" + s + "】等记成功！");
+                    atomicInteger.addAndGet(1);
+                } else {
+                    failMobiles.add(s);
+                    System.err.println("最后，手机号【" + s + "】等记失败！");
+                }
+            } catch (Exception e) {
+                System.err.println("手机号【" + s + "】等记异常！" + e.getMessage());
+            }
+        });
+        System.out.println(
+            "登记结果：总登记【" + mobiles.size() + "】，成功【" + atomicInteger.get() + "】,失败【" + (mobiles.size() - atomicInteger
+                .get()) + "】");
+        if (failMobiles.size() > 0) {
+            System.out.println("登记失败手机号：" + failMobiles);
+        }
+    }
+
+    protected static void invoiceSignup(String pwd) throws IOException {
+        String path = System.getProperty("path");
+        if (Strings.isBlank(path)) {
+            System.out.println("请在命令行中输入路劲，比如-Dpath=http");
+        }
+        List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
+            .filter(Strings::isNotBlank).collect(
+                Collectors.toList());
+        AtomicInteger atomicInteger = new AtomicInteger(0);
+        List<String> failMobiles = Lists.newArrayList();
+        mobiles.forEach(s -> {
+            CMaotaiServiceImpl cMaotaiService = new CMaotaiServiceImpl();
+            try {
+                System.out.println("开始，登记手机号【" + s + "】");
+                if (cMaotaiService.invoiceSignup(s, pwd)) {
                     System.out.println("最后，手机号【" + s + "】等记成功！");
                     atomicInteger.addAndGet(1);
                 } else {
