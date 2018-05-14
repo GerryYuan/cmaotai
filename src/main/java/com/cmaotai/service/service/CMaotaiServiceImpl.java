@@ -56,7 +56,6 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         return defaultSubmit(getDefualtAdd());
     }
 
-
     @Override
     public boolean invoiceSignup(String mobile, String pwd) throws Exception {
         loginBefore();
@@ -180,7 +179,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         String action =
             "action=UserManager.ChangePwd&newPassword=" + newPwd + "&oldPassword=" + oldPwd + "&timestamp121="
                 + new Date().getTime();
-        ResponseEntity<String> response = post(action, headers);
+        ResponseEntity<String> response = ysPost(action, headers);
         DataResult<?> dataResult = JSON.parseObject(response.getBody(), new TypeReference<DataResult>() {
         });
         return dataResult.isState();
@@ -334,7 +333,6 @@ public class CMaotaiServiceImpl implements CMaotaiService {
             cMaotaiService.loginBefore();
             try {
                 cMaotaiService.login(s, pwd);
-                cMaotaiService.isLogin();
                 if (cMaotaiService.changePassword(pwd, newPwd)) {
                     succ.addAndGet(1);
                     System.out.println("手机号【" + s + "】修改密码成功!");
