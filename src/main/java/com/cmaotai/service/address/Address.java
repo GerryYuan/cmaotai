@@ -149,8 +149,8 @@ public class Address {
     }
 
     public static String getCallPhone() {
-        int max = Mobile.MOBILES.size() - 1;
-        return Mobile.MOBILES.get(random(max));
+        int max = Mobile.CALL_MOBILES.size() - 1;
+        return Mobile.CALL_MOBILES.get(random(max));
     }
 
     public static int random(int max) {
