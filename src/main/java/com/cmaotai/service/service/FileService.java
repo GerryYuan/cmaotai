@@ -29,4 +29,10 @@ public class FileService {
         }
     }
 
+    public static void write() throws IOException {
+        File file = new File("~/submit/submit.txt");
+        String now = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
+        FileUtils.writeStringToFile(file, now, Charset.defaultCharset().name());
+    }
+
 }

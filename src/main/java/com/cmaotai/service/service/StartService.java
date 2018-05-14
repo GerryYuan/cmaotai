@@ -19,6 +19,7 @@ public class StartService {
             if (FileService.isInvoke(now)) {
                 System.out.println(now + "时刻，开始执行下单操作........");
                 CMaotaiServiceImpl.signUp(pwd);
+                FileService.write();
             }
         }
         if (order) {
