@@ -7,6 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CmaotaiStart {
 
     public static void main(String[] args) throws Exception {
-        StartService.start();;
+        StartService.start();
     }
 }

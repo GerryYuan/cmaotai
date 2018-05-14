@@ -187,7 +187,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
 
     @Override
     public boolean addDefaultAddress() {
-        CMotaiDefaultAddress address = Address.getAddress();
+        CMotaiDefaultAddress address = Address.getGuiYangAddress();
         String action =
             "action=AddressManager.add&provinceId=" + address.getProvinceId()
                 + "&cityId=" + address.getCityId() + "&districtsId=" +
