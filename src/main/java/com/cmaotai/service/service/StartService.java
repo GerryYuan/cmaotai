@@ -36,7 +36,7 @@ public class StartService {
         if (address) {
             String from = System.getProperty("from");
             if (Strings.isBlank(from)) {
-                System.err.println("请在命令行中输入密码，比如-Dfrom=guiyang");
+                System.err.println("请在命令行中输入地址来源，比如-Dfrom=guiyang");
                 return;
             }
             System.out.println(now + "，开始执行添加默认地址操作........");
