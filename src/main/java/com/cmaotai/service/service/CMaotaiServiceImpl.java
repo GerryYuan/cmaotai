@@ -3,6 +3,7 @@ package com.cmaotai.service.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.cmaotai.service.address.Address;
+import com.cmaotai.service.mobile.Invoice;
 import com.cmaotai.service.model.CMaotaiOrderStatus;
 import com.cmaotai.service.model.CMaotaiOrderStatus.OrderStatus;
 import com.cmaotai.service.model.CMaotaiUser;
@@ -52,7 +53,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     public boolean signup(String mobile, String pwd) throws Exception {
         loginBefore();
         login(mobile, pwd);
-        return submit(getDefualtAdd());
+        return defaultSubmit(getDefualtAdd());
     }
 
     @Override
@@ -116,9 +117,50 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     }
 
     @Override
-    public boolean submit(CMotaiDefaultAddress cMotaiDefaultAddress) throws UnsupportedEncodingException {
+    public int getInvoiceId() throws Exception {
+        String action = "action=GrabSingleManager.invoiceList&timestamp121=" + new Date().getTime();
+        ResponseEntity<String> response = post(action, headers);
+        headers = parseHeader(response.getHeaders());
+        DataResult<List<Invoice>> dataResult = JSON
+            .parseObject(response.getBody(), new TypeReference<DataResult<List<Invoice>>>() {
+            });
+        if (dataResult.getData().size() <= 0) {
+            throw new Exception("获取发票失败！");
+        }
+        return dataResult.getData().get(0).getId();
+    }
+
+    @Override
+    public boolean createInvioceInfo() throws Exception {
+        String action =
+            "InvoiceType=2&InvoiceName=扬子江药业集团有限公司&TaxpayerID=913212007286987632&Address=江苏省泰州市高港区扬子江南路1号|0523-86961999&AccountLine=中行泰州惠裕支行&BankAccount=489758206195&IsDefault=1&InvoiceMail=0&action=UserManager.CreateInvioceInfo&timestamp121="
+                + new Date().getTime();
+        ResponseEntity<String> response = ysPost(action, headers);
+        headers = parseHeader(response.getHeaders());
+        DataResult<String> dataResult = JSON.parseObject(response.getBody(), new TypeReference<DataResult<String>>() {
+        });
+        if (!dataResult.isState()) {
+            throw new Exception("添加发票失败！");
+        }
+        return true;
+    }
+
+    @Override
+    public boolean defaultSubmit(CMotaiDefaultAddress cMotaiDefaultAddress) throws UnsupportedEncodingException {
         String action =
             "action=GrabSingleManager.submit&iid=-1&qty=5&express=14&timestamp121=" + new Date().getTime() + "&sid="
+                + cMotaiDefaultAddress.getSId() + "&remark=" + "&product=" + JSON.toJSONString(new CMotaiProduct());
+        ResponseEntity<String> response = post(action, headers);
+        return JSON.parseObject(response.getBody(), new TypeReference<DataResult<Integer>>() {
+        }).isState();
+    }
+
+    @Override
+    public boolean invoiceSubmit(CMotaiDefaultAddress cMotaiDefaultAddress)
+        throws Exception {
+        String action =
+            "action=GrabSingleManager.submit&iid=" + getInvoiceId() + "&qty=2&express=14&timestamp121=" + new Date()
+                .getTime() + "&sid="
                 + cMotaiDefaultAddress.getSId() + "&remark=" + "&product=" + JSON.toJSONString(new CMotaiProduct());
         ResponseEntity<String> response = post(action, headers);
         return JSON.parseObject(response.getBody(), new TypeReference<DataResult<Integer>>() {
@@ -156,7 +198,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
 
     protected static void signUp(String pwd) throws IOException {
         String path = System.getProperty("path");
-        if(Strings.isBlank(path)){
+        if (Strings.isBlank(path)) {
             System.out.println("请在命令行中输入路劲，比如-Dpath=http");
         }
         List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
@@ -189,7 +231,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
 
     protected static void getOrderStatus(String pwd) throws IOException {
         String path = System.getProperty("path");
-        if(Strings.isBlank(path)){
+        if (Strings.isBlank(path)) {
             System.out.println("请在命令行中输入路劲，比如-Dpath=http");
         }
         List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
@@ -238,7 +280,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
 
     protected static void changePwd(String pwd, String newPwd) throws IOException {
         String path = System.getProperty("path");
-        if(Strings.isBlank(path)){
+        if (Strings.isBlank(path)) {
             System.out.println("请在命令行中输入路劲，比如-Dpath=http");
         }
         List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
@@ -271,7 +313,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
 
     protected static void addDefaultAddress(String pwd) throws IOException {
         String path = System.getProperty("path");
-        if(Strings.isBlank(path)){
+        if (Strings.isBlank(path)) {
             System.out.println("请在命令行中输入路劲，比如-Dpath=http");
         }
         List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
@@ -299,6 +341,38 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         System.out.println("添加结果：总添加【" + mobiles.size() + "】，成功【" + succ.get() + "】,失败【" + failMobiles.size() + "】");
         if (failMobiles.size() > 0) {
             System.out.println("添加失败手机号：" + failMobiles);
+        }
+    }
+
+    protected static void addInvoice(String pwd) throws IOException {
+        String path = System.getProperty("path");
+        if (Strings.isBlank(path)) {
+            System.out.println("请在命令行中输入路劲，比如-Dpath=http");
+        }
+        List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
+            .filter(Strings::isNotBlank).collect(
+                Collectors.toList());
+        List<String> failMobiles = Lists.newArrayList();
+        AtomicInteger succ = new AtomicInteger(0);
+        mobiles.forEach(s -> {
+            CMaotaiServiceImpl cMaotaiService = new CMaotaiServiceImpl();
+            cMaotaiService.loginBefore();
+            try {
+                cMaotaiService.login(s, pwd);
+                if (cMaotaiService.createInvioceInfo()) {
+                    succ.addAndGet(1);
+                    System.out.println("手机号【" + s + "】发票添加成功!");
+                } else {
+                    failMobiles.add(s);
+                    System.err.println("手机号【" + s + "】发票添加失败！");
+                }
+            } catch (Exception e) {
+                System.err.println("手机号【" + s + "】异常！" + e.getMessage());
+            }
+        });
+        System.out.println("添加结果：总添加【" + mobiles.size() + "】，成功【" + succ.get() + "】,失败【" + failMobiles.size() + "】");
+        if (failMobiles.size() > 0) {
+            System.out.println("添加失败的手机号：" + failMobiles);
         }
     }
 

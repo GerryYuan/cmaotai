@@ -17,18 +17,23 @@ public class StartService {
         String now = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
         if (submit) {
             if (FileService.isInvoke(now)) {
-                System.out.println(now + "时刻，开始执行下单操作........");
+                System.out.println(now + "，开始执行下单操作........");
                 CMaotaiServiceImpl.signUp(pwd);
                 FileService.write();
             }
         }
         if (order) {
-            System.out.println(now + "时刻，开始执行查询订单操作........");
+            System.out.println(now + "，开始执行查询订单操作........");
             CMaotaiServiceImpl.getOrderStatus(pwd);
         }
         if (address) {
-            System.out.println(now + "时刻，开始执行添加默认地址操作........");
+            System.out.println(now + "，开始执行添加默认地址操作........");
             CMaotaiServiceImpl.addDefaultAddress(pwd);
+        }
+        boolean invoice = Boolean.valueOf(System.getProperty("invoice"));
+        if (invoice) {
+            System.out.println(now + "，开始执行添加发票操作........");
+            CMaotaiServiceImpl.addInvoice(pwd);
         }
     }
 }
