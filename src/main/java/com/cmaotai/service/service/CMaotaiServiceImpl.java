@@ -84,19 +84,6 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     }
 
     @Override
-    public boolean isLogin() {
-        String action = "action=UserManager.isLogin&timestamp121=" + new Date().getTime();
-        ResponseEntity<String> response = post(action, headers);
-        if (!JSON.parseObject(response.getBody(), new TypeReference<DataResult<CMaotaiUser>>() {
-        }).isState()) {
-            System.err.println("用户未登录");
-            return false;
-        }
-        headers = parseHeader(response.getHeaders());
-        return true;
-    }
-
-    @Override
     public List<CMaotaiOrderStatus> getYsOrderStatusCount() throws Exception {
         String action = "action=OrderManager.GetYsOrderStatusCount&timestamp121=" + new Date().getTime();
         ResponseEntity<String> response = post(action, headers);

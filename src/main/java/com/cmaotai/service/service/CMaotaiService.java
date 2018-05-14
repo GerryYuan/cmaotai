@@ -37,8 +37,6 @@ public interface CMaotaiService {
 
     void login(String mobile, String pwd) throws Exception;
 
-    boolean isLogin();
-
     List<CMaotaiOrderStatus> getYsOrderStatusCount() throws Exception;
 
     CMotaiDefaultAddress getDefualtAdd() throws Exception;
