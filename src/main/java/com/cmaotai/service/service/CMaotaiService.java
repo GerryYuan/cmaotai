@@ -18,11 +18,13 @@ public interface CMaotaiService {
 
     List<String> USERAGENTS = Lists.newArrayList(
         "Mozilla/5.0 (iPhone; CPU iPhone OS 11_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E216[iphone/1.0.23/6bcfa8eca598d009a9b6d43861783eee/63e60631de817fb5c28e35b95298411a]",
-        "Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_5 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13G36[iphone/1.0.23/7b114f75dcb98d35c68ccef4007b3210/b079c2e3e943108643ca0387da836b09]");
+        "Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_5 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13G36[iphone/1.0.23/7b114f75dcb98d35c68ccef4007b3210/b079c2e3e943108643ca0387da836b09]",
+        "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_2 like Mac OS X) AppleWebKit/603.2.4 (KHTML, like Gecko) Mobile/14F89[iphone/1.0.23/c1d1f2a823e0064dc865e6a2ad9386e9/60cb8e6580055022ee6d5fad77ab39aa]");
 
     default String getUA() {
         return USERAGENTS.get(Address.random(USERAGENTS.size() - 1));
     }
+
     HttpHeaders parseHeader(HttpHeaders httpHeaders);
 
     boolean signup(String mobile, String pwd) throws Exception;
