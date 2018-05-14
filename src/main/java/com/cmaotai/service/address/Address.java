@@ -8,6 +8,7 @@ import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
+import org.apache.logging.log4j.util.Strings;
 
 public class Address {
 
@@ -18,8 +19,7 @@ public class Address {
             "贵阳市南明区南厂路", "贵阳市白云区白云南路", "贵阳市南明区西湖路");
 
     private static List<String> WUXI_DISTRICTS = Lists
-        .newArrayList("无锡市崇安区", "无锡市梁溪区", "无锡新区","无锡锡山区","无锡惠山区");
-
+        .newArrayList("无锡市崇安区", "无锡市梁溪区", "无锡新区", "无锡锡山区", "无锡惠山区");
 
     public static String getGuiYangDistricts() {
         int max = GUIYANG_DISTRICTS.size() - 1;
@@ -77,7 +77,19 @@ public class Address {
         }).collect(Collectors.toList());
     }
 
-    public static CMotaiDefaultAddress getGuiYangAddress() {
+    public static CMotaiDefaultAddress getAddress(String from) {
+        if (Strings.isBlank(from)) {
+            return getGuiYangAddress();
+        }
+        if ("guiyang".equals(from)) {
+            return getGuiYangAddress();
+        } else if ("wuxi".equals(from)) {
+            return getWuXiAddress();
+        }
+        return getGuiYangAddress();
+    }
+
+    private static CMotaiDefaultAddress getGuiYangAddress() {
         if (ADDRESS.size() <= 0) {
             ADDRESS.addAll(guiYangAddress(300));
         }
@@ -85,7 +97,7 @@ public class Address {
         return ADDRESS.get(random(max));
     }
 
-    public static CMotaiDefaultAddress getWuXiAddress() {
+    private static CMotaiDefaultAddress getWuXiAddress() {
         if (ADDRESS.size() <= 0) {
             ADDRESS.addAll(wuXiAddress(42));
         }

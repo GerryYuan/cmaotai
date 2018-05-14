@@ -34,6 +34,11 @@ public class StartService {
             CMaotaiServiceImpl.getOrderStatus(pwd);
         }
         if (address) {
+            String from = System.getProperty("from");
+            if (Strings.isBlank(from)) {
+                System.err.println("请在命令行中输入密码，比如-Dfrom=guiyang");
+                return;
+            }
             System.out.println(now + "，开始执行添加默认地址操作........");
             CMaotaiServiceImpl.addDefaultAddress(pwd);
         }
