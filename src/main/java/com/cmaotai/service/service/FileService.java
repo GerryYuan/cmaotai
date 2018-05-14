@@ -11,9 +11,8 @@ import org.joda.time.format.DateTimeFormatter;
 
 public class FileService {
 
-    public static boolean isInvoke() throws IOException {
+    public static boolean isInvoke(String now) throws IOException {
         File file = new File("~/submit/submit.txt");
-        String now = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
         if (Files.isFile().test(file)) {
             String date = Files.readFirstLine(file, Charset.defaultCharset());
             DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
