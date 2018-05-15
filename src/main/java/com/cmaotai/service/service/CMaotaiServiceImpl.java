@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.NumberUtils;
 
 public class CMaotaiServiceImpl implements CMaotaiService {
 
@@ -115,8 +116,14 @@ public class CMaotaiServiceImpl implements CMaotaiService {
 
     @Override
     public boolean submit(CMotaiDefaultAddress cMotaiDefaultAddress) throws UnsupportedEncodingException {
+        String qty = System.getProperty("qty");
+        int num = 5;
+        if (Strings.isNotBlank(qty)) {
+            num = Integer.valueOf(qty);
+        }
         String action =
-            "action=GrabSingleManager.submit&iid=-1&qty=5&express=14&timestamp121=" + new Date().getTime() + "&sid="
+            "action=GrabSingleManager.submit&iid=-1&qty=" + num + "&express=14&timestamp121=" + new Date().getTime()
+                + "&sid="
                 + cMotaiDefaultAddress.getSId() + "&remark=" + "&product=" + JSON.toJSONString(new CMotaiProduct());
         ResponseEntity<String> response = post(action, headers);
         return JSON.parseObject(response.getBody(), new TypeReference<DataResult<Integer>>() {
@@ -252,35 +259,6 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         System.out.println("修改结果：总修改【" + mobiles.size() + "】，成功【" + succ.get() + "】,失败【" + failMobiles.size() + "】");
         if (failMobiles.size() > 0) {
             System.out.println("修改失败手机号：" + failMobiles);
-        }
-    }
-
-    protected static void addDefaultAddress(String pwd) throws IOException {
-        List<String> mobiles = Mobile.ADDRESS_MOBILES.stream()
-            .filter(Strings::isNotBlank).collect(
-                Collectors.toList());
-        List<String> failMobiles = Lists.newArrayList();
-        AtomicInteger succ = new AtomicInteger(0);
-        mobiles.forEach(s -> {
-            CMaotaiServiceImpl cMaotaiService = new CMaotaiServiceImpl();
-            cMaotaiService.loginBefore();
-            try {
-                cMaotaiService.login(s, pwd);
-                cMaotaiService.isLogin();
-                if (cMaotaiService.addDefaultAddress()) {
-                    succ.addAndGet(1);
-                    System.out.println("手机号【" + s + "】默认地址添加成功!");
-                } else {
-                    failMobiles.add(s);
-                    System.err.println("手机号【" + s + "】默认地址添加失败！");
-                }
-            } catch (Exception e) {
-                System.err.println("手机号【" + s + "】登录异常！" + e.getMessage());
-            }
-        });
-        System.out.println("添加结果：总添加【" + mobiles.size() + "】，成功【" + succ.get() + "】,失败【" + failMobiles.size() + "】");
-        if (failMobiles.size() > 0) {
-            System.out.println("添加失败手机号：" + failMobiles);
         }
     }
 
