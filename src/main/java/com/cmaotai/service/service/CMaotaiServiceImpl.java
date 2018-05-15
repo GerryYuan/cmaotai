@@ -177,6 +177,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
                     System.err.println("最后，手机号【" + s + "】等记失败！");
                 }
             } catch (Exception e) {
+                failMobiles.add(s);
                 System.err.println("手机号【" + s + "】等记异常！" + e.getMessage());
             }
         });
