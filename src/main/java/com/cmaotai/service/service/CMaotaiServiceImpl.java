@@ -146,7 +146,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
 
     @Override
     public boolean addDefaultAddress() {
-        CMotaiDefaultAddress address = Address.getAddress();
+        CMotaiDefaultAddress address = Address.getAddress("guiyang");
         String action =
             "action=AddressManager.add&provinceId=" + address.getProvinceId()
                 + "&cityId=" + address.getCityId() + "&districtsId=" +
@@ -268,8 +268,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
 
     protected static void addDefaultAddress(String pwd) throws IOException {
         List<String> mobiles = Mobile.MOBILES.stream()
-            .filter(Strings::isNotBlank).collect(
-                Collectors.toList());
+            .filter(Strings::isNotBlank).collect(Collectors.toList());
         List<String> failMobiles = Lists.newArrayList();
         AtomicInteger succ = new AtomicInteger(0);
         mobiles.forEach(s -> {
