@@ -12,4 +12,6 @@ public class DataResult<T> implements Serializable {
 
     private T data;
 
+    private String msg;
+
 }

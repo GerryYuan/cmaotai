@@ -41,9 +41,11 @@ public interface CMaotaiService {
 
     CMotaiDefaultAddress getDefualtAdd() throws Exception;
 
-    boolean defaultSubmit(CMotaiDefaultAddress cMotaiDefaultAddress) throws UnsupportedEncodingException;
+    boolean defaultSubmit(CMotaiDefaultAddress cMotaiDefaultAddress) throws Exception;
 
     boolean invoiceSubmit(CMotaiDefaultAddress cMotaiDefaultAddress) throws Exception;
+
+    boolean logout() throws Exception;
 
     boolean changePassword(String oldPwd, String newPwd);
 

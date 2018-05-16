@@ -76,9 +76,11 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         String action =
             "action=UserManager.login&tel=" + mobile + "&pwd=" + pwd + "&timestamp121=" + now;
         ResponseEntity<String> response = post(action, headers);
-        if (!JSON.parseObject(response.getBody(), new TypeReference<DataResult<CMaotaiUser>>() {
-        }).isState()) {
-            throw new Exception("登录失败");
+        DataResult<CMaotaiUser> result = JSON
+            .parseObject(response.getBody(), new TypeReference<DataResult<CMaotaiUser>>() {
+            });
+        if (result.getCode() != 0) {
+            throw new Exception("登录失败!" + result.getMsg());
         }
         headers = parseHeader(response.getHeaders());
     }
@@ -140,13 +142,18 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     }
 
     @Override
-    public boolean defaultSubmit(CMotaiDefaultAddress cMotaiDefaultAddress) throws UnsupportedEncodingException {
+    public boolean defaultSubmit(CMotaiDefaultAddress cMotaiDefaultAddress) throws Exception {
         String action =
             "action=GrabSingleManager.submit&iid=-1&qty=5&express=14&timestamp121=" + new Date().getTime() + "&sid="
                 + cMotaiDefaultAddress.getSId() + "&remark=" + "&product=" + JSON.toJSONString(new CMotaiProduct());
         ResponseEntity<String> response = post(action, headers);
-        return JSON.parseObject(response.getBody(), new TypeReference<DataResult<Integer>>() {
-        }).isState();
+        DataResult<Integer> result = JSON.parseObject(response.getBody(), new TypeReference<DataResult<Integer>>() {
+        });
+        if (result.getCode() != 0) {
+            throw new Exception("下单失败！" + result.getMsg());
+        }
+        logout();
+        return true;
     }
 
     @Override
@@ -159,6 +166,19 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         ResponseEntity<String> response = post(action, headers);
         return JSON.parseObject(response.getBody(), new TypeReference<DataResult<Integer>>() {
         }).isState();
+    }
+
+    @Override
+    public boolean logout() throws Exception {
+        String action = "action=UserManager.LogOut";
+        ResponseEntity<String> response = post(action, headers);
+        DataResult<String> dataResult = JSON.parseObject(response.getBody(), new TypeReference<DataResult<String>>() {
+        });
+        if (dataResult.getCode() != 0) {
+            throw new Exception("用户注销失败");
+        }
+        System.out.println(dataResult.getMsg());
+        return true;
     }
 
     @Override
@@ -191,7 +211,8 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     }
 
     protected static void defaultSignup(String pwd) throws IOException {
-        String path = System.getProperty("path");
+//        String path = System.getProperty("path");
+        String path = "/Users/gerry/Downloads/maitai/test.txt";
         if (Strings.isBlank(path)) {
             System.out.println("请在命令行中输入路劲，比如-Dpath=http");
         }
@@ -401,4 +422,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         }
     }
 
+    public static void main(String[] args) throws IOException {
+        defaultSignup("123456ygh");
+    }
 }
