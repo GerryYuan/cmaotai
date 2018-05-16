@@ -13,8 +13,11 @@ import com.cmaotai.service.model.DataResult;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.io.Files;
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -117,7 +120,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     @Override
     public boolean submit(CMotaiDefaultAddress cMotaiDefaultAddress) throws UnsupportedEncodingException {
         String qty = System.getProperty("qty");
-        int num = 5;
+        int num = 6;
         if (Strings.isNotBlank(qty)) {
             num = Integer.valueOf(qty);
         }
@@ -263,4 +266,30 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         }
     }
 
+    protected static void addDefaultAddress(String pwd) throws IOException {
+        List<String> mobiles = Mobile.MOBILES.stream()
+            .filter(Strings::isNotBlank).collect(Collectors.toList());
+        List<String> failMobiles = Lists.newArrayList();
+        AtomicInteger succ = new AtomicInteger(0);
+        mobiles.forEach(s -> {
+            CMaotaiServiceImpl cMaotaiService = new CMaotaiServiceImpl();
+            cMaotaiService.loginBefore();
+            try {
+                cMaotaiService.login(s, pwd);
+                if (cMaotaiService.addDefaultAddress()) {
+                    succ.addAndGet(1);
+                    System.out.println("手机号【" + s + "】默认地址添加成功!");
+                } else {
+                    failMobiles.add(s);
+                    System.err.println("手机号【" + s + "】默认地址添加失败！");
+                }
+            } catch (Exception e) {
+                System.err.println("手机号【" + s + "】登录异常！" + e.getMessage());
+            }
+        });
+        System.out.println("添加结果：总添加【" + mobiles.size() + "】，成功【" + succ.get() + "】,失败【" + failMobiles.size() + "】");
+        if (failMobiles.size() > 0) {
+            System.out.println("添加失败手机号：" + failMobiles);
+        }
+    }
 }
