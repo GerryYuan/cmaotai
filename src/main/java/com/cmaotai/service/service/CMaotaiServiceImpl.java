@@ -106,7 +106,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         DataResult<CMotaiDefaultAddress> dataResult = JSON
             .parseObject(response.getBody(), new TypeReference<DataResult<CMotaiDefaultAddress>>() {
             });
-        if (!dataResult.isState()) {
+        if (dataResult.getData() == null) {
             throw new Exception("获取默认地址失败！");
         }
         return dataResult.getData();
@@ -182,7 +182,6 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         if (dataResult.getCode() != 0) {
             throw new Exception("用户注销失败");
         }
-        System.out.println(dataResult.getMsg());
         return true;
     }
 
@@ -216,7 +215,8 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     }
 
     protected static void defaultSignup(String pwd) throws IOException {
-        String path = System.getProperty("path");
+//        String path = System.getProperty("path");
+        String path = "/Users/gerry/Downloads/maitai/guiyang.txt";
         if (Strings.isBlank(path)) {
             System.out.println("请在命令行中输入路劲，比如-Dpath=http");
         }
