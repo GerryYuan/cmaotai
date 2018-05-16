@@ -152,7 +152,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         return dataResult.isState();
     }
 
-    protected static void signUp(String pwd) throws IOException {
+    public static void signUp(String pwd) throws IOException {
         List<String> mobiles = Mobile.MOBILES.stream()
             .filter(Strings::isNotBlank).collect(
                 Collectors.toList());
