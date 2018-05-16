@@ -56,7 +56,7 @@ public class Address {
 
     public static List<CMotaiDefaultAddress> guiYangAddress(int num) {
         List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getGuiYangDistricts());
-        for (int i = aMapAddressTips.size(); i < num; i++) {
+        for (; aMapAddressTips.size() < num; ) {
             aMapAddressTips.addAll(AMapService.getAddress(getGuiYangDistricts()));
         }
         System.out.println(aMapAddressTips.size() + "个地址已生成");
@@ -92,8 +92,8 @@ public class Address {
 
     private static CMotaiDefaultAddress getGuiYangAddress() {
         if (ADDRESS.size() <= 0) {
-            ADDRESS.addAll(guiYangAddress(150));
-            System.out.println("150个贵阳地址已生成，开始添加....");
+            ADDRESS.addAll(guiYangAddress(300));
+            System.out.println("300个贵阳地址已生成，开始添加....");
         }
         int max = ADDRESS.size() - 1;
         return ADDRESS.get(random(max));

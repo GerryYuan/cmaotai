@@ -19,7 +19,7 @@ public class AMapService {
             String.class);
         String address = response.getBody().replace("jsonp_90668_(", "").replace(")", "");
         return JSON.parseObject(address, AMapAddress.class).getTips().stream()
-            .filter(tip -> Strings.isNotBlank(tip.getAddress())).collect(
+            .filter(tip -> Strings.isNotBlank(tip.getAddress()) && !"[]".equals(tip.getAddress())).collect(
                 Collectors.toList());
     }
 }
