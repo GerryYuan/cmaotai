@@ -92,7 +92,7 @@ public class Address {
 
     private static CMotaiDefaultAddress getGuiYangAddress() {
         if (ADDRESS.size() <= 0) {
-            ADDRESS.addAll(guiYangAddress(300));
+            ADDRESS.addAll(guiYangAddress(50));
         }
         int max = ADDRESS.size() - 1;
         return ADDRESS.get(random(max));
