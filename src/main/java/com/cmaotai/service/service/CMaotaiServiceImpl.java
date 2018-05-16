@@ -143,8 +143,14 @@ public class CMaotaiServiceImpl implements CMaotaiService {
 
     @Override
     public boolean defaultSubmit(CMotaiDefaultAddress cMotaiDefaultAddress) throws Exception {
+        int qty = 6;
+        String num = System.getProperty("qty");
+        if (Strings.isNotBlank(num)) {
+            qty = Integer.valueOf(num);
+        }
         String action =
-            "action=GrabSingleManager.submit&iid=-1&qty=5&express=14&timestamp121=" + new Date().getTime() + "&sid="
+            "action=GrabSingleManager.submit&iid=-1&qty=" + qty + "&express=14&timestamp121=" + new Date().getTime()
+                + "&sid="
                 + cMotaiDefaultAddress.getSId() + "&remark=" + "&product=" + JSON.toJSONString(new CMotaiProduct());
         ResponseEntity<String> response = post(action, headers);
         DataResult<Integer> result = JSON.parseObject(response.getBody(), new TypeReference<DataResult<Integer>>() {
