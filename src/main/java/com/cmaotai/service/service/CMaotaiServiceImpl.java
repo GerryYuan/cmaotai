@@ -267,11 +267,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     }
 
     protected static void addDefaultAddress(String pwd) throws IOException {
-        String path = System.getProperty("path");
-        if (Strings.isBlank(path)) {
-            System.out.println("请在命令行中输入路劲，比如-Dpath=http");
-        }
-        List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
+        List<String> mobiles = Mobile.MOBILES.stream()
             .filter(Strings::isNotBlank).collect(
                 Collectors.toList());
         List<String> failMobiles = Lists.newArrayList();
