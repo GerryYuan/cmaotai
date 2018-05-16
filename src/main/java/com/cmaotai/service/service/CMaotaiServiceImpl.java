@@ -164,8 +164,13 @@ public class CMaotaiServiceImpl implements CMaotaiService {
                 .getTime() + "&sid="
                 + cMotaiDefaultAddress.getSId() + "&remark=" + "&product=" + JSON.toJSONString(new CMotaiProduct());
         ResponseEntity<String> response = post(action, headers);
-        return JSON.parseObject(response.getBody(), new TypeReference<DataResult<Integer>>() {
-        }).isState();
+        DataResult<Integer> result = JSON.parseObject(response.getBody(), new TypeReference<DataResult<Integer>>() {
+        });
+        if (result.getCode() != 0) {
+            throw new Exception("下单失败！" + result.getMsg());
+        }
+        logout();
+        return true;
     }
 
     @Override
@@ -211,8 +216,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     }
 
     protected static void defaultSignup(String pwd) throws IOException {
-//        String path = System.getProperty("path");
-        String path = "/Users/gerry/Downloads/maitai/test.txt";
+        String path = System.getProperty("path");
         if (Strings.isBlank(path)) {
             System.out.println("请在命令行中输入路劲，比如-Dpath=http");
         }
