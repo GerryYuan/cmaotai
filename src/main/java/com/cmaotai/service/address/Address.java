@@ -44,6 +44,7 @@ public class Address {
         for (int i = aMapAddressTips.size(); i < num; i++) {
             aMapAddressTips.addAll(AMapService.getAddress(getWuXiDistricts()));
         }
+        System.out.println(aMapAddressTips.size() + "个无锡地址已生成");
         return aMapAddressTips.stream().map(aMapAddressTip -> {
             CMotaiDefaultAddress cMotaiDefaultAddress = new CMotaiDefaultAddress();
             cMotaiDefaultAddress.setProvinceId("320000");
@@ -67,6 +68,7 @@ public class Address {
         for (int i = aMapAddressTips.size(); i < num; i++) {
             aMapAddressTips.addAll(AMapService.getAddress(getZunYiDistricts()));
         }
+        System.out.println(aMapAddressTips.size() + "个遵义地址已生成");
         return aMapAddressTips.stream().map(aMapAddressTip -> {
             CMotaiDefaultAddress cMotaiDefaultAddress = new CMotaiDefaultAddress();
             cMotaiDefaultAddress.setProvinceId("520000");
@@ -90,7 +92,7 @@ public class Address {
         for (; aMapAddressTips.size() < num; ) {
             aMapAddressTips.addAll(AMapService.getAddress(getGuiYangDistricts()));
         }
-        System.out.println(aMapAddressTips.size() + "个地址已生成");
+        System.out.println(aMapAddressTips.size() + "个贵阳地址已生成");
         return aMapAddressTips.stream().map(aMapAddressTip -> {
             CMotaiDefaultAddress cMotaiDefaultAddress = new CMotaiDefaultAddress();
             cMotaiDefaultAddress.setProvinceId("520000");
