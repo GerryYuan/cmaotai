@@ -93,7 +93,6 @@ public class Address {
     private static CMotaiDefaultAddress getGuiYangAddress() {
         if (ADDRESS.size() <= 0) {
             ADDRESS.addAll(guiYangAddress(300));
-            System.out.println("300个贵阳地址已生成，开始添加....");
         }
         int max = ADDRESS.size() - 1;
         return ADDRESS.get(random(max));
