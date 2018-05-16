@@ -59,6 +59,7 @@ public class Address {
         for (int i = aMapAddressTips.size(); i < num; i++) {
             aMapAddressTips.addAll(AMapService.getAddress(getGuiYangDistricts()));
         }
+        System.out.println(aMapAddressTips.size() + "个地址已生成");
         return aMapAddressTips.stream().map(aMapAddressTip -> {
             CMotaiDefaultAddress cMotaiDefaultAddress = new CMotaiDefaultAddress();
             cMotaiDefaultAddress.setProvinceId("520000");
@@ -91,8 +92,8 @@ public class Address {
 
     private static CMotaiDefaultAddress getGuiYangAddress() {
         if (ADDRESS.size() <= 0) {
-            ADDRESS.addAll(guiYangAddress(300));
-            System.out.println("300个贵阳地址已生成，开始添加....");
+            ADDRESS.addAll(guiYangAddress(150));
+            System.out.println("150个贵阳地址已生成，开始添加....");
         }
         int max = ADDRESS.size() - 1;
         return ADDRESS.get(random(max));

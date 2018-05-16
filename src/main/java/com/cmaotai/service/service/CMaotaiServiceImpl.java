@@ -198,7 +198,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
 
     @Override
     public boolean addDefaultAddress() {
-        CMotaiDefaultAddress address = Address.getAddress(System.getProperty("from"));
+        CMotaiDefaultAddress address = Address.getAddress("guiyang");
         String action =
             "action=AddressManager.add&provinceId=" + address.getProvinceId()
                 + "&cityId=" + address.getCityId() + "&districtsId=" +
@@ -215,8 +215,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     }
 
     protected static void defaultSignup(String pwd) throws IOException {
-//        String path = System.getProperty("path");
-        String path = "/Users/gerry/Downloads/maitai/guiyang.txt";
+        String path = System.getProperty("path");
         if (Strings.isBlank(path)) {
             System.out.println("请在命令行中输入路劲，比如-Dpath=http");
         }
@@ -424,9 +423,5 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         if (failMobiles.size() > 0) {
             System.out.println("添加失败的手机号：" + failMobiles);
         }
-    }
-
-    public static void main(String[] args) throws IOException {
-        defaultSignup("123456ygh");
     }
 }
