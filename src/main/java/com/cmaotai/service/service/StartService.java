@@ -6,8 +6,7 @@ import org.joda.time.DateTime;
 public class StartService {
 
     public static void start() throws Exception {
-        boolean defaultSubmit = Boolean.valueOf(System.getProperty("defaultSubmit"));
-        boolean invoiceSubmit = Boolean.valueOf(System.getProperty("invoiceSubmit"));
+        boolean submit = Boolean.valueOf(System.getProperty("submit"));
         boolean order = Boolean.valueOf(System.getProperty("order"));
         boolean address = Boolean.valueOf(System.getProperty("address"));
         String pwd = System.getProperty("pwd");
@@ -16,18 +15,9 @@ public class StartService {
             return;
         }
         String now = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
-        if (defaultSubmit) {
-            if (FileService.isInvoke(now)) {
-                System.out.println(now + "，开始执行下单&不带发票5瓶操作........");
-                CMaotaiServiceImpl.defaultSignup(pwd);
-                FileService.write();
-            }
-        } else if (invoiceSubmit) {
-            if (FileService.isInvoke(now)) {
-                System.out.println(now + "，开始执行下单&带发票2瓶操作........");
-                CMaotaiServiceImpl.invoiceSignup(pwd);
-                FileService.write();
-            }
+        if (submit) {
+            System.out.println(now + "，开始执行下单操作........");
+            CMaotaiServiceImpl.defaultSignup(pwd);
         }
         if (order) {
             System.out.println(now + "，开始执行查询订单操作........");
