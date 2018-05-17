@@ -181,7 +181,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         }
     }
 
-    protected static void getOrderStatus(String pwd) throws IOException {
+    public static void getOrderStatus(String pwd) throws IOException {
         List<String> mobiles = Mobile.MOBILES.stream()
             .filter(Strings::isNotBlank).collect(
                 Collectors.toList());
