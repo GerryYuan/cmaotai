@@ -221,11 +221,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         return dataResult.isState();
     }
 
-    protected static void defaultSignup(String pwd, int timer) throws IOException {
-        String path = System.getProperty("path");
-        if (Strings.isBlank(path)) {
-            System.out.println("请在命令行中输入路劲，比如-Dpath=http");
-        }
+    public static void defaultSignup(String pwd, String path, int timer) throws IOException {
         List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
             .collect(Collectors.toList());
         AtomicInteger atomicInteger = new AtomicInteger(0);
@@ -256,7 +252,8 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         }
     }
 
-    protected static void invoiceSignup(String pwd) throws IOException {
+    @Deprecated
+    private static void invoiceSignup(String pwd) throws IOException {
         String path = System.getProperty("path");
         if (Strings.isBlank(path)) {
             System.out.println("请在命令行中输入路劲，比如-Dpath=http");
@@ -290,11 +287,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         }
     }
 
-    protected static void getOrderStatus(String pwd) throws IOException {
-        String path = System.getProperty("path");
-        if (Strings.isBlank(path)) {
-            System.out.println("请在命令行中输入路劲，比如-Dpath=http");
-        }
+    public static void getOrderStatus(String pwd, String path) throws IOException {
         List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
             .filter(Strings::isNotBlank).collect(
                 Collectors.toList());

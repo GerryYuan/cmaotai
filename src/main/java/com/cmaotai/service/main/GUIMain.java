@@ -13,6 +13,8 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -25,6 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import org.apache.logging.log4j.util.Strings;
 import org.joda.time.DateTime;
+import org.springframework.util.NumberUtils;
 
 public class GUIMain extends JDialog {
 
@@ -36,6 +39,10 @@ public class GUIMain extends JDialog {
     private JTextField qyt;
     private JTextArea textArea;
     private JButton clean;
+    private JTextField path;
+    private JTextField timer;
+    private JButton shutdown;
+    ExecutorService newCachedThread = Executors.newCachedThreadPool();//创建一个缓冲线程池
 
     public GUIMain() {
         setContentPane(contentPane);
@@ -50,11 +57,13 @@ public class GUIMain extends JDialog {
             onCancel();
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         invoke.addActionListener(e -> {
-            try {
-                invoke();
-            } catch (IOException ee) {
-                System.err.println(ee.getMessage());
-            }
+            newCachedThread.execute(() -> {
+                try {
+                    invoke();
+                } catch (IOException e1) {
+                    System.err.println(e1.getMessage());
+                }
+            });
         });
         pwd.addFocusListener(new FocusListener() {
             @Override
@@ -65,10 +74,8 @@ public class GUIMain extends JDialog {
             public void focusLost(FocusEvent e) {
                 String password = new String(pwd.getPassword());
                 if (Strings.isBlank(password)) {
-                    String msg = "密码不能为空！";
-                    JOptionPane.showMessageDialog(null, "密码不能为空！", "错误提示框", JOptionPane.WARNING_MESSAGE);
+                    show("密码不能为空！");
                     pwd.requestFocus();
-                    System.out.println(msg);
                 }
             }
         });
@@ -81,17 +88,29 @@ public class GUIMain extends JDialog {
         textArea.setLineWrap(true);//激活自动换行功能
         textArea.setWrapStyleWord(true);
         outputUI();
+        shutdown.addActionListener(e -> {
+            int value = JOptionPane.showConfirmDialog(null, "确定关闭正在执行的操作？");
+            if(value == 0){
+//                newCachedThread.shutdownNow();
+            }
+        });
+    }
+
+    private void show(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "错误提示框", JOptionPane.WARNING_MESSAGE);
     }
 
     private void invoke() throws IOException {
         String password = new String(pwd.getPassword());
         String start = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
         if (submit.isSelected()) {
-//            CMaotaiServiceImpl.signUp(password);
+            System.out.println(start + "，开始执行下单操作........");
+            CMaotaiServiceImpl
+                .defaultSignup(password, path.getText(), NumberUtils.parseNumber(timer.getText(), Integer.class));
         }
         if (order.isSelected()) {
             System.out.println(start + "，开始执行查询订单操作........");
-            CMaotaiServiceImpl.getOrderStatus(password);
+            CMaotaiServiceImpl.getOrderStatus(password, path.getText());
         }
         String end = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
         System.out.println(end + "，结束");

@@ -12,19 +12,24 @@ public class StartService {
         boolean address = Boolean.valueOf(System.getProperty("address"));
         String pwd = System.getProperty("pwd");
         String min = System.getProperty("min");
+        String path = System.getProperty("path");
         int timer = Strings.isNotBlank(min) ? Integer.valueOf(min) : 0;
         if (Strings.isBlank(pwd)) {
             System.err.println("请在命令行中输入密码，比如-Dpwd=123456");
             return;
         }
+        if (Strings.isBlank(path)) {
+            System.err.println("请在命令行中输入密码，比如-Dpath=c:");
+            return;
+        }
         String now = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
         if (submit) {
             System.out.println(now + "，开始执行下单操作........");
-            CMaotaiServiceImpl.defaultSignup(pwd, timer);
+            CMaotaiServiceImpl.defaultSignup(pwd, path, timer);
         }
         if (order) {
             System.out.println(now + "，开始执行查询订单操作........");
-            CMaotaiServiceImpl.getOrderStatus(pwd);
+            CMaotaiServiceImpl.getOrderStatus(pwd,path);
         }
         if (address) {
             System.out.println(now + "，开始执行添加默认地址操作........");
