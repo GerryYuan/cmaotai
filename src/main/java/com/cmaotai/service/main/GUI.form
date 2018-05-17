@@ -153,16 +153,21 @@
         <properties/>
         <border type="none" title="操作记录"/>
         <children>
-          <component id="25b1" class="javax.swing.JTextArea" binding="operater">
+          <scrollpane id="51a4d">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="647" height="50"/>
-              </grid>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value=""/>
-            </properties>
-          </component>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="2f23e" class="javax.swing.JTextArea" binding="textArea">
+                <constraints/>
+                <properties>
+                  <text value=""/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
         </children>
       </grid>
     </children>

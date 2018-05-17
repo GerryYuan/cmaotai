@@ -153,7 +153,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     }
 
     public static void signUp(String pwd) throws IOException {
-        List<String> mobiles = Mobile.MOBILES.stream()
+        List<String> mobiles = Mobile.MOBILES().stream()
             .filter(Strings::isNotBlank).collect(
                 Collectors.toList());
         AtomicInteger atomicInteger = new AtomicInteger(0);
@@ -182,7 +182,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     }
 
     public static void getOrderStatus(String pwd) throws IOException {
-        List<String> mobiles = Mobile.MOBILES.stream()
+        List<String> mobiles = Mobile.MOBILES().stream()
             .filter(Strings::isNotBlank).collect(
                 Collectors.toList());
         AtomicInteger WAIT_PAY = new AtomicInteger(0);
@@ -227,7 +227,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     }
 
     protected static void changePwd(String pwd, String newPwd) throws IOException {
-        List<String> mobiles = Mobile.MOBILES.stream()
+        List<String> mobiles = Mobile.MOBILES().stream()
             .filter(Strings::isNotBlank).collect(
                 Collectors.toList());
         List<String> failMobiles = Lists.newArrayList();
