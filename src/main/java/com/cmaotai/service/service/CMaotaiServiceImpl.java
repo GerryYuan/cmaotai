@@ -16,7 +16,6 @@ import com.google.common.collect.Maps;
 import com.google.common.io.Files;
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.List;
@@ -221,14 +220,13 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         return dataResult.isState();
     }
 
-    protected static void defaultSignup(String pwd) throws IOException {
+    protected static void defaultSignup(String pwd, int timer) throws IOException {
         String path = System.getProperty("path");
         if (Strings.isBlank(path)) {
             System.out.println("请在命令行中输入路劲，比如-Dpath=http");
         }
         List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
-            .filter(Strings::isNotBlank).collect(
-                Collectors.toList());
+            .collect(Collectors.toList());
         AtomicInteger atomicInteger = new AtomicInteger(0);
         List<String> failMobiles = Lists.newArrayList();
         mobiles.forEach(s -> {
@@ -238,6 +236,8 @@ public class CMaotaiServiceImpl implements CMaotaiService {
                 if (cMaotaiService.defaultSignup(s, pwd)) {
                     System.out.println("最后，手机号【" + s + "】等记成功！");
                     atomicInteger.addAndGet(1);
+                    Thread.sleep(1000 * 60 * timer);
+                    System.out.println("休息【" + timer + "】分钟，在继续登记哟！");
                 } else {
                     failMobiles.add(s);
                     System.err.println("最后，手机号【" + s + "】等记失败！");
