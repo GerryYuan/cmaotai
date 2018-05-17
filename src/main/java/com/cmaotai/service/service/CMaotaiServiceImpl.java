@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.cmaotai.service.address.Address;
 import com.cmaotai.service.mobile.Invoice;
+import com.cmaotai.service.mobile.Mobile;
 import com.cmaotai.service.model.CMaotaiOrderStatus;
 import com.cmaotai.service.model.CMaotaiOrderStatus.OrderStatus;
 import com.cmaotai.service.model.CMaotaiUser;
@@ -22,14 +23,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import javax.swing.JTextArea;
 import org.apache.logging.log4j.util.Strings;
 import org.joda.time.DateTime;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
 public class CMaotaiServiceImpl implements CMaotaiService {
-
-    public static long SUBMITTIMES = 1;
 
     private HttpHeaders headers = new HttpHeaders();
 

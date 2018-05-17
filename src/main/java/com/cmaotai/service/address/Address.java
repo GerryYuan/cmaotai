@@ -151,6 +151,7 @@ public class Address {
     }
 
     public static String getCallPhone() {
+<<<<<<< HEAD
         int max = Mobile.CALL_MOBILES.size() - 1;
         return Mobile.CALL_MOBILES.get(random(max));
     }
@@ -158,6 +159,10 @@ public class Address {
     public static String getCallName() {
         int max = Mobile.CALL_NAMES.size() - 1;
         return Mobile.CALL_NAMES.get(random(max));
+=======
+        int max = new Mobile().MOBILES().size() - 1;
+        return new Mobile().MOBILES().get(random(max));
+>>>>>>> origin/GUI
     }
 
     public static int random(int max) {
