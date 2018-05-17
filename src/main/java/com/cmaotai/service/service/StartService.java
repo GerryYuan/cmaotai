@@ -2,6 +2,7 @@ package com.cmaotai.service.service;
 
 import org.apache.logging.log4j.util.Strings;
 import org.joda.time.DateTime;
+import org.springframework.util.NumberUtils;
 
 public class StartService {
 
@@ -10,6 +11,8 @@ public class StartService {
         boolean order = Boolean.valueOf(System.getProperty("order"));
         boolean address = Boolean.valueOf(System.getProperty("address"));
         String pwd = System.getProperty("pwd");
+        String min = System.getProperty("min");
+        int timer = Strings.isNotBlank(min) ? Integer.valueOf(min) : 0;
         if (Strings.isBlank(pwd)) {
             System.out.println("请在命令行中输入密码，比如-Dpwd=123456");
             return;
@@ -18,7 +21,7 @@ public class StartService {
         if (submit) {
             if (FileService.isInvoke()) {
                 System.out.println(now + "，开始执行下单操作........");
-                CMaotaiServiceImpl.signUp(pwd);
+                CMaotaiServiceImpl.signUp(pwd, timer);
             }
         }
         if (order) {
