@@ -301,10 +301,13 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         AtomicInteger WAIT_PAY = new AtomicInteger(0);
         AtomicInteger WAIT_DELIVER_GOODS = new AtomicInteger(0);
         AtomicInteger WAIT_CONFIRMATION_GOODS = new AtomicInteger(0);
+        AtomicInteger num = new AtomicInteger(mobiles.size());
         List<String> WAIT_PAYMobile = Lists.newArrayList();
         List<String> WAIT_DELIVER_GOODSMobile = Lists.newArrayList();
         List<String> WAIT_CONFIRMATION_GOODSMobile = Lists.newArrayList();
+        System.out.println("开始查单操作，需要花费一段时间，请等待......");
         mobiles.forEach(s -> {
+            System.out.println("【" + s + "】查单中，剩余【" + num.addAndGet(-1) + "】个。");
             CMaotaiServiceImpl cMaotaiService = new CMaotaiServiceImpl();
             cMaotaiService.loginBefore();
             try {
