@@ -154,8 +154,8 @@ public class Address {
     }
 
     public static String getCallPhone() {
-        int max = Mobile.MOBILES().size() - 1;
-        return Mobile.MOBILES().get(random(max));
+        int max = new Mobile().MOBILES().size() - 1;
+        return new Mobile().MOBILES().get(random(max));
     }
 
     public static int random(int max) {
