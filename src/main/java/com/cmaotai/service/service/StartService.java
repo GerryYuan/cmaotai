@@ -5,7 +5,7 @@ import org.joda.time.DateTime;
 
 public class StartService {
 
-    public static void start() throws Exception {
+    public void start() throws Exception {
         boolean submit = Boolean.valueOf(System.getProperty("submit"));
         boolean order = Boolean.valueOf(System.getProperty("order"));
         boolean address = Boolean.valueOf(System.getProperty("address"));

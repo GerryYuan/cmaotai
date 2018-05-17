@@ -3,6 +3,7 @@ package com.cmaotai.service.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.cmaotai.service.address.Address;
+import com.cmaotai.service.main.GUIMain;
 import com.cmaotai.service.mobile.Mobile;
 import com.cmaotai.service.model.CMaotaiOrderStatus;
 import com.cmaotai.service.model.CMaotaiOrderStatus.OrderStatus;
@@ -25,8 +26,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
 public class CMaotaiServiceImpl implements CMaotaiService {
-
-    public static long SUBMITTIMES = 1;
 
     private HttpHeaders headers = new HttpHeaders();
 
@@ -215,6 +214,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
                     }
                 });
             } catch (Exception e) {
+
                 System.err.println("手机号【" + s + "】登录异常！" + e.getMessage());
             }
         });

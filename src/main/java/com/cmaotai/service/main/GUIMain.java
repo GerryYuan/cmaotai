@@ -19,6 +19,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import lombok.Getter;
 import org.apache.logging.log4j.util.Strings;
 import org.joda.time.DateTime;
 
@@ -30,6 +31,7 @@ public class GUIMain extends JDialog {
     private JRadioButton order;
     private JPasswordField pwd;
     private JTextField qyt;
+    @Getter
     private JTextArea textArea;
 
     public GUIMain() {
@@ -48,7 +50,7 @@ public class GUIMain extends JDialog {
             try {
                 invoke();
             } catch (IOException ee) {
-                textArea.append(ee.getMessage());
+                println(ee.getMessage());
             }
         });
         pwd.addFocusListener(new FocusListener() {
@@ -63,7 +65,7 @@ public class GUIMain extends JDialog {
                     String msg = "密码不能为空！";
                     JOptionPane.showMessageDialog(null, "密码不能为空！", "错误提示框", JOptionPane.WARNING_MESSAGE);
                     pwd.requestFocus();
-                    textArea.append(msg);
+                    println(msg);
                 }
             }
         });
@@ -75,23 +77,19 @@ public class GUIMain extends JDialog {
         String password = new String(pwd.getPassword());
         String start = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
         if (submit.isSelected()) {
-            CMaotaiServiceImpl.signUp(password);
+//            CMaotaiServiceImpl.signUp(password);
         }
         if (order.isSelected()) {
-            textArea.append(start + "时刻，开始执行查询订单操作........");
-//            CMaotaiServiceImpl.getOrderStatus(password);
+            println(start + "，开始执行查询订单操作........");
+            CMaotaiServiceImpl.getOrderStatus(password);
         }
         String end = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
-        this.textArea.append(end + "，执行结束.....\n");
-        this.textArea.append(end + "，执行结束.....");
-        this.textArea.append(end + "，执行结束.....");
-        this.textArea.append(end + "，执行结束.....");
-        this.textArea.append(end + "，执行结束.....");
-        this.textArea.append(end + "，执行结束.....");
-        this.textArea.append(end + "，执行结束.....");
-        this.textArea.append(end + "，执行结束.....");
+        this.println(end);
     }
 
+    public void println(String content) {
+        this.getTextArea().append(content + "\n");
+    }
 
     private void onCancel() {
         System.exit(0);
@@ -109,7 +107,6 @@ public class GUIMain extends JDialog {
         dialog.pack();
         dialog.setVisible(true);
         dialog.setSize(600, 500);
-        System.exit(0);
     }
 
 }
