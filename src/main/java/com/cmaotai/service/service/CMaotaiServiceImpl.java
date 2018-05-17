@@ -46,7 +46,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
             });
         headers.put(HttpHeaders.COOKIE, cookies.values().stream().collect(Collectors.toList()));
         headers.remove(HttpHeaders.USER_AGENT);
-        headers.add(HttpHeaders.USER_AGENT, UA);
+        headers.add(HttpHeaders.USER_AGENT, getUA());
         return headers;
     }
 
