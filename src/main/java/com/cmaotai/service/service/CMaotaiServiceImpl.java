@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import javax.swing.JTextArea;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -193,7 +194,8 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         List<String> WAIT_CONFIRMATION_GOODSMobile = Lists.newArrayList();
         System.out.println("开始查单操作，需要花费一段时间，请等待......");
         mobiles.forEach(s -> {
-            System.out.println("【" + s + "】查单中，剩余【" + num.addAndGet(-1) + "】个");
+            int n = num.addAndGet(-1);
+            System.out.println("【" + s + "】查单中，剩余【" + n + "】个");
             CMaotaiServiceImpl cMaotaiService = new CMaotaiServiceImpl();
             cMaotaiService.loginBefore();
             try {
