@@ -276,6 +276,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
                     System.err.println("最后，手机号【" + s + "】等记失败！");
                 }
             } catch (Exception e) {
+                failMobiles.add(s);
                 System.err.println("手机号【" + s + "】等记异常！" + e.getMessage());
             }
         });
@@ -359,6 +360,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
                     System.err.println("手机号【" + s + "】修改密码失败！");
                 }
             } catch (Exception e) {
+                failMobiles.add(s);
                 System.err.println("手机号【" + s + "】登录异常！" + e.getMessage());
             }
         });
@@ -391,6 +393,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
                     System.err.println("手机号【" + s + "】默认地址添加失败！");
                 }
             } catch (Exception e) {
+                failMobiles.add(s);
                 System.err.println("手机号【" + s + "】登录异常！" + e.getMessage());
             }
         });
@@ -423,6 +426,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
                     System.err.println("手机号【" + s + "】发票添加失败！");
                 }
             } catch (Exception e) {
+                failMobiles.add(s);
                 System.err.println("手机号【" + s + "】异常！" + e.getMessage());
             }
         });
