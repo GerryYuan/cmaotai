@@ -19,7 +19,7 @@ public class CmaotaiStart {
 
     public static void main(String[] args) throws Exception {
         JFrame frame = new JFrame();
-        JPanel panel1 = new JPanel();
+        JPanel njPanel = new JPanel();
         JPanel panel2 = new JPanel();
         JPanel panel3 = new JPanel();
 
@@ -35,14 +35,14 @@ public class CmaotaiStart {
         Font font1 = new Font("SansSerif", Font.BOLD, 30);
         Font font2 = new Font("SansSerif", Font.BOLD, 14);
         Font font3 = new Font("SansSerif", Font.BOLD, 14);
-        frame.add(panel1);
-        panel1.setSize(500, 120);
-        panel1.setBackground(Color.gray);
-        panel1.setLayout(new BorderLayout());
-        panel1.add(label0, BorderLayout.CENTER);
+
+        njPanel.setSize(500, 120);
+        njPanel.setBackground(Color.gray);
+        njPanel.setLayout(new BorderLayout());
+        njPanel.add(label0, BorderLayout.CENTER);
         label0.setFont(font1);
         label0.setForeground(Color.BLACK);
-        frame.add(panel2);
+
         panel2.setSize(300, 200);
         panel2.setLocation(60, 150);
         panel2.setLayout(new GridLayout(5, 2, 30, 20));
@@ -65,14 +65,18 @@ public class CmaotaiStart {
         panel3.setSize(500, 120);
         panel3.setBackground(Color.WHITE);
         panel3.setLayout(new BorderLayout());
-        panel3.add(lable3);
+        panel3.add(lable3, BorderLayout.CENTER);
         lable3.setFont(font1);
         lable3.setForeground(Color.BLACK);
-        frame.add(lable3);
+
+
+        frame.add(njPanel, BorderLayout.NORTH);
+        frame.add(panel2, BorderLayout.CENTER);
+        frame.add(panel3,BorderLayout.SOUTH);
 
         frame.setSize(500, 600);
         frame.setLocation(400, 300);
-        frame.setLayout(null);
+        frame.setLayout(new BorderLayout(3,3));
         frame.setResizable(false);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
