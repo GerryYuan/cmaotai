@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import org.apache.logging.log4j.util.Strings;
+import org.joda.time.DateTime;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.NumberUtils;
@@ -179,8 +180,9 @@ public class CMaotaiServiceImpl implements CMaotaiService {
                 if (cMaotaiService.signup(s, pwd)) {
                     System.out.println("最后，手机号【" + s + "】等记成功！");
                     atomicInteger.addAndGet(1);
+                    String now = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
+                    System.out.println("现在【" + now + "】,休息【" + timer + "】分钟，再继续登记哟！");
                     Thread.sleep(1000 * 60 * timer);
-                    System.out.println("休息【" + timer + "】分钟，在继续登记哟！");
                 } else {
                     failMobiles.add(s);
                     System.err.println("最后，手机号【" + s + "】等记失败！");
