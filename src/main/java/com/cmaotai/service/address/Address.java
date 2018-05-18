@@ -21,6 +21,16 @@ public class Address {
         return CHONGQING_DISTRICTS.get(random(max));
     }
 
+    private static List<String> WUXI_DISTRICTS = Lists
+        .newArrayList("无锡市崇安区", "无锡市梁溪区", "无锡新区", "无锡锡山区", "无锡惠山区");
+
+    private static List<Integer> QTYS = Lists.newArrayList(2, 3, 4, 5, 6);
+
+    public static String getWuXiDistricts() {
+        int max = WUXI_DISTRICTS.size() - 1;
+        return WUXI_DISTRICTS.get(random(max));
+    }
+
     public static List<CMotaiDefaultAddress> chongqingAddress(int num) {
         List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(chongqingDistricts());
         for (; aMapAddressTips.size() < num; ) {
@@ -65,6 +75,11 @@ public class Address {
     public static String getCallName() {
         int max = Mobile.CALL_NAMES.size() - 1;
         return Mobile.CALL_NAMES.get(random(max));
+    }
+
+    public static Integer getQty() {
+        int max = QTYS.size() - 1;
+        return QTYS.get(random(max));
     }
 
     public static int random(int max) {

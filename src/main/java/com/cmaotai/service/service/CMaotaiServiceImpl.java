@@ -120,13 +120,8 @@ public class CMaotaiServiceImpl implements CMaotaiService {
 
     @Override
     public boolean submit(CMotaiDefaultAddress cMotaiDefaultAddress) throws UnsupportedEncodingException {
-        String qty = System.getProperty("qty");
-        int num = 6;
-        if (Strings.isNotBlank(qty)) {
-            num = Integer.valueOf(qty);
-        }
         String action =
-            "action=GrabSingleManager.submit&iid=-1&qty=" + num + "&express=14&timestamp121=" + new Date().getTime()
+            "action=GrabSingleManager.submit&iid=-1&qty=" + Address.getQty() + "&express=14&timestamp121=" + new Date().getTime()
                 + "&sid="
                 + cMotaiDefaultAddress.getSId() + "&remark=" + "&product=" + JSON.toJSONString(new CMotaiProduct());
         ResponseEntity<String> response = post(action, headers);
