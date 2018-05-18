@@ -4,7 +4,26 @@ import com.google.common.collect.Lists;
 import java.util.List;
 public class Mobile {
 
-    public static List<String> MOBILES = Lists.newArrayList("15261545703");
+    public static List<String> MOBILES = Lists.newArrayList("15589858761",
+        "17136741186",
+        "17136741176",
+        "17139548591",
+        "17139548561",
+        "17131949109",
+        "17131949110",
+        "17131949112",
+        "17131949113",
+        "17131949114",
+        "17131949115",
+        "17131949116",
+        "17131949117",
+        "17131949118",
+        "17131949119",
+        "17131949297",
+        "17131949298",
+        "17131949299",
+        "17131949300",
+        "17131949311");
 
     public static List<String> CALL_NAMES = Lists
         .newArrayList("马鑫", "黄凯", "李伟", "李斯", "李翔", "李达", "李欣", "李梅", "刘岳", "周啊娜", "刘玉", "李凤扬", "田文", "倪婧", "解晶", "谢岩",
