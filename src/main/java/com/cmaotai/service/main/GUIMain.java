@@ -89,10 +89,7 @@ public class GUIMain extends JDialog {
         textArea.setWrapStyleWord(true);
         outputUI();
         shutdown.addActionListener(e -> {
-            int value = JOptionPane.showConfirmDialog(null, "确定关闭正在执行的操作？");
-            if(value == 0){
-//                newCachedThread.shutdownNow();
-            }
+            JOptionPane.showConfirmDialog(null, "确定关闭正在执行的操作？");
         });
     }
 
@@ -101,20 +98,29 @@ public class GUIMain extends JDialog {
     }
 
     private void invoke() throws IOException {
+        if (!succ) {
+            show("上次操作正在执行");
+            return;
+        }
         String password = new String(pwd.getPassword());
         String start = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
         if (submit.isSelected()) {
+            succ = false;
             System.out.println(start + "，开始执行下单操作........");
             CMaotaiServiceImpl
                 .defaultSignup(password, path.getText(), NumberUtils.parseNumber(timer.getText(), Integer.class));
         }
         if (order.isSelected()) {
+            succ = false;
             System.out.println(start + "，开始执行查询订单操作........");
             CMaotaiServiceImpl.getOrderStatus(password, path.getText());
         }
         String end = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
         System.out.println(end + "，结束");
+        succ = true;
     }
+
+    private boolean succ = true;
 
     private void onCancel() {
         System.exit(0);
