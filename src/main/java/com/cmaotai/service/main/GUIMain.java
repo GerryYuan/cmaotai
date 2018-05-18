@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
@@ -42,6 +43,7 @@ public class GUIMain extends JDialog {
     private JTextField path;
     private JTextField timer;
     private JButton shutdown;
+    private JScrollPane jscrollPane;
     ExecutorService newCachedThread = Executors.newCachedThreadPool();//创建一个缓冲线程池
 
     public GUIMain() {
@@ -79,17 +81,12 @@ public class GUIMain extends JDialog {
                 }
             }
         });
-        clean.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                textArea.setText("");
-            }
-        });
+        clean.addActionListener(e -> textArea.setText(""));
         textArea.setLineWrap(true);//激活自动换行功能
         textArea.setWrapStyleWord(true);
         outputUI();
         shutdown.addActionListener(e -> {
-            JOptionPane.showConfirmDialog(null, "确定关闭正在执行的操作？");
+            show("确定关闭正在执行的操作？");
         });
     }
 
