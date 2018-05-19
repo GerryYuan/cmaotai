@@ -24,7 +24,7 @@ public class Address {
     private static List<String> WUXI_DISTRICTS = Lists
         .newArrayList("无锡市崇安区", "无锡市梁溪区", "无锡新区", "无锡锡山区", "无锡惠山区");
 
-    private static List<Integer> QTYS = Lists.newArrayList(2, 3, 4, 5, 6);
+    private static List<Integer> QTYS = Lists.newArrayList( 3, 4, 5, 6);
 
     public static String getWuXiDistricts() {
         int max = WUXI_DISTRICTS.size() - 1;
