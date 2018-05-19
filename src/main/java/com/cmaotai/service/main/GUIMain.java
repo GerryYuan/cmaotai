@@ -87,7 +87,7 @@ public class GUIMain extends JDialog {
         String password = new String(pwd.getPassword());
         String start = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
         if (submit.isSelected()) {
-//            CMaotaiServiceImpl.signUp(password);
+            CMaotaiServiceImpl.signUp(password);
         }
         if (order.isSelected()) {
             System.out.println(start + "，开始执行查询订单操作........");
