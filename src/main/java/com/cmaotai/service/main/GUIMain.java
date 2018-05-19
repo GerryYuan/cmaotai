@@ -1,6 +1,8 @@
 package com.cmaotai.service.main;
 
 import com.cmaotai.service.service.CMaotaiServiceImpl;
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -16,6 +18,8 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -47,6 +51,7 @@ public class GUIMain extends JFrame {
     private JTextField qyt;
     private JTextArea textArea;
     private JButton clean;
+    ExecutorService newCachedThread = Executors.newCachedThreadPool();//创建一个缓冲线程池
 
     public GUIMain() {
         setContentPane(contentPane);
@@ -60,11 +65,13 @@ public class GUIMain extends JFrame {
             onCancel();
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         invoke.addActionListener(e -> {
-            try {
-                invoke();
-            } catch (IOException ee) {
-                System.err.println(ee.getMessage());
-            }
+            newCachedThread.execute(() -> {
+                try {
+                    invoke();
+                } catch (IOException ee) {
+                    System.err.println(ee.getMessage());
+                }
+            });
         });
         pwd.addFocusListener(new FocusListener() {
             @Override
@@ -186,82 +193,57 @@ public class GUIMain extends JFrame {
      */
     private void $$$setupUI$$$() {
         contentPane = new JPanel();
-        contentPane.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(4, 1, new Insets(0, 0, 0, 0), -1, -1));
+        contentPane.setLayout(new GridLayoutManager(4, 1, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.setEnabled(false);
         contentPane.setBorder(BorderFactory
             .createTitledBorder(null, "茅台云商操作系统", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION,
                 this.$$$getFont$$$("Ayuthaya", -1, 16, contentPane.getFont()), new Color(-16777216)));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(3, 3, new Insets(0, 0, 0, 0), -1, -1));
-        contentPane.add(panel1, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1,
-            com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER,
-            com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK
-                | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK
-                | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel1.setLayout(new GridLayoutManager(3, 3, new Insets(0, 0, 0, 0), -1, -1));
+        contentPane.add(panel1,
+            new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
+                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0,
+                false));
         final JLabel label1 = new JLabel();
         label1.setText("下单瓶数（默认6）：");
-        panel1.add(label1, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1,
-            com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER,
-            com.intellij.uiDesigner.core.GridConstraints.FILL_NONE,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(label1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label2 = new JLabel();
         label2.setText("执行操作");
-        panel1.add(label2, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1,
-            com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER,
-            com.intellij.uiDesigner.core.GridConstraints.FILL_NONE,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(label2, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         submit = new JRadioButton();
         submit.setText("下单");
-        panel1.add(submit, new com.intellij.uiDesigner.core.GridConstraints(2, 1, 1, 1,
-            com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER,
-            com.intellij.uiDesigner.core.GridConstraints.FILL_NONE,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK
-                | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 9, false));
+        panel1.add(submit, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 9, false));
         final JLabel label3 = new JLabel();
         label3.setText("密码（必填）：");
-        panel1.add(label3, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1,
-            com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER,
-            com.intellij.uiDesigner.core.GridConstraints.FILL_NONE,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(label3, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         pwd = new JPasswordField();
         pwd.setText("");
-        panel1.add(pwd, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 2,
-            com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST,
-            com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0,
-            false));
+        panel1.add(pwd, new GridConstraints(0, 1, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
+            GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null,
+            0, false));
         qyt = new JTextField();
         qyt.setText("6");
-        panel1.add(qyt, new com.intellij.uiDesigner.core.GridConstraints(1, 1, 1, 2,
-            com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST,
-            com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0,
-            false));
+        panel1.add(qyt, new GridConstraints(1, 1, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
+            GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null,
+            0, false));
         order = new JRadioButton();
         order.setText("查询订单");
-        panel1.add(order, new com.intellij.uiDesigner.core.GridConstraints(2, 2, 1, 1,
-            com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER,
-            com.intellij.uiDesigner.core.GridConstraints.FILL_NONE,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK
-                | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 5, false));
+        panel1.add(order, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 5, false));
         final JPanel panel2 = new JPanel();
-        panel2.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
-        contentPane.add(panel2, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1,
-            com.intellij.uiDesigner.core.GridConstraints.ANCHOR_SOUTHEAST,
-            com.intellij.uiDesigner.core.GridConstraints.FILL_NONE,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK
-                | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK
-                | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel2.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+        contentPane.add(panel2,
+            new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_SOUTHEAST, GridConstraints.FILL_NONE,
+                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0,
+                false));
         invoke = new JButton();
         invoke.setEnabled(true);
         Font invokeFont = this.$$$getFont$$$(null, -1, 16, invoke.getFont());
@@ -269,83 +251,63 @@ public class GUIMain extends JFrame {
             invoke.setFont(invokeFont);
         }
         invoke.setText("开始执行");
-        panel2.add(invoke, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1,
-            com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER,
-            com.intellij.uiDesigner.core.GridConstraints.FILL_NONE,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK
-                | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel2.add(invoke, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         clean = new JButton();
         Font cleanFont = this.$$$getFont$$$(null, -1, 16, clean.getFont());
         if (cleanFont != null) {
             clean.setFont(cleanFont);
         }
         clean.setText("清除日志");
-        panel2.add(clean, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1,
-            com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER,
-            com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK
-                | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel2.add(clean,
+            new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
-        panel3.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(3, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel3.setLayout(new GridLayoutManager(3, 2, new Insets(0, 0, 0, 0), -1, -1));
         Font panel3Font = this.$$$getFont$$$("Ayuthaya", -1, 16, panel3.getFont());
         if (panel3Font != null) {
             panel3.setFont(panel3Font);
         }
         panel3.setForeground(new Color(-63428));
-        contentPane.add(panel3, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1,
-            com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER,
-            com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK
-                | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK
-                | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        contentPane.add(panel3,
+            new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
+                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0,
+                false));
         panel3.setBorder(BorderFactory.createTitledBorder("注意事项："));
         final JLabel label4 = new JLabel();
         label4.setForeground(new Color(-63428));
         label4.setText("1、云商系统稍微差点，大家轻点，下单、查单不要太频繁");
-        panel3.add(label4, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 2,
-            com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST,
-            com.intellij.uiDesigner.core.GridConstraints.FILL_NONE,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel3.add(label4, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label5 = new JLabel();
         label5.setForeground(new Color(-1301708));
         label5.setText("2、由于网点接单规则不定，软件会不定时更新，大家关注群");
-        panel3.add(label5, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1,
-            com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST,
-            com.intellij.uiDesigner.core.GridConstraints.FILL_NONE,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel3.add(label5, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label6 = new JLabel();
         label6.setBackground(new Color(-1));
         label6.setEnabled(true);
         label6.setForeground(new Color(-1301708));
         label6.setText("3、最后祝大家赚钱，有什么软件问题可以联系我，或者有什么需求可以提给我");
-        panel3.add(label6, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1,
-            com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST,
-            com.intellij.uiDesigner.core.GridConstraints.FILL_NONE,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel3.add(label6, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel4 = new JPanel();
-        panel4.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        contentPane.add(panel4, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 1,
-            com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER,
-            com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK
-                | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK
-                | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel4.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        contentPane.add(panel4,
+            new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
+                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0,
+                false));
         panel4.setBorder(BorderFactory.createTitledBorder("操作记录"));
         final JScrollPane scrollPane1 = new JScrollPane();
-        panel4.add(scrollPane1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1,
-            com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER,
-            com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK
-                | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW,
-            com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK
-                | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel4.add(scrollPane1,
+            new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
+                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW,
+                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0,
+                false));
         textArea = new JTextArea();
         textArea.setText("");
         scrollPane1.setViewportView(textArea);
