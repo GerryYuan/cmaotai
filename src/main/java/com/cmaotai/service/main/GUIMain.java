@@ -138,7 +138,7 @@ public class GUIMain extends JFrame {
         Dimension screenSize = kit.getScreenSize(); //获取屏幕的尺寸
         int screenWidth = screenSize.width; //获取屏幕的宽
         int screenHeight = screenSize.height; //获取屏幕的高
-        dialog.setLocation(screenWidth / 2 - windowWidth / 2, screenHeight / 2 - windowHeight / 2);//设置窗口居中显示
+        dialog.setLocation(screenWidth / 4 - windowWidth /4, screenHeight / 4 - windowHeight / 4);//设置窗口居中显示
         dialog.pack();
         dialog.setVisible(true);
         dialog.setSize(600, 500);
