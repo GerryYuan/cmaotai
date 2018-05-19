@@ -225,13 +225,14 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
             .collect(Collectors.toList());
         AtomicInteger atomicInteger = new AtomicInteger(0);
+        AtomicInteger num = new AtomicInteger(mobiles.size());
         List<String> failMobiles = Lists.newArrayList();
         mobiles.forEach(s -> {
             CMaotaiServiceImpl cMaotaiService = new CMaotaiServiceImpl();
             try {
-                System.out.println("开始，登记手机号【" + s + "】");
+                System.out.println("开始下单，手机号【" + s + "】，剩余【" + num.addAndGet(-1) + "】个");
                 if (cMaotaiService.defaultSignup(s, pwd)) {
-                    System.out.println("最后，手机号【" + s + "】等记成功！");
+                    System.out.println("手机号【" + s + "】等记成功！");
                     atomicInteger.addAndGet(1);
                     String now = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
                     System.out.println("现在【" + now + "】,休息【" + timer + "】分钟，再继续登记哟！");
@@ -241,6 +242,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
                     System.err.println("最后，手机号【" + s + "】等记失败！");
                 }
             } catch (Exception e) {
+                failMobiles.add(s);
                 System.err.println("手机号【" + s + "】等记异常！" + e.getMessage());
             }
         });

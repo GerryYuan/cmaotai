@@ -3,8 +3,6 @@ package com.cmaotai.service.main;
 import com.cmaotai.service.service.CMaotaiServiceImpl;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
@@ -17,7 +15,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -30,7 +28,7 @@ import org.apache.logging.log4j.util.Strings;
 import org.joda.time.DateTime;
 import org.springframework.util.NumberUtils;
 
-public class GUIMain extends JDialog {
+public class GUIMain extends JFrame {
 
     private JPanel contentPane;
     private JButton invoke;
@@ -48,7 +46,6 @@ public class GUIMain extends JDialog {
 
     public GUIMain() {
         setContentPane(contentPane);
-        setModal(true);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
