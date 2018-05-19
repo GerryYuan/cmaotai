@@ -157,7 +157,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         return dataResult.isState();
     }
 
-    protected static void signUp(String pwd) throws IOException {
+    public static void signUp(String pwd) throws IOException {
         signUp(pwd, 0);
     }
 
