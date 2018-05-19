@@ -18,6 +18,7 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.swing.BorderFactory;
@@ -48,9 +49,9 @@ public class GUIMain extends JFrame {
     private JRadioButton submit;
     private JRadioButton order;
     private JPasswordField pwd;
-    private JTextField qyt;
     private JTextArea textArea;
     private JButton clean;
+    private JTextField timer;
     ExecutorService newCachedThread = Executors.newCachedThreadPool();//创建一个缓冲线程池
 
     public GUIMain() {
@@ -107,7 +108,7 @@ public class GUIMain extends JFrame {
         if (submit.isSelected()) {
             succ = false;
             System.out.println(start + "，开始执行下单操作........");
-            CMaotaiServiceImpl.signUp(password);
+            CMaotaiServiceImpl.signUp(password, NumberUtils.parseNumber(timer.getText(), Integer.class));
         }
         if (order.isSelected()) {
             succ = false;
@@ -226,11 +227,6 @@ public class GUIMain extends JFrame {
         pwd = new JPasswordField();
         pwd.setText("");
         panel1.add(pwd, new GridConstraints(0, 1, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
-            GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null,
-            0, false));
-        qyt = new JTextField();
-        qyt.setText("6");
-        panel1.add(qyt, new GridConstraints(1, 1, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
             GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null,
             0, false));
         order = new JRadioButton();

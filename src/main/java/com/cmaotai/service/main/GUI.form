@@ -21,14 +21,6 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="909f3" class="javax.swing.JLabel">
-            <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="下单瓶数（默认6）："/>
-            </properties>
-          </component>
           <component id="f74fd" class="javax.swing.JLabel">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
@@ -63,22 +55,30 @@
               <text value=""/>
             </properties>
           </component>
-          <component id="8e954" class="javax.swing.JTextField" binding="qyt">
-            <constraints>
-              <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties>
-              <text value="6"/>
-            </properties>
-          </component>
           <component id="6f1ab" class="javax.swing.JRadioButton" binding="order">
             <constraints>
               <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="5" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="查询订单"/>
+            </properties>
+          </component>
+          <component id="f9488" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="下单时间间隔（分钟）"/>
+            </properties>
+          </component>
+          <component id="f43c2" class="javax.swing.JTextField" binding="timer">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <text value="2"/>
             </properties>
           </component>
         </children>
