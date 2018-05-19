@@ -13,11 +13,8 @@ import com.cmaotai.service.model.DataResult;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.io.Files;
-import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -27,11 +24,8 @@ import org.apache.logging.log4j.util.Strings;
 import org.joda.time.DateTime;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.NumberUtils;
 
 public class CMaotaiServiceImpl implements CMaotaiService {
-
-    public static long SUBMITTIMES = 1;
 
     private HttpHeaders headers = new HttpHeaders();
 
@@ -158,12 +152,12 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         return dataResult.isState();
     }
 
-    protected static void signUp(String pwd) throws IOException {
+    public static void signUp(String pwd) throws IOException {
         signUp(pwd, 0);
     }
 
     protected static void signUp(String pwd, Integer timer) throws IOException {
-        List<String> mobiles = Mobile.MOBILES.stream()
+        List<String> mobiles =  Mobile.MOBILES.stream()
             .filter(Strings::isNotBlank).collect(
                 Collectors.toList());
         AtomicInteger atomicInteger = new AtomicInteger(0);
@@ -195,17 +189,21 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         }
     }
 
-    protected static void getOrderStatus(String pwd) throws IOException {
+    public static void getOrderStatus(String pwd) throws IOException {
         List<String> mobiles = Mobile.MOBILES.stream()
             .filter(Strings::isNotBlank).collect(
                 Collectors.toList());
         AtomicInteger WAIT_PAY = new AtomicInteger(0);
         AtomicInteger WAIT_DELIVER_GOODS = new AtomicInteger(0);
         AtomicInteger WAIT_CONFIRMATION_GOODS = new AtomicInteger(0);
+        AtomicInteger num = new AtomicInteger(mobiles.size());
         List<String> WAIT_PAYMobile = Lists.newArrayList();
         List<String> WAIT_DELIVER_GOODSMobile = Lists.newArrayList();
         List<String> WAIT_CONFIRMATION_GOODSMobile = Lists.newArrayList();
+        System.out.println("开始查单操作，需要花费一段时间，请等待......");
         mobiles.forEach(s -> {
+            int n = num.addAndGet(-1);
+            System.out.println("【" + s + "】查单中，剩余【" + n + "】个");
             CMaotaiServiceImpl cMaotaiService = new CMaotaiServiceImpl();
             cMaotaiService.loginBefore();
             try {
