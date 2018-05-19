@@ -20,6 +20,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -32,9 +33,11 @@ import javax.swing.KeyStroke;
 import javax.swing.border.TitledBorder;
 import org.apache.logging.log4j.util.Strings;
 import org.joda.time.DateTime;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.util.NumberUtils;
 
-public class GUIMain extends JDialog {
+@SpringBootApplication
+public class GUIMain extends JFrame {
 
     private JPanel contentPane;
     private JButton invoke;
@@ -47,7 +50,6 @@ public class GUIMain extends JDialog {
 
     public GUIMain() {
         setContentPane(contentPane);
-        setModal(true);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -78,12 +80,7 @@ public class GUIMain extends JDialog {
                 }
             }
         });
-        clean.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                textArea.setText("");
-            }
-        });
+        clean.addActionListener(e -> textArea.setText(""));
         textArea.setLineWrap(true);//激活自动换行功能
         textArea.setWrapStyleWord(true);
         outputUI();
@@ -129,7 +126,7 @@ public class GUIMain extends JDialog {
         Dimension screenSize = kit.getScreenSize(); //获取屏幕的尺寸
         int screenWidth = screenSize.width; //获取屏幕的宽
         int screenHeight = screenSize.height; //获取屏幕的高
-        dialog.setLocation(screenWidth / 2 - windowWidth / 2, screenHeight / 2 - windowHeight / 2);//设置窗口居中显示
+        dialog.setLocation(screenWidth / 4 - windowWidth / 4, screenHeight / 4 - windowHeight / 4);//设置窗口居中显示
         dialog.pack();
         dialog.setVisible(true);
         dialog.setSize(600, 500);
@@ -151,6 +148,28 @@ public class GUIMain extends JDialog {
         });
         System.setOut(myOut);
         System.setErr(myOut);
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
+        if (currentFont == null) {
+            return null;
+        }
+        String resultName;
+        if (fontName == null) {
+            resultName = currentFont.getName();
+        } else {
+            Font testFont = new Font(fontName, Font.PLAIN, 10);
+            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
+                resultName = fontName;
+            } else {
+                resultName = currentFont.getName();
+            }
+        }
+        return new Font(resultName, style >= 0 ? style : currentFont.getStyle(),
+            size >= 0 ? size : currentFont.getSize());
     }
 
     {
@@ -330,28 +349,6 @@ public class GUIMain extends JDialog {
         textArea = new JTextArea();
         textArea.setText("");
         scrollPane1.setViewportView(textArea);
-    }
-
-    /**
-     * @noinspection ALL
-     */
-    private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
-        if (currentFont == null) {
-            return null;
-        }
-        String resultName;
-        if (fontName == null) {
-            resultName = currentFont.getName();
-        } else {
-            Font testFont = new Font(fontName, Font.PLAIN, 10);
-            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
-                resultName = fontName;
-            } else {
-                resultName = currentFont.getName();
-            }
-        }
-        return new Font(resultName, style >= 0 ? style : currentFont.getStyle(),
-            size >= 0 ? size : currentFont.getSize());
     }
 
     /**
