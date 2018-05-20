@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import javax.swing.JTextArea;
+import org.apache.commons.math3.analysis.function.Add;
 import org.apache.logging.log4j.util.Strings;
 import org.joda.time.DateTime;
 import org.springframework.http.HttpHeaders;
@@ -163,7 +164,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         }
         CMaotaiList cMaotaiList = cMaotaiLists.stream().filter(s -> s.getOrderStatus() == 99)
             .findFirst().orElse(null);
-        if(cMaotaiList == null) {
+        if (cMaotaiList == null) {
             cMaotaiList = cMaotaiLists.stream().filter(s -> s.getOrderStatus() == 6)
                 .findFirst().orElse(null);
         }
@@ -172,13 +173,13 @@ public class CMaotaiServiceImpl implements CMaotaiService {
 
     @Override
     public boolean cancel() throws Exception {
-        CMaotaiList cMaotaiList  = getList();
+        CMaotaiList cMaotaiList = getList();
         if (cMaotaiList == null) {
             System.out.println("取消失败！未查到相关下单信息");
             return false;
         }
-        if(cMaotaiList.getOrderStatus() == 6){
-             return cancel(cMaotaiList.getId());
+        if (cMaotaiList.getOrderStatus() == 6) {
+            return cancel(cMaotaiList.getId());
         }
         String action = "action=GrabSingleManager.cancel&id=" + cMaotaiList.getId() + "&pid=" + cMaotaiList.getGoodsId()
             + "&timestamp121=" + new Date().getTime();
@@ -224,15 +225,10 @@ public class CMaotaiServiceImpl implements CMaotaiService {
 
     @Override
     public boolean defaultSubmit(CMotaiDefaultAddress cMotaiDefaultAddress) throws Exception {
-        int qty = 6;
-        String num = System.getProperty("qty");
-        if (Strings.isNotBlank(num)) {
-            qty = Integer.valueOf(num);
-        }
         String action =
-            "action=GrabSingleManager.submit&iid=-1&qty=" + qty + "&express=14&timestamp121=" + new Date().getTime()
-                + "&sid="
-                + cMotaiDefaultAddress.getSId() + "&remark=" + "&product=" + JSON.toJSONString(new CMotaiProduct());
+            "action=GrabSingleManager.submit&iid=-1&qty=" + Address.getQty() + "&express=14&timestamp121=" + new Date()
+                .getTime() + "&sid=" + cMotaiDefaultAddress.getSId() + "&remark=" + "&product=" + JSON
+                .toJSONString(new CMotaiProduct());
         ResponseEntity<String> response = post(action, headers);
         DataResult<Integer> result = JSON.parseObject(response.getBody(), new TypeReference<DataResult<Integer>>() {
         });
