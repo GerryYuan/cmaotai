@@ -8,6 +8,7 @@ import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
+import lombok.Getter;
 import org.apache.logging.log4j.util.Strings;
 
 public class Address {
@@ -20,6 +21,24 @@ public class Address {
 
     private static List<String> WUXI_DISTRICTS = Lists
         .newArrayList("无锡市崇安区", "无锡市梁溪区", "无锡新区", "无锡锡山区", "无锡惠山区");
+
+    @Getter
+    private static String qty;
+
+    public static void initQty(Integer start, Integer end) {
+        if (start == null) {
+            start = 6;
+        }
+        if (end == null) {
+            end = 6;
+        }
+        List<String> qtys = Lists.newArrayList();
+        for (int i = start; i <= end; i++) {
+            qtys.add(i + "");
+        }
+        int max = qtys.size() - 1;
+        qty =  qtys.get(random(max));
+    }
 
     public static String getGuiYangDistricts() {
         int max = GUIYANG_DISTRICTS.size() - 1;
