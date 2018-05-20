@@ -58,7 +58,9 @@ public interface CMaotaiService {
 
     CMaotaiList getList() throws Exception;
 
-    boolean cancel(CMaotaiList cMaotaiList) throws Exception;
+    boolean cancel() throws Exception;
+
+    boolean cancel(Integer id) throws Exception;
 
     RestTemplate restTemplate = new RestTemplate();
 

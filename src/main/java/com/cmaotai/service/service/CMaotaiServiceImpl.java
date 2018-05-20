@@ -161,15 +161,24 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         if (cMaotaiLists == null) {
             return null;
         }
-        return cMaotaiLists.stream().filter(s -> s.getOrderStatus() == 99)
+        CMaotaiList cMaotaiList = cMaotaiLists.stream().filter(s -> s.getOrderStatus() == 99)
             .findFirst().orElse(null);
+        if(cMaotaiList == null) {
+            cMaotaiList = cMaotaiLists.stream().filter(s -> s.getOrderStatus() == 6)
+                .findFirst().orElse(null);
+        }
+        return cMaotaiList;
     }
 
     @Override
-    public boolean cancel(CMaotaiList cMaotaiList) throws Exception {
+    public boolean cancel() throws Exception {
+        CMaotaiList cMaotaiList  = getList();
         if (cMaotaiList == null) {
             System.out.println("取消失败！未查到相关下单信息");
             return false;
+        }
+        if(cMaotaiList.getOrderStatus() == 6){
+             return cancel(cMaotaiList.getId());
         }
         String action = "action=GrabSingleManager.cancel&id=" + cMaotaiList.getId() + "&pid=" + cMaotaiList.getGoodsId()
             + "&timestamp121=" + new Date().getTime();
@@ -185,6 +194,30 @@ public class CMaotaiServiceImpl implements CMaotaiService {
             });
         if (returns.getCount() != 1) {
             throw new Exception("取消失败！");
+        }
+        return true;
+    }
+
+    @Override
+    public boolean cancel(Integer id) throws Exception {
+        if (id == null) {
+            System.out.println("取消失败！未查到相关下单信息");
+            return false;
+        }
+        String action = "action=GrabSingleManager.cancel&id=" + id + "&pid=391&timestamp121=" + new Date().getTime();
+        ResponseEntity<String> response = post(action, headers);
+        DataResult<String> dataResult = JSON.parseObject(response.getBody(), new TypeReference<DataResult<String>>() {
+        });
+        if (!dataResult.isState()) {
+            throw new Exception("取消失败！");
+        }
+        headers = parseHeader(response.getHeaders());
+        CMaotaiReturn<CMaotaiList> returns = JSON
+            .parseObject(dataResult.getData(), new TypeReference<CMaotaiReturn<CMaotaiList>>() {
+            });
+        if (returns.getCount() != 1) {
+            System.out.println("取消失败，id+1继续尝试");
+            return cancel(id + 1);
         }
         return true;
     }
@@ -495,7 +528,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
             cMaotaiService.loginBefore();
             try {
                 cMaotaiService.login(s, pwd);
-                if (cMaotaiService.cancel(cMaotaiService.getList())) {
+                if (cMaotaiService.cancel()) {
                     succ.addAndGet(1);
                     System.out.println("手机号【" + s + "】修复成功!");
                 } else {
