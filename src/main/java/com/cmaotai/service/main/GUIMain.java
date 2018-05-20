@@ -368,6 +368,7 @@ public class GUIMain extends JFrame {
         ButtonGroup buttonGroup;
         buttonGroup = new ButtonGroup();
         buttonGroup.add(order);
+        buttonGroup.add(cancel);
         buttonGroup.add(submit);
     }
 
