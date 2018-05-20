@@ -96,7 +96,7 @@
               </grid>
             </constraints>
             <properties>
-              <text value="2"/>
+              <text value="0"/>
             </properties>
           </component>
         </children>
