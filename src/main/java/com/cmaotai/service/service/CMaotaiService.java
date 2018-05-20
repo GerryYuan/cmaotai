@@ -39,7 +39,7 @@ public interface CMaotaiService {
 
     boolean changePassword(String oldPwd, String newPwd);
 
-    boolean addDefaultAddress();
+    boolean addDefaultAddress(String from);
 
     RestTemplate restTemplate = new RestTemplate();
 

@@ -13,6 +13,9 @@ import org.apache.logging.log4j.util.Strings;
 
 public class Address {
 
+    public static String GUIYANG = "guiyang";
+    public static String WUXI = "wuxi";
+
     private static List<CMotaiDefaultAddress> ADDRESS = Lists.newArrayList();
 
     private static List<String> GUIYANG_DISTRICTS = Lists
@@ -106,9 +109,9 @@ public class Address {
         if (Strings.isBlank(from)) {
             return getGuiYangAddress();
         }
-        if ("guiyang".equals(from)) {
+        if (GUIYANG.equals(from)) {
             return getGuiYangAddress();
-        } else if ("wuxi".equals(from)) {
+        } else if (WUXI.equals(from)) {
             return getWuXiAddress();
         }
         return getGuiYangAddress();

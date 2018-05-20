@@ -133,20 +133,20 @@
               <text value="地址库："/>
             </properties>
           </component>
-          <component id="8e9a3" class="javax.swing.JRadioButton" binding="guiyang">
-            <constraints>
-              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="贵阳"/>
-            </properties>
-          </component>
           <component id="633af" class="javax.swing.JRadioButton" binding="address">
             <constraints>
               <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="添加默认地址"/>
+            </properties>
+          </component>
+          <component id="8e9a3" class="javax.swing.JRadioButton" binding="guiyang">
+            <constraints>
+              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="贵阳"/>
             </properties>
           </component>
         </children>
