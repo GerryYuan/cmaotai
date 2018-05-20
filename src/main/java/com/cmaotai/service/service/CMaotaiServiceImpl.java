@@ -249,7 +249,6 @@ public class CMaotaiServiceImpl implements CMaotaiService {
             cMaotaiService.loginBefore();
             try {
                 cMaotaiService.login(s, pwd);
-                cMaotaiService.isLogin();
                 if (cMaotaiService.changePassword(pwd, newPwd)) {
                     succ.addAndGet(1);
                     System.out.println("手机号【" + s + "】修改密码成功!");
