@@ -8,8 +8,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Insets;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
@@ -23,7 +21,6 @@ import java.util.concurrent.Executors;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -38,7 +35,6 @@ import javax.swing.border.TitledBorder;
 import org.apache.logging.log4j.util.Strings;
 import org.joda.time.DateTime;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.util.NumberUtils;
 
 @SpringBootApplication
 public class GUIMain extends JFrame {
@@ -107,7 +103,7 @@ public class GUIMain extends JFrame {
         if (submit.isSelected()) {
             succ = false;
             System.out.println(start + "，开始执行下单操作........");
-            CMaotaiServiceImpl.signUp(password);
+            CMaotaiServiceImpl.signUp(password,1);
         }
         if (order.isSelected()) {
             succ = false;
