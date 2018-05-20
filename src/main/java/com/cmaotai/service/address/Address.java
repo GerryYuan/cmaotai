@@ -40,9 +40,12 @@ public class Address {
             qtys.add(i + "");
         }
         int max = qtys.size() - 1;
-        qty =  qtys.get(random(max));
+        if (max == 0) {
+            qty = qtys.get(max);
+        } else {
+            qty = qtys.get(random(max));
+        }
     }
-
 
     public static String getWuXiDistricts() {
         int max = WUXI_DISTRICTS.size() - 1;
