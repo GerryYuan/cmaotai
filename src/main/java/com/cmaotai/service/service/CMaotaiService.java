@@ -1,6 +1,7 @@
 package com.cmaotai.service.service;
 
 import com.cmaotai.service.address.Address;
+import com.cmaotai.service.list.CMaotaiList;
 import com.cmaotai.service.mobile.Invoice;
 import com.cmaotai.service.model.CMaotaiOrderStatus;
 import com.cmaotai.service.model.CMotaiDefaultAddress;
@@ -54,6 +55,10 @@ public interface CMaotaiService {
     int getInvoiceId() throws Exception;
 
     boolean createInvioceInfo() throws Exception;
+
+    CMaotaiList getList() throws Exception;
+
+    boolean cancel(CMaotaiList cMaotaiList) throws Exception;
 
     RestTemplate restTemplate = new RestTemplate();
 

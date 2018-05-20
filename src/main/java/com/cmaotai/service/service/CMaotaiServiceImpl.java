@@ -3,6 +3,8 @@ package com.cmaotai.service.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.cmaotai.service.address.Address;
+import com.cmaotai.service.list.CMaotaiList;
+import com.cmaotai.service.list.CMaotaiReturn;
 import com.cmaotai.service.mobile.Invoice;
 import com.cmaotai.service.mobile.Mobile;
 import com.cmaotai.service.model.CMaotaiOrderStatus;
@@ -137,6 +139,52 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         });
         if (!dataResult.isState()) {
             throw new Exception("添加发票失败！");
+        }
+        return true;
+    }
+
+    @Override
+    public CMaotaiList getList() throws Exception {
+        String action =
+            "action=GrabSingleManager.getList&status=-1&index=1&size=10&timestamp121=" + new Date().getTime();
+        ResponseEntity<String> response = post(action, headers);
+        DataResult<String> dataResult = JSON.parseObject(response.getBody(), new TypeReference<DataResult<String>>() {
+        });
+        if (!dataResult.isState()) {
+            throw new Exception("获取下单列表失败！");
+        }
+        headers = parseHeader(response.getHeaders());
+        CMaotaiReturn<CMaotaiList> returns = JSON
+            .parseObject(dataResult.getData(), new TypeReference<CMaotaiReturn<CMaotaiList>>() {
+            });
+        List<CMaotaiList> cMaotaiLists = returns.getData().getData();
+        if (cMaotaiLists == null) {
+            return null;
+        }
+        return cMaotaiLists.stream().filter(s -> s.getOrderStatus() == 99)
+            .findFirst().orElse(null);
+    }
+
+    @Override
+    public boolean cancel(CMaotaiList cMaotaiList) throws Exception {
+        if (cMaotaiList == null) {
+            System.out.println("取消失败！未查到相关下单信息");
+            return false;
+        }
+        String action = "action=GrabSingleManager.cancel&id=" + cMaotaiList.getId() + "&pid=" + cMaotaiList.getGoodsId()
+            + "&timestamp121=" + new Date().getTime();
+        ResponseEntity<String> response = post(action, headers);
+        DataResult<String> dataResult = JSON.parseObject(response.getBody(), new TypeReference<DataResult<String>>() {
+        });
+        if (!dataResult.isState()) {
+            throw new Exception("取消失败！");
+        }
+        headers = parseHeader(response.getHeaders());
+        CMaotaiReturn<CMaotaiList> returns = JSON
+            .parseObject(dataResult.getData(), new TypeReference<CMaotaiReturn<CMaotaiList>>() {
+            });
+        if (returns.getCount() != 1) {
+            throw new Exception("取消失败！");
         }
         return true;
     }
@@ -433,6 +481,35 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         System.out.println("添加结果：总添加【" + mobiles.size() + "】，成功【" + succ.get() + "】,失败【" + failMobiles.size() + "】");
         if (failMobiles.size() > 0) {
             System.out.println("添加失败的手机号：" + failMobiles);
+        }
+    }
+
+    public static void cancel(String pwd, String path) throws IOException {
+        List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
+            .filter(Strings::isNotBlank).collect(
+                Collectors.toList());
+        AtomicInteger succ = new AtomicInteger(0);
+        List<String> failMobiles = Lists.newArrayList();
+        mobiles.forEach(s -> {
+            CMaotaiServiceImpl cMaotaiService = new CMaotaiServiceImpl();
+            cMaotaiService.loginBefore();
+            try {
+                cMaotaiService.login(s, pwd);
+                if (cMaotaiService.cancel(cMaotaiService.getList())) {
+                    succ.addAndGet(1);
+                    System.out.println("手机号【" + s + "】修复成功!");
+                } else {
+                    failMobiles.add(s);
+                    System.err.println("手机号【" + s + "】修复失败！");
+                }
+            } catch (Exception e) {
+                failMobiles.add(s);
+                System.err.println("手机号【" + s + "】异常！" + e.getMessage());
+            }
+        });
+        System.out.println("修复结果：总修复【" + mobiles.size() + "】，成功【" + succ.get() + "】,失败【" + failMobiles.size() + "】");
+        if (failMobiles.size() > 0) {
+            System.out.println("修复失败的手机号：" + failMobiles);
         }
     }
 
