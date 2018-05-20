@@ -135,8 +135,8 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     }
 
     @Override
-    public boolean addDefaultAddress() {
-        CMotaiDefaultAddress address = Address.getAddress("guiyang");
+    public boolean addDefaultAddress(String from) {
+        CMotaiDefaultAddress address = Address.getAddress(from);
         String action =
             "action=AddressManager.add&provinceId=" + address.getProvinceId()
                 + "&cityId=" + address.getCityId() + "&districtsId=" +
@@ -266,7 +266,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         }
     }
 
-    protected static void addDefaultAddress(String pwd) throws IOException {
+    public static void addDefaultAddress(String pwd, String from) throws IOException {
         List<String> mobiles = Mobile.MOBILES.stream()
             .filter(Strings::isNotBlank).collect(Collectors.toList());
         List<String> failMobiles = Lists.newArrayList();
@@ -276,7 +276,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
             cMaotaiService.loginBefore();
             try {
                 cMaotaiService.login(s, pwd);
-                if (cMaotaiService.addDefaultAddress()) {
+                if (cMaotaiService.addDefaultAddress(from)) {
                     succ.addAndGet(1);
                     System.out.println("手机号【" + s + "】默认地址添加成功!");
                 } else {
