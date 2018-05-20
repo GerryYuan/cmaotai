@@ -345,6 +345,7 @@ public class GUIMain extends JFrame {
         scrollPane1.setViewportView(textArea);
         ButtonGroup buttonGroup;
         buttonGroup = new ButtonGroup();
+        buttonGroup.add(submit);
         buttonGroup.add(order);
         buttonGroup.add(changePwd);
     }

@@ -227,6 +227,7 @@
   </grid>
   <buttonGroups>
     <group name="invokeGroup">
+      <member id="7f060"/>
       <member id="48d82"/>
       <member id="3451f"/>
     </group>
