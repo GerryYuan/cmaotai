@@ -53,6 +53,8 @@ public class GUIMain extends JFrame {
     private JTextField timer;
     private JRadioButton changePwd;
     private JPasswordField newPwd;
+    private JRadioButton guiyang;
+    private JRadioButton address;
     ExecutorService newCachedThread = Executors.newCachedThreadPool();//创建一个缓冲线程池
 
     public GUIMain() {
@@ -122,6 +124,12 @@ public class GUIMain extends JFrame {
             succ = false;
             System.out.println(start + "，开始执行修改密码操作........");
             CMaotaiServiceImpl.changePwd(password, new String(newPwd.getPassword()));
+        }
+
+        if(guiyang.isSelected()){
+            succ = false;
+            System.out.println(start + "，开始执行添加默认地址操作........");
+            CMaotaiServiceImpl.addDefaultAddress(password);
         }
         String end = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
         System.out.println(end + "，结束");
