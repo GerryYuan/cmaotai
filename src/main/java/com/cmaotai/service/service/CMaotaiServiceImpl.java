@@ -238,7 +238,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         System.out.println("待确认收货：" + WAIT_CONFIRMATION_GOODSMobile);
     }
 
-    protected static void changePwd(String pwd, String newPwd) throws IOException {
+    public static void changePwd(String pwd, String newPwd) throws IOException {
         List<String> mobiles = Mobile.MOBILES.stream()
             .filter(Strings::isNotBlank).collect(
                 Collectors.toList());
