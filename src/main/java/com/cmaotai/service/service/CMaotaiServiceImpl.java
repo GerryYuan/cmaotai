@@ -161,7 +161,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         signUp(pwd, 0);
     }
 
-    protected static void signUp(String pwd, Integer timer) throws IOException {
+    public static void signUp(String pwd, Integer timer) throws IOException {
         List<String> mobiles =  Mobile.MOBILES.stream()
             .filter(Strings::isNotBlank).collect(
                 Collectors.toList());
