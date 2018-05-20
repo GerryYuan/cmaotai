@@ -150,7 +150,7 @@ public class GUIMain extends JFrame {
         dialog.setLocation(screenWidth / 4 - windowWidth / 4, screenHeight / 4 - windowHeight / 4);//设置窗口居中显示
         dialog.pack();
         dialog.setVisible(true);
-        dialog.setSize(600, 500);
+//        dialog.setSize(600, 500);
     }
 
     protected void outputUI() {
