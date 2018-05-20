@@ -51,6 +51,7 @@ public class GUIMain extends JFrame {
     private JTextField qyt;
     private JTextArea textArea;
     private JButton clean;
+    private JTextField timer;
     ExecutorService newCachedThread = Executors.newCachedThreadPool();//创建一个缓冲线程池
 
     public GUIMain() {
@@ -107,7 +108,7 @@ public class GUIMain extends JFrame {
         if (submit.isSelected()) {
             succ = false;
             System.out.println(start + "，开始执行下单操作........");
-            CMaotaiServiceImpl.signUp(password);
+            CMaotaiServiceImpl.signUp(password, NumberUtils.parseNumber(timer.getText(), Integer.class));
         }
         if (order.isSelected()) {
             succ = false;
