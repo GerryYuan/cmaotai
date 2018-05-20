@@ -23,7 +23,7 @@ public class Address {
         .newArrayList("无锡市崇安区", "无锡市梁溪区", "无锡新区", "无锡锡山区", "无锡惠山区");
 
     private static List<String> ZUNYI_DISTRICTS = Lists
-        .newArrayList("红花岗区石龙路", "红花岗区银河北路", "汇川区天津路", "汇川区珠海路", "贵州省遵义市汇川区南京路","遵义市红花岗区南宫山湘江大道");
+        .newArrayList("红花岗区石龙路", "红花岗区银河北路", "汇川区天津路", "汇川区珠海路", "贵州省遵义市汇川区南京路", "遵义市红花岗区南宫山湘江大道");
 
     @Getter
     private static String qty;
@@ -40,7 +40,11 @@ public class Address {
             qtys.add(i + "");
         }
         int max = qtys.size() - 1;
-        qty =  qtys.get(random(max));
+        if (max == 0) {
+            qty = qtys.get(max);
+        } else {
+            qty = qtys.get(random(max));
+        }
     }
 
     public static String getGuiYangDistricts() {
@@ -138,7 +142,7 @@ public class Address {
             return getGuiYangAddress();
         } else if ("wuxi".equals(from)) {
             return getWuXiAddress();
-        } else if("zunyi".equals(from)){
+        } else if ("zunyi".equals(from)) {
             return getZunYiAddress();
         }
         return getGuiYangAddress();

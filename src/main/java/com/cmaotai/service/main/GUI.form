@@ -37,14 +37,6 @@
               <text value="执行操作："/>
             </properties>
           </component>
-          <component id="39fb1" class="javax.swing.JRadioButton" binding="submit">
-            <constraints>
-              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="9" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="下单"/>
-            </properties>
-          </component>
           <component id="2f087" class="javax.swing.JLabel">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
@@ -131,10 +123,22 @@
           </component>
           <component id="8da31" class="javax.swing.JRadioButton" binding="cancel">
             <constraints>
-              <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="158" height="26"/>
+              </grid>
             </constraints>
             <properties>
               <text value="下单不了"/>
+            </properties>
+          </component>
+          <component id="24a37" class="javax.swing.JRadioButton" binding="submit">
+            <constraints>
+              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="158" height="26"/>
+              </grid>
+            </constraints>
+            <properties>
+              <text value="下单"/>
             </properties>
           </component>
         </children>
@@ -252,4 +256,11 @@
       </grid>
     </children>
   </grid>
+  <buttonGroups>
+    <group name="invokeGroup">
+      <member id="6f1ab"/>
+      <member id="8da31"/>
+      <member id="24a37"/>
+    </group>
+  </buttonGroups>
 </form>

@@ -4,6 +4,7 @@ import com.cmaotai.service.address.Address;
 import com.cmaotai.service.service.CMaotaiServiceImpl;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -20,6 +21,7 @@ import java.io.PrintStream;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -227,11 +229,6 @@ public class GUIMain extends JFrame {
         label2.setText("执行操作：");
         panel1.add(label2, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        submit = new JRadioButton();
-        submit.setText("下单");
-        panel1.add(submit, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 9, false));
         final JLabel label3 = new JLabel();
         label3.setText("密码（必填）：");
         panel1.add(label3, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
@@ -279,7 +276,12 @@ public class GUIMain extends JFrame {
         cancel.setText("下单不了");
         panel1.add(cancel, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+            GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(158, 26), null, 0, false));
+        submit = new JRadioButton();
+        submit.setText("下单");
+        panel1.add(submit, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+            GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(158, 26), null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel2,
@@ -363,6 +365,10 @@ public class GUIMain extends JFrame {
         textArea = new JTextArea();
         textArea.setText("");
         jscrollPane.setViewportView(textArea);
+        ButtonGroup buttonGroup;
+        buttonGroup = new ButtonGroup();
+        buttonGroup.add(order);
+        buttonGroup.add(submit);
     }
 
     /**
