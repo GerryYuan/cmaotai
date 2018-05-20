@@ -128,7 +128,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         String action =
             "action=UserManager.ChangePwd&newPassword=" + newPwd + "&oldPassword=" + oldPwd + "&timestamp121="
                 + new Date().getTime();
-        ResponseEntity<String> response = post(action, headers);
+        ResponseEntity<String> response = ysPost(action, headers);
         DataResult<?> dataResult = JSON.parseObject(response.getBody(), new TypeReference<DataResult>() {
         });
         return dataResult.isState();
