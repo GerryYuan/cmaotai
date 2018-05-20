@@ -1,5 +1,6 @@
 package com.cmaotai.service.main;
 
+import com.cmaotai.service.address.Address;
 import com.cmaotai.service.service.CMaotaiServiceImpl;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -108,6 +109,8 @@ public class GUIMain extends JFrame {
         if (submit.isSelected()) {
             succ = false;
             System.out.println(start + "，开始执行下单操作........");
+            int num = NumberUtils.parseNumber(qyt.getText(), Integer.class);
+            Address.initQty(num, num);
             CMaotaiServiceImpl.signUp(password, NumberUtils.parseNumber(timer.getText(), Integer.class));
         }
         if (order.isSelected()) {
