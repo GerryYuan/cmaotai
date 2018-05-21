@@ -25,8 +25,7 @@ public class Address {
     private static List<String> WUXI_DISTRICTS = Lists
         .newArrayList("无锡市崇安区", "无锡市梁溪区", "无锡新区", "无锡锡山区", "无锡惠山区");
 
-    @Getter
-    private static String qty;
+    private static List<String> qtys = Lists.newArrayList();
 
     public static void initQty(Integer start, Integer end) {
         if (start == null) {
@@ -35,15 +34,17 @@ public class Address {
         if (end == null) {
             end = 6;
         }
-        List<String> qtys = Lists.newArrayList();
         for (int i = start; i <= end; i++) {
             qtys.add(i + "");
         }
+    }
+
+    public static String getQty() {
         int max = qtys.size() - 1;
         if (max == 0) {
-            qty = qtys.get(max);
+            return qtys.get(max);
         } else {
-            qty = qtys.get(random(max));
+            return qtys.get(random(max));
         }
     }
 
