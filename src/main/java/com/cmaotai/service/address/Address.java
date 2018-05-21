@@ -40,21 +40,21 @@ public class Address {
     }
 
     public static String getQty() {
-        int max = qtys.size() - 1;
-        if (max == 0) {
-            return qtys.get(max);
+        int max = qtys.size();
+        if (max == 1) {
+            return qtys.get(0);
         } else {
             return qtys.get(random(max));
         }
     }
 
     public static String getGuiYangDistricts() {
-        int max = GUIYANG_DISTRICTS.size() - 1;
+        int max = GUIYANG_DISTRICTS.size();
         return GUIYANG_DISTRICTS.get(random(max));
     }
 
     public static String getWuXiDistricts() {
-        int max = WUXI_DISTRICTS.size() - 1;
+        int max = WUXI_DISTRICTS.size();
         return WUXI_DISTRICTS.get(random(max));
     }
 
@@ -122,7 +122,7 @@ public class Address {
         if (ADDRESS.size() <= 0) {
             ADDRESS.addAll(guiYangAddress(100));
         }
-        int max = ADDRESS.size() - 1;
+        int max = ADDRESS.size();
         return ADDRESS.get(random(max));
     }
 
@@ -130,23 +130,23 @@ public class Address {
         if (ADDRESS.size() <= 0) {
             ADDRESS.addAll(wuXiAddress(100));
         }
-        int max = ADDRESS.size() - 1;
+        int max = ADDRESS.size();
         return ADDRESS.get(random(max));
     }
 
     public static String getCallPhone() {
-        int max = Mobile.MOBILES.size() - 1;
+        int max = Mobile.MOBILES.size();
         return Mobile.MOBILES.get(random(max));
     }
 
     public static String getCallName() {
-        int max = Mobile.CALL_NAMES.size() - 1;
+        int max = Mobile.CALL_NAMES.size();
         return Mobile.CALL_NAMES.get(random(max));
     }
 
     public static int random(int max) {
         Random random = new Random();
-        return random.nextInt(max) % (max - 0 + 1) + 0;
+        return random.nextInt(max);
     }
 
 }
