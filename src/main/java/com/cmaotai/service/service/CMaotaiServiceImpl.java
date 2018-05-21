@@ -413,11 +413,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         System.out.println("待确认收货：" + WAIT_CONFIRMATION_GOODSMobile);
     }
 
-    protected static void changePwd(String pwd, String newPwd) throws IOException {
-        String path = System.getProperty("path");
-        if (Strings.isBlank(path)) {
-            System.out.println("请在命令行中输入路劲，比如-Dpath=http");
-        }
+    public static void changePwd(String path, String pwd, String newPwd) throws IOException {
         List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
             .filter(Strings::isNotBlank).collect(
                 Collectors.toList());
