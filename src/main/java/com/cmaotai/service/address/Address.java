@@ -8,7 +8,6 @@ import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
-import lombok.Getter;
 import org.apache.logging.log4j.util.Strings;
 
 public class Address {
@@ -16,7 +15,8 @@ public class Address {
     private static List<CMotaiDefaultAddress> ADDRESS = Lists.newArrayList();
 
     private static List<String> GUIYANG_DISTRICTS = Lists
-        .newArrayList("贵阳市花溪区碧云窝", "贵阳市南明区瑞金南路", "贵阳市乌当区顺新社区新添大道北段", "贵阳市云岩区北京路", "贵阳市云岩区盐务街", "贵阳市南明区花果园", "贵阳市云岩区紫林庵",
+        .newArrayList("贵阳市花溪区碧云窝", "贵阳市南明区瑞金南路", "贵阳市乌当区顺新社区新添大道北段",
+            "贵阳市云岩区北京路", "贵阳市云岩区盐务街", "贵阳市南明区花果园", "贵阳市云岩区紫林庵",
             "贵阳市南明区南厂路", "贵阳市白云区白云南路", "贵阳市南明区西湖路");
 
     private static List<String> WUXI_DISTRICTS = Lists
