@@ -8,18 +8,45 @@ import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
+import lombok.Getter;
 import org.apache.logging.log4j.util.Strings;
 
 public class Address {
+
+    public static String GUIYANG = "guiyang";
+    public static String WUXI = "wuxi";
 
     private static List<CMotaiDefaultAddress> ADDRESS = Lists.newArrayList();
 
     private static List<String> GUIYANG_DISTRICTS = Lists
         .newArrayList("贵阳市花溪区碧云窝", "贵阳市南明区瑞金南路", "贵阳市乌当区顺新社区新添大道北段", "贵阳市云岩区北京路", "贵阳市云岩区盐务街", "贵阳市南明区花果园", "贵阳市云岩区紫林庵",
-            "贵阳市南明区南厂路", "贵阳市白云区白云南路", "贵阳市南明区西湖路");
+            "贵阳市南明区南厂路", "贵阳市白云区白云南路", "贵阳市南明区西湖路", "贵阳市中华中路", "贵阳市云岩区未来方舟", "贵州省贵阳市云岩区黔春路");
 
     private static List<String> WUXI_DISTRICTS = Lists
         .newArrayList("无锡市崇安区", "无锡市梁溪区", "无锡新区", "无锡锡山区", "无锡惠山区");
+
+    private static List<String> qtys = Lists.newArrayList();
+
+    public static void initQty(Integer start, Integer end) {
+        if (start == null) {
+            start = 6;
+        }
+        if (end == null) {
+            end = 6;
+        }
+        for (int i = start; i <= end; i++) {
+            qtys.add(i + "");
+        }
+    }
+
+    public static String getQty() {
+        int max = qtys.size() - 1;
+        if (max == 0) {
+            return qtys.get(max);
+        } else {
+            return qtys.get(random(max));
+        }
+    }
 
     public static String getGuiYangDistricts() {
         int max = GUIYANG_DISTRICTS.size() - 1;
@@ -36,6 +63,7 @@ public class Address {
         for (int i = aMapAddressTips.size(); i < num; i++) {
             aMapAddressTips.addAll(AMapService.getAddress(getWuXiDistricts()));
         }
+        System.out.println(aMapAddressTips.size() + "个地址已生成");
         return aMapAddressTips.stream().map(aMapAddressTip -> {
             CMotaiDefaultAddress cMotaiDefaultAddress = new CMotaiDefaultAddress();
             cMotaiDefaultAddress.setProvinceId("320000");
@@ -82,9 +110,9 @@ public class Address {
         if (Strings.isBlank(from)) {
             return getGuiYangAddress();
         }
-        if ("guiyang".equals(from)) {
+        if (GUIYANG.equals(from)) {
             return getGuiYangAddress();
-        } else if ("wuxi".equals(from)) {
+        } else if (WUXI.equals(from)) {
             return getWuXiAddress();
         }
         return getGuiYangAddress();
@@ -92,7 +120,7 @@ public class Address {
 
     private static CMotaiDefaultAddress getGuiYangAddress() {
         if (ADDRESS.size() <= 0) {
-            ADDRESS.addAll(guiYangAddress(50));
+            ADDRESS.addAll(guiYangAddress(100));
         }
         int max = ADDRESS.size() - 1;
         return ADDRESS.get(random(max));
@@ -100,8 +128,7 @@ public class Address {
 
     private static CMotaiDefaultAddress getWuXiAddress() {
         if (ADDRESS.size() <= 0) {
-            ADDRESS.addAll(wuXiAddress(42));
-            System.out.println("42个无锡地址已生成，开始添加....");
+            ADDRESS.addAll(wuXiAddress(100));
         }
         int max = ADDRESS.size() - 1;
         return ADDRESS.get(random(max));
