@@ -280,8 +280,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     }
 
     @Override
-    public boolean addDefaultAddress() {
-        String from = System.getProperty("from");
+    public boolean addDefaultAddress(String from) {
         CMotaiDefaultAddress address = Address.getAddress(from);
         String action =
             "action=AddressManager.add&provinceId=" + address.getProvinceId()
@@ -447,11 +446,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         }
     }
 
-    protected static void addDefaultAddress(String pwd) throws IOException {
-        String path = System.getProperty("path");
-        if (Strings.isBlank(path)) {
-            System.out.println("请在命令行中输入路劲，比如-Dpath=http");
-        }
+    public static void addDefaultAddress(String path, String pwd, String from) throws IOException {
         List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
             .filter(Strings::isNotBlank).collect(
                 Collectors.toList());
@@ -462,7 +457,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
             cMaotaiService.loginBefore();
             try {
                 cMaotaiService.login(s, pwd);
-                if (cMaotaiService.addDefaultAddress()) {
+                if (cMaotaiService.addDefaultAddress(from)) {
                     succ.addAndGet(1);
                     System.out.println("手机号【" + s + "】默认地址添加成功!");
                 } else {

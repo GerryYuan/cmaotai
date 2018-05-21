@@ -135,15 +135,21 @@ public class Address {
         }).collect(Collectors.toList());
     }
 
+    public static String GUIYANG = "guiyang";
+
+    public static String WUXI = "wuxi";
+
+    public static String ZUNYI = "zunyi";
+
     public static CMotaiDefaultAddress getAddress(String from) {
         if (Strings.isBlank(from)) {
             return getGuiYangAddress();
         }
-        if ("guiyang".equals(from)) {
+        if (GUIYANG.equals(from)) {
             return getGuiYangAddress();
-        } else if ("wuxi".equals(from)) {
+        } else if (WUXI.equals(from)) {
             return getWuXiAddress();
-        } else if ("zunyi".equals(from)) {
+        } else if (ZUNYI.equals(from)) {
             return getZunYiAddress();
         }
         return getGuiYangAddress();

@@ -50,7 +50,7 @@ public interface CMaotaiService {
 
     boolean changePassword(String oldPwd, String newPwd);
 
-    boolean addDefaultAddress();
+    boolean addDefaultAddress(String from);
 
     int getInvoiceId() throws Exception;
 
