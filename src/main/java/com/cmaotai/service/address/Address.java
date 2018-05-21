@@ -121,8 +121,8 @@ public class Address {
         System.out.println(aMapAddressTips.size() + "个广州地址已生成");
         return aMapAddressTips.stream().map(aMapAddressTip -> {
             CMotaiDefaultAddress cMotaiDefaultAddress = new CMotaiDefaultAddress();
-            cMotaiDefaultAddress.setProvinceId("320000");
-            cMotaiDefaultAddress.setCityId("320200");
+            cMotaiDefaultAddress.setProvinceId("440000");
+            cMotaiDefaultAddress.setCityId("440100");
             cMotaiDefaultAddress.setDistrictsId(aMapAddressTip.getAdcode());
             cMotaiDefaultAddress.setAddressInfo(aMapAddressTip.getDistrict());
             cMotaiDefaultAddress.setAddress(aMapAddressTip.getAddress());
@@ -169,8 +169,8 @@ public class Address {
         System.out.println(aMapAddressTips.size() + "个贵阳地址已生成");
         return aMapAddressTips.stream().map(aMapAddressTip -> {
             CMotaiDefaultAddress cMotaiDefaultAddress = new CMotaiDefaultAddress();
-            cMotaiDefaultAddress.setProvinceId("440000");
-            cMotaiDefaultAddress.setCityId("440100");
+            cMotaiDefaultAddress.setProvinceId("520000");
+            cMotaiDefaultAddress.setCityId("520000");
             cMotaiDefaultAddress.setDistrictsId(aMapAddressTip.getAdcode());
             cMotaiDefaultAddress.setAddressInfo(aMapAddressTip.getDistrict());
             cMotaiDefaultAddress.setAddress(aMapAddressTip.getAddress());

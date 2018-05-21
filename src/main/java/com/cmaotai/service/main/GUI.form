@@ -183,6 +183,14 @@
               <text value="贵阳"/>
             </properties>
           </component>
+          <component id="40e11" class="javax.swing.JRadioButton" binding="guangzhou">
+            <constraints>
+              <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="广州"/>
+            </properties>
+          </component>
         </children>
       </grid>
       <grid id="8de94" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -300,11 +308,12 @@
   </grid>
   <buttonGroups>
     <group name="invokeGroup">
-      <member id="6f1ab"/>
       <member id="8da31"/>
       <member id="24a37"/>
-      <member id="462e5"/>
+      <member id="6f1ab"/>
       <member id="17d15"/>
+      <member id="462e5"/>
+      <member id="40e11"/>
     </group>
   </buttonGroups>
 </form>

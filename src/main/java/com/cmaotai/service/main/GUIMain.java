@@ -59,6 +59,7 @@ public class GUIMain extends JFrame {
     private JRadioButton guiyang;
     private JRadioButton changePwd;
     private JPasswordField newPwd;
+    private JRadioButton guangzhou;
     ExecutorService newCachedThread = Executors.newCachedThreadPool();//创建一个缓冲线程池
 
     public GUIMain() {
@@ -137,6 +138,10 @@ public class GUIMain extends JFrame {
             succ = false;
             System.out.println(start + "，开始执行添加默认地址操作........");
             CMaotaiServiceImpl.addDefaultAddress(path.getText(), password, Address.GUIYANG);
+        } else if (guangzhou.isSelected()) {
+            succ = false;
+            System.out.println(start + "，开始执行添加默认地址操作........");
+            CMaotaiServiceImpl.addDefaultAddress(path.getText(), password, Address.GUANGZHOU);
         }
         if (changePwd.isSelected()) {
             succ = false;
@@ -318,6 +323,11 @@ public class GUIMain extends JFrame {
         panel1.add(guiyang, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        guangzhou = new JRadioButton();
+        guangzhou.setText("广州");
+        panel1.add(guangzhou, new GridConstraints(5, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel2,
@@ -403,11 +413,12 @@ public class GUIMain extends JFrame {
         jscrollPane.setViewportView(textArea);
         ButtonGroup buttonGroup;
         buttonGroup = new ButtonGroup();
-        buttonGroup.add(order);
         buttonGroup.add(cancel);
         buttonGroup.add(submit);
-        buttonGroup.add(guiyang);
+        buttonGroup.add(order);
         buttonGroup.add(changePwd);
+        buttonGroup.add(guiyang);
+        buttonGroup.add(guangzhou);
     }
 
     /**
