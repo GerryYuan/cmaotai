@@ -13,24 +13,19 @@ import com.cmaotai.service.model.DataResult;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.io.Files;
-import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import org.apache.logging.log4j.util.Strings;
+import org.joda.time.DateTime;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.NumberUtils;
 
 public class CMaotaiServiceImpl implements CMaotaiService {
-
-    public static long SUBMITTIMES = 1;
 
     private HttpHeaders headers = new HttpHeaders();
 
@@ -119,13 +114,8 @@ public class CMaotaiServiceImpl implements CMaotaiService {
 
     @Override
     public boolean submit(CMotaiDefaultAddress cMotaiDefaultAddress) throws UnsupportedEncodingException {
-        String qty = System.getProperty("qty");
-        int num = 6;
-        if (Strings.isNotBlank(qty)) {
-            num = Integer.valueOf(qty);
-        }
         String action =
-            "action=GrabSingleManager.submit&iid=-1&qty=" + num + "&express=14&timestamp121=" + new Date().getTime()
+            "action=GrabSingleManager.submit&iid=-1&qty=" + Address.getQty() + "&express=14&timestamp121=" + new Date().getTime()
                 + "&sid="
                 + cMotaiDefaultAddress.getSId() + "&remark=" + "&product=" + JSON.toJSONString(new CMotaiProduct());
         ResponseEntity<String> response = post(action, headers);
@@ -138,15 +128,15 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         String action =
             "action=UserManager.ChangePwd&newPassword=" + newPwd + "&oldPassword=" + oldPwd + "&timestamp121="
                 + new Date().getTime();
-        ResponseEntity<String> response = post(action, headers);
+        ResponseEntity<String> response = ysPost(action, headers);
         DataResult<?> dataResult = JSON.parseObject(response.getBody(), new TypeReference<DataResult>() {
         });
         return dataResult.isState();
     }
 
     @Override
-    public boolean addDefaultAddress() {
-        CMotaiDefaultAddress address = Address.getAddress("guiyang");
+    public boolean addDefaultAddress(String from) {
+        CMotaiDefaultAddress address = Address.getAddress(from);
         String action =
             "action=AddressManager.add&provinceId=" + address.getProvinceId()
                 + "&cityId=" + address.getCityId() + "&districtsId=" +
@@ -162,8 +152,12 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         return dataResult.isState();
     }
 
-    protected static void signUp(String pwd) throws IOException {
-        List<String> mobiles = Mobile.MOBILES.stream()
+    public static void signUp(String pwd) throws IOException {
+        signUp(pwd, 0);
+    }
+
+    public static void signUp(String pwd, Integer timer) throws IOException {
+        List<String> mobiles =  Mobile.MOBILES.stream()
             .filter(Strings::isNotBlank).collect(
                 Collectors.toList());
         AtomicInteger atomicInteger = new AtomicInteger(0);
@@ -175,6 +169,9 @@ public class CMaotaiServiceImpl implements CMaotaiService {
                 if (cMaotaiService.signup(s, pwd)) {
                     System.out.println("最后，手机号【" + s + "】等记成功！");
                     atomicInteger.addAndGet(1);
+                    String now = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
+                    System.out.println("现在【" + now + "】,休息【" + timer + "】分钟，再继续登记哟！");
+                    Thread.sleep(1000 * 60 * timer);
                 } else {
                     failMobiles.add(s);
                     System.err.println("最后，手机号【" + s + "】等记失败！");
@@ -192,17 +189,21 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         }
     }
 
-    protected static void getOrderStatus(String pwd) throws IOException {
+    public static void getOrderStatus(String pwd) throws IOException {
         List<String> mobiles = Mobile.MOBILES.stream()
             .filter(Strings::isNotBlank).collect(
                 Collectors.toList());
         AtomicInteger WAIT_PAY = new AtomicInteger(0);
         AtomicInteger WAIT_DELIVER_GOODS = new AtomicInteger(0);
         AtomicInteger WAIT_CONFIRMATION_GOODS = new AtomicInteger(0);
+        AtomicInteger num = new AtomicInteger(mobiles.size());
         List<String> WAIT_PAYMobile = Lists.newArrayList();
         List<String> WAIT_DELIVER_GOODSMobile = Lists.newArrayList();
         List<String> WAIT_CONFIRMATION_GOODSMobile = Lists.newArrayList();
+        System.out.println("开始查单操作，需要花费一段时间，请等待......");
         mobiles.forEach(s -> {
+            int n = num.addAndGet(-1);
+            System.out.println("【" + s + "】查单中，剩余【" + n + "】个");
             CMaotaiServiceImpl cMaotaiService = new CMaotaiServiceImpl();
             cMaotaiService.loginBefore();
             try {
@@ -237,7 +238,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         System.out.println("待确认收货：" + WAIT_CONFIRMATION_GOODSMobile);
     }
 
-    protected static void changePwd(String pwd, String newPwd) throws IOException {
+    public static void changePwd(String pwd, String newPwd) throws IOException {
         List<String> mobiles = Mobile.MOBILES.stream()
             .filter(Strings::isNotBlank).collect(
                 Collectors.toList());
@@ -248,7 +249,6 @@ public class CMaotaiServiceImpl implements CMaotaiService {
             cMaotaiService.loginBefore();
             try {
                 cMaotaiService.login(s, pwd);
-                cMaotaiService.isLogin();
                 if (cMaotaiService.changePassword(pwd, newPwd)) {
                     succ.addAndGet(1);
                     System.out.println("手机号【" + s + "】修改密码成功!");
@@ -266,7 +266,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         }
     }
 
-    protected static void addDefaultAddress(String pwd) throws IOException {
+    public static void addDefaultAddress(String pwd, String from) throws IOException {
         List<String> mobiles = Mobile.MOBILES.stream()
             .filter(Strings::isNotBlank).collect(Collectors.toList());
         List<String> failMobiles = Lists.newArrayList();
@@ -276,7 +276,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
             cMaotaiService.loginBefore();
             try {
                 cMaotaiService.login(s, pwd);
-                if (cMaotaiService.addDefaultAddress()) {
+                if (cMaotaiService.addDefaultAddress(from)) {
                     succ.addAndGet(1);
                     System.out.println("手机号【" + s + "】默认地址添加成功!");
                 } else {
