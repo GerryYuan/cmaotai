@@ -60,6 +60,7 @@ public class GUIMain extends JFrame {
     private JRadioButton changePwd;
     private JPasswordField newPwd;
     private JRadioButton guangzhou;
+    private JRadioButton invice;
     ExecutorService newCachedThread = Executors.newCachedThreadPool();//创建一个缓冲线程池
 
     public GUIMain() {
@@ -148,6 +149,11 @@ public class GUIMain extends JFrame {
             System.out.println(start + "，开始执行修改密码操作........");
             CMaotaiServiceImpl.changePwd(path.getText(), password, new String(newPwd.getPassword()));
         }
+        if (invice.isSelected()) {
+            succ = false;
+            System.out.println(start + "，开始执行添加发票操作........");
+            CMaotaiServiceImpl.addInvoice(path.getText(), password);
+        }
         String end = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
         System.out.println(end + "，结束");
         succ = true;
@@ -233,7 +239,7 @@ public class GUIMain extends JFrame {
             .createTitledBorder(null, "茅台云商操作系统", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION,
                 this.$$$getFont$$$("Ayuthaya", -1, 16, contentPane.getFont()), new Color(-16777216)));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(8, 4, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(8, 5, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel1,
             new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
                 GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -253,12 +259,12 @@ public class GUIMain extends JFrame {
             GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         pwd = new JPasswordField();
         pwd.setText("123456ygh");
-        panel1.add(pwd, new GridConstraints(1, 1, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
+        panel1.add(pwd, new GridConstraints(1, 1, 1, 4, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
             GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null,
             0, false));
         qyt = new JTextField();
         qyt.setText("6");
-        panel1.add(qyt, new GridConstraints(4, 1, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
+        panel1.add(qyt, new GridConstraints(4, 1, 1, 4, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
             GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null,
             0, false));
         final JLabel label4 = new JLabel();
@@ -267,7 +273,7 @@ public class GUIMain extends JFrame {
             GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         path = new JTextField();
         path.setText("/Users/gerry/Downloads/maitai/all.txt");
-        panel1.add(path, new GridConstraints(0, 1, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
+        panel1.add(path, new GridConstraints(0, 1, 1, 4, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
             GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null,
             0, false));
         final JLabel label5 = new JLabel();
@@ -276,7 +282,7 @@ public class GUIMain extends JFrame {
             GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         timer = new JTextField();
         timer.setText("3");
-        panel1.add(timer, new GridConstraints(3, 1, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
+        panel1.add(timer, new GridConstraints(3, 1, 1, 4, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
             GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null,
             0, false));
         final JLabel label6 = new JLabel();
@@ -303,7 +309,7 @@ public class GUIMain extends JFrame {
             GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         newPwd = new JPasswordField();
         newPwd.setText("");
-        panel1.add(newPwd, new GridConstraints(2, 1, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
+        panel1.add(newPwd, new GridConstraints(2, 1, 1, 4, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
             GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null,
             0, false));
         order = new JRadioButton();
@@ -315,7 +321,7 @@ public class GUIMain extends JFrame {
             GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(256, 26), null, 5, false));
         changePwd = new JRadioButton();
         changePwd.setText("修改密码");
-        panel1.add(changePwd, new GridConstraints(6, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+        panel1.add(changePwd, new GridConstraints(6, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         guiyang = new JRadioButton();
@@ -326,6 +332,11 @@ public class GUIMain extends JFrame {
         guangzhou = new JRadioButton();
         guangzhou.setText("广州");
         panel1.add(guangzhou, new GridConstraints(5, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        invice = new JRadioButton();
+        invice.setText("添加发票");
+        panel1.add(invice, new GridConstraints(6, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
@@ -419,6 +430,7 @@ public class GUIMain extends JFrame {
         buttonGroup.add(changePwd);
         buttonGroup.add(guiyang);
         buttonGroup.add(guangzhou);
+        buttonGroup.add(invice);
     }
 
     /**

@@ -471,11 +471,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         }
     }
 
-    protected static void addInvoice(String pwd) throws IOException {
-        String path = System.getProperty("path");
-        if (Strings.isBlank(path)) {
-            System.out.println("请在命令行中输入路劲，比如-Dpath=http");
-        }
+    public static void addInvoice(String path, String pwd) throws IOException {
         List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
             .filter(Strings::isNotBlank).collect(
                 Collectors.toList());
