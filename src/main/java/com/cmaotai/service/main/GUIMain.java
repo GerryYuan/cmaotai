@@ -55,6 +55,7 @@ public class GUIMain extends JFrame {
     private JPasswordField newPwd;
     private JRadioButton guiyang;
     private JRadioButton address;
+    private JRadioButton guangzhou;
     ExecutorService newCachedThread = Executors.newCachedThreadPool();//创建一个缓冲线程池
 
     public GUIMain() {
@@ -127,9 +128,11 @@ public class GUIMain extends JFrame {
         }
         if (address.isSelected()) {
             succ = false;
+            System.out.println(start + "，开始执行添加默认地址操作........");
             if (guiyang.isSelected()) {
-                System.out.println(start + "，开始执行添加默认地址操作........");
                 CMaotaiServiceImpl.addDefaultAddress(password, Address.GUIYANG);
+            } else if (guangzhou.isSelected()) {
+                CMaotaiServiceImpl.addDefaultAddress(password, Address.GUANGZHOU);
             }
         }
         String end = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
@@ -290,6 +293,11 @@ public class GUIMain extends JFrame {
         guiyang = new JRadioButton();
         guiyang.setText("贵阳");
         panel1.add(guiyang, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        guangzhou = new JRadioButton();
+        guangzhou.setText("广州");
+        panel1.add(guangzhou, new GridConstraints(4, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
