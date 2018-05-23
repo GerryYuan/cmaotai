@@ -6,7 +6,7 @@ import java.util.List;
 public class Mobile {
 
     public static List<String> CALL_MOBILES = Lists
-        .newArrayList("13110498305", "13164910871", "18601645898", "13052105625", "18962072076");
+        .newArrayList("13110498305", "13164910871", "18601645898", "13052105645", "18962072076");
 
     public static List<String> CALL_NAMES = Lists
         .newArrayList("刘璇", "张程", "张桐", "冯冕", "冷翰林", "王焕", "曲锴", "袁吉臻", "袁琪", "盛鸿军", "隋浩", "温悦", "刘旭栋", "刘瀚", "马贺",
