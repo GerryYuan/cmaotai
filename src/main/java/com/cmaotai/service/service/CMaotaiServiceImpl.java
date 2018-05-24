@@ -287,6 +287,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
                 System.err.println("手机号【" + s + "】登录异常！" + e.getMessage());
             }
         });
+        Address.clear();
         System.out.println("添加结果：总添加【" + mobiles.size() + "】，成功【" + succ.get() + "】,失败【" + failMobiles.size() + "】");
         if (failMobiles.size() > 0) {
             System.out.println("添加失败手机号：" + failMobiles);
