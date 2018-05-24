@@ -170,8 +170,8 @@ public class CMaotaiServiceImpl implements CMaotaiService {
                     System.out.println("最后，手机号【" + s + "】等记成功！");
                     atomicInteger.addAndGet(1);
                     String now = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
-                    System.out.println("现在【" + now + "】,休息【" + timer + "】分钟，再继续登记哟！");
-                    Thread.sleep(1000 * 60 * timer);
+                    System.out.println("现在【" + now + "】,休息【" + timer + "】秒，再继续登记哟！");
+                    Thread.sleep(1000 * timer);
                 } else {
                     failMobiles.add(s);
                     System.err.println("最后，手机号【" + s + "】等记失败！");
@@ -287,6 +287,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
                 System.err.println("手机号【" + s + "】登录异常！" + e.getMessage());
             }
         });
+        Address.clear();
         System.out.println("添加结果：总添加【" + mobiles.size() + "】，成功【" + succ.get() + "】,失败【" + failMobiles.size() + "】");
         if (failMobiles.size() > 0) {
             System.out.println("添加失败手机号：" + failMobiles);
