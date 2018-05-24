@@ -19,7 +19,8 @@ public interface CMaotaiService {
     String CMAOTAI_URL = "https://www.cmaotai.com/API/Servers.ashx?";
     String CMAOTAI_YSAPP_URL = "https://www.cmaotai.com/YSApp_API/YSAppServer.ashx?";
     List<String> USERAGENTS = Lists.newArrayList(
-        "Mozilla/5.0 (Linux; Android 5.1; OPPO R9m Build/LMY47I; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/43.0.2357.121 Mobile Safari/537.36[android/1.0.23/35facc15ca64a3bb85c81875cde35d5c/84afe039b858896b6c41e5d811c2e920]");
+        "Mozilla/5.0 (Linux; Android 5.1; OPPO R9m Build/LMY47I; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/43.0.2357.121 Mobile Safari/537.36[android/1.0.23/35facc15ca64a3bb85c81875cde35d5c/84afe039b858896b6c41e5d811c2e920]",
+        "Mozilla/5.0 (Linux; Android 7.1.1; MX6 Build/NMF26O; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/51.0.2704.110 Mobile Safari/537.36[android/1.0.23/42af1f4e7a0a421beae14f6f42b2d517/87bc7d3b55706751357ec63cf9423368]");
 
     default String getUA() {
         if (USERAGENTS.size() == 1) {
