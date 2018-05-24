@@ -34,7 +34,7 @@
               <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="执行操作"/>
+              <text value="执行操作："/>
             </properties>
           </component>
           <component id="2f087" class="javax.swing.JLabel">
@@ -70,7 +70,7 @@
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="下单时间间隔（分钟）："/>
+              <text value="下单时间间隔（秒）："/>
             </properties>
           </component>
           <component id="97821" class="javax.swing.JTextField" binding="timer">
@@ -88,7 +88,7 @@
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="新密码："/>
+              <text value="新密码（修改密码用）："/>
             </properties>
           </component>
           <component id="d55ec" class="javax.swing.JPasswordField" binding="newPwd">
@@ -130,15 +130,7 @@
               <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="地址库："/>
-            </properties>
-          </component>
-          <component id="633af" class="javax.swing.JRadioButton" binding="address">
-            <constraints>
-              <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="添加默认地址"/>
+              <text value="添加地址："/>
             </properties>
           </component>
           <component id="8e9a3" class="javax.swing.JRadioButton" binding="guiyang">
@@ -259,10 +251,14 @@
   </grid>
   <buttonGroups>
     <group name="invokeGroup">
+      <member id="633af"/>
+    </group>
+    <group name="invokeGroup">
       <member id="7f060"/>
       <member id="48d82"/>
       <member id="3451f"/>
-      <member id="633af"/>
+      <member id="8e9a3"/>
+      <member id="a113"/>
     </group>
   </buttonGroups>
 </form>
