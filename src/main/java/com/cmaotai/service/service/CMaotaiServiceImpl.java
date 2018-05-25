@@ -448,6 +448,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
                 Collectors.toList());
         List<String> failMobiles = Lists.newArrayList();
         AtomicInteger succ = new AtomicInteger(0);
+        AtomicInteger num = new AtomicInteger(mobiles.size());
         mobiles.forEach(s -> {
             CMaotaiServiceImpl cMaotaiService = new CMaotaiServiceImpl();
             cMaotaiService.loginBefore();
@@ -460,6 +461,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
                     failMobiles.add(s);
                     System.err.println("手机号【" + s + "】默认地址添加失败！");
                 }
+                System.out.println("【" + s + "】修改地址中，剩余【" + num.addAndGet(-1) + "】个。");
             } catch (Exception e) {
                 failMobiles.add(s);
                 System.err.println("手机号【" + s + "】登录异常！" + e.getMessage());
