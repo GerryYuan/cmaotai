@@ -242,7 +242,7 @@ public class Address {
 
     private static CMotaiDefaultAddress getGuangZhouAddress() {
         if (ADDRESS.size() <= 0) {
-            ADDRESS.addAll(guangzhouAddress(100));
+            ADDRESS.addAll(guangzhouAddress(150));
         }
         int max = ADDRESS.size();
         return ADDRESS.get(random(max));
