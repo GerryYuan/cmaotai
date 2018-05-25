@@ -257,4 +257,7 @@ public class Address {
         return random.nextInt(max);
     }
 
+    public static void clear() {
+        ADDRESS.clear();
+    }
 }

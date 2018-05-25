@@ -137,11 +137,11 @@ public class GUIMain extends JFrame {
         }
         if (guiyang.isSelected()) {
             succ = false;
-            System.out.println(start + "，开始执行添加默认地址操作........");
+            System.out.println(start + "，开始执行添加贵阳默认地址操作........");
             CMaotaiServiceImpl.addDefaultAddress(path.getText(), password, Address.GUIYANG);
         } else if (guangzhou.isSelected()) {
             succ = false;
-            System.out.println(start + "，开始执行添加默认地址操作........");
+            System.out.println(start + "，开始执行添加广州默认地址操作........");
             CMaotaiServiceImpl.addDefaultAddress(path.getText(), password, Address.GUANGZHOU);
         }
         if (changePwd.isSelected()) {
@@ -277,7 +277,7 @@ public class GUIMain extends JFrame {
             GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null,
             0, false));
         final JLabel label5 = new JLabel();
-        label5.setText("登记下单时间间隔（分钟）:");
+        label5.setText("登记下单时间间隔（秒）:");
         panel1.add(label5, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         timer = new JTextField();
