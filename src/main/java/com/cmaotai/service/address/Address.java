@@ -18,7 +18,6 @@ public class Address {
         .newArrayList("贵阳市花溪区碧云窝", "贵阳市南明区瑞金南路", "贵阳市乌当区顺新社区新添大道北段",
             "贵阳市云岩区北京路", "贵阳市云岩区盐务街", "贵阳市南明区花果园", "贵阳市云岩区紫林庵",
             "贵阳市南明区南厂路", "贵阳市白云区白云南路", "贵阳市南明区西湖路");
-
     //天河区 ，白云区
 //    private static List<String> GUANGZHOU_DISTRICTS = Lists
 //        .newArrayList("广东省广州市海珠区", "广东省广州市海珠区新港东路", "广东省广州市海珠区华洲路",
@@ -43,24 +42,9 @@ public class Address {
     private static List<String> GUANGZHOU_DISTRICTS = Lists
         .newArrayList(
             "广东省广州市白云区黄园路", "广东省广州市赵秀区环市中路",
-            "广东省广州市赵秀区府前路", "广东省广州市花都区凤凰北路","广东省广州市天河区员村四横路蒲林街",
-            "广东省广州市天河区广州大道中", "广东省广州市天河区粤垦路","广东省广州市天河区珠江新城猎德大道",
-
-            "广东省广州市白云区黄石花园黄园三街", "广东省广州市白云区江高镇", "广东省广州市白云区龙归北太路",
-            "广东省广州市白云区龙归镇", "广东省广州市白云区友塘南街",
-            "广州市机场路石柱岭大街",
-            "广东省广州市白云区黄石机场路",
-            "广东省广州市白云区黄石东路江景路",
-
-            "广东省广州市天河区汇景北路",
-            "广东省广州市天河区光宝路",
-            "广东省广州市天河区东圃小新塘合景路",
-            "广东省广州市天河区火炉山蓝鹏高尔夫练习场",
-            "广东省广州市天河区五山街五山路",
-
-            "广东省广州市赵秀区小北路",
-            "广东省广州市赵秀区北较场路",
-            "广东省广州市赵秀区麓景路");
+            "广东省广州市赵秀区府前路", "广东省广州市花都区凤凰北路", "广东省广州市天河区员村四横路蒲林街",
+            "广东省广州市天河区广州大道中", "广东省广州市天河区粤垦路", "广东省广州市天河区珠江新城猎德大道",
+            "广东省广州市增城区新塘镇府前路", "广东省广州市增城区荔乡路", "广东省广州市南沙区进港大道");
 
     private static List<String> WUXI_DISTRICTS = Lists
         .newArrayList("无锡市崇安区", "无锡市梁溪区", "无锡新区", "无锡锡山区", "无锡惠山区");
@@ -258,7 +242,7 @@ public class Address {
 
     private static CMotaiDefaultAddress getGuangZhouAddress() {
         if (ADDRESS.size() <= 0) {
-            ADDRESS.addAll(guangzhouAddress(100));
+            ADDRESS.addAll(guangzhouAddress(300));
         }
         int max = ADDRESS.size();
         return ADDRESS.get(random(max));

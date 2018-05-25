@@ -3,7 +3,7 @@
   <grid id="cbd77" binding="contentPane" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="228" y="56" width="654" height="699"/>
+      <xy x="228" y="56" width="673" height="699"/>
     </constraints>
     <properties>
       <enabled value="false"/>
@@ -323,6 +323,7 @@
       <member id="462e5"/>
       <member id="40e11"/>
       <member id="2b9b9"/>
+      <member id="71044"/>
     </group>
   </buttonGroups>
 </form>
