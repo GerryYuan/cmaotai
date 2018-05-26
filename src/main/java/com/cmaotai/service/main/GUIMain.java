@@ -64,6 +64,7 @@ public class GUIMain extends JFrame {
     private JRadioButton dongguan;
     private JRadioButton shenzhen;
     private JRadioButton seachDefaultAddress;
+    private JRadioButton isForEach;
     ExecutorService newCachedThread = Executors.newCachedThreadPool();//创建一个缓冲线程池
 
     public GUIMain() {
@@ -128,6 +129,26 @@ public class GUIMain extends JFrame {
                 Address.initQty(num, num);
                 CMaotaiServiceImpl
                     .defaultSignup(password, path.getText(), NumberUtils.parseNumber(timer.getText(), Integer.class));
+            }
+            if (isForEach.isSelected()) {
+                succ = false;
+                System.out.println(start + "，开始执行循环下单操作........");
+                DateTime today = DateTime.now();
+                DateTime clock_18 = new DateTime(today.getYear(), today.getMonthOfYear(), today.getDayOfMonth(), 18, 0,
+                    0,
+                    0);
+                for (; ; ) {
+                    DateTime now = new DateTime();
+                    if (now.toDate().getTime() >= clock_18.toDate().getTime()) {
+                        System.out.println("当前时间【" + now.toString("yyyy-MM-dd HH:mm:ss") + "】超过18点，不执行循环下单操作");
+                        break;
+                    }
+                    int num = NumberUtils.parseNumber(qyt.getText(), Integer.class);
+                    Address.initQty(num, num);
+                    CMaotaiServiceImpl
+                        .defaultSignup(password, path.getText(),
+                            NumberUtils.parseNumber(timer.getText(), Integer.class));
+                }
             }
             if (order.isSelected()) {
                 succ = false;
@@ -331,13 +352,6 @@ public class GUIMain extends JFrame {
         panel1.add(newPwd, new GridConstraints(2, 1, 1, 4, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
             GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null,
             0, false));
-        order = new JRadioButton();
-        order.setEnabled(true);
-        order.setSelected(true);
-        order.setText("查询订单");
-        panel1.add(order, new GridConstraints(6, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-            GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(256, 26), null, 5, false));
         changePwd = new JRadioButton();
         changePwd.setText("修改密码");
         panel1.add(changePwd, new GridConstraints(6, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
@@ -378,6 +392,18 @@ public class GUIMain extends JFrame {
             new GridConstraints(7, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
                 GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                 GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        order = new JRadioButton();
+        order.setEnabled(true);
+        order.setSelected(true);
+        order.setText("查询订单");
+        panel1.add(order, new GridConstraints(7, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+            GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(256, 26), null, 5, false));
+        isForEach = new JRadioButton();
+        isForEach.setText("循环下单");
+        panel1.add(isForEach, new GridConstraints(6, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel2,
@@ -465,7 +491,6 @@ public class GUIMain extends JFrame {
         buttonGroup = new ButtonGroup();
         buttonGroup.add(cancel);
         buttonGroup.add(submit);
-        buttonGroup.add(order);
         buttonGroup.add(changePwd);
         buttonGroup.add(guiyang);
         buttonGroup.add(guangzhou);
@@ -473,6 +498,8 @@ public class GUIMain extends JFrame {
         buttonGroup.add(dongguan);
         buttonGroup.add(shenzhen);
         buttonGroup.add(seachDefaultAddress);
+        buttonGroup.add(order);
+        buttonGroup.add(isForEach);
     }
 
     /**

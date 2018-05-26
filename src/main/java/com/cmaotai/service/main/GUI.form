@@ -155,18 +155,6 @@
               <text value=""/>
             </properties>
           </component>
-          <component id="6f1ab" class="javax.swing.JRadioButton" binding="order">
-            <constraints>
-              <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="5" use-parent-layout="false">
-                <preferred-size width="256" height="26"/>
-              </grid>
-            </constraints>
-            <properties>
-              <enabled value="true"/>
-              <selected value="true"/>
-              <text value="查询订单"/>
-            </properties>
-          </component>
           <component id="17d15" class="javax.swing.JRadioButton" binding="changePwd">
             <constraints>
               <grid row="6" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
@@ -229,6 +217,26 @@
             </constraints>
             <properties>
               <text value="查询默认地址"/>
+            </properties>
+          </component>
+          <component id="6f1ab" class="javax.swing.JRadioButton" binding="order">
+            <constraints>
+              <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="5" use-parent-layout="false">
+                <preferred-size width="256" height="26"/>
+              </grid>
+            </constraints>
+            <properties>
+              <enabled value="true"/>
+              <selected value="true"/>
+              <text value="查询订单"/>
+            </properties>
+          </component>
+          <component id="91d2b" class="javax.swing.JRadioButton" binding="isForEach">
+            <constraints>
+              <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="循环下单"/>
             </properties>
           </component>
         </children>
@@ -353,7 +361,6 @@
     <group name="invokeGroup">
       <member id="8da31"/>
       <member id="24a37"/>
-      <member id="6f1ab"/>
       <member id="17d15"/>
       <member id="462e5"/>
       <member id="40e11"/>
@@ -361,6 +368,8 @@
       <member id="b875d"/>
       <member id="bacd1"/>
       <member id="dc623"/>
+      <member id="6f1ab"/>
+      <member id="91d2b"/>
     </group>
   </buttonGroups>
 </form>
