@@ -117,14 +117,6 @@
               <text value="查询订单"/>
             </properties>
           </component>
-          <component id="3451f" class="javax.swing.JRadioButton" binding="changePwd">
-            <constraints>
-              <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="修改密码"/>
-            </properties>
-          </component>
           <component id="73cd0" class="javax.swing.JLabel">
             <constraints>
               <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
@@ -147,6 +139,22 @@
             </constraints>
             <properties>
               <text value="广州"/>
+            </properties>
+          </component>
+          <component id="3451f" class="javax.swing.JRadioButton" binding="changePwd">
+            <constraints>
+              <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="修改密码"/>
+            </properties>
+          </component>
+          <component id="1a50b" class="javax.swing.JRadioButton" binding="isForEach">
+            <constraints>
+              <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="循环下单"/>
             </properties>
           </component>
         </children>
@@ -256,9 +264,10 @@
     <group name="invokeGroup">
       <member id="7f060"/>
       <member id="48d82"/>
-      <member id="3451f"/>
       <member id="8e9a3"/>
       <member id="a113"/>
+      <member id="3451f"/>
+      <member id="1a50b"/>
     </group>
   </buttonGroups>
 </form>
