@@ -284,7 +284,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
                     failMobiles.add(s);
                     System.err.println("手机号【" + s + "】默认地址添加失败！");
                 }
-                System.out.println("【" + s + "】查单中，剩余【" + num.addAndGet(-1) + "】个");
+                System.out.println("【" + s + "】添加地址中，剩余【" + num.addAndGet(-1) + "】个");
             } catch (Exception e) {
                 System.err.println("手机号【" + s + "】登录异常！" + e.getMessage());
             }
