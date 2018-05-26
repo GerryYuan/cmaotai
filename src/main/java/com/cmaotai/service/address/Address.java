@@ -255,9 +255,9 @@ public class Address {
     }
 
     public static List<CMotaiDefaultAddress> dongGuanAddress(int num) {
-        List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getGuangZhouDistricts());
+        List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getDongGuanDistricts());
         for (int i = aMapAddressTips.size(); i < num; i++) {
-            aMapAddressTips.addAll(AMapService.getAddress(getGuangZhouDistricts()));
+            aMapAddressTips.addAll(AMapService.getAddress(getDongGuanDistricts()));
         }
         System.out.println(aMapAddressTips.size() + "个东莞地址已生成");
         return aMapAddressTips.stream().map(aMapAddressTip -> {
@@ -279,9 +279,9 @@ public class Address {
     }
 
     public static List<CMotaiDefaultAddress> shenZhenAddress(int num) {
-        List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getGuangZhouDistricts());
+        List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getShenZhenDistricts());
         for (int i = aMapAddressTips.size(); i < num; i++) {
-            aMapAddressTips.addAll(AMapService.getAddress(getGuangZhouDistricts()));
+            aMapAddressTips.addAll(AMapService.getAddress(getShenZhenDistricts()));
         }
         System.out.println(aMapAddressTips.size() + "个深圳地址已生成");
         return aMapAddressTips.stream().map(aMapAddressTip -> {
