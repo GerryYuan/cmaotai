@@ -56,6 +56,8 @@ public class GUIMain extends JFrame {
     private JRadioButton guiyang;
     private JRadioButton address;
     private JRadioButton guangzhou;
+    private JRadioButton dongguan;
+    private JRadioButton shenzhen;
     ExecutorService newCachedThread = Executors.newCachedThreadPool();//创建一个缓冲线程池
 
     public GUIMain() {
@@ -133,6 +135,10 @@ public class GUIMain extends JFrame {
                 CMaotaiServiceImpl.addDefaultAddress(password, Address.GUIYANG);
             } else if (guangzhou.isSelected()) {
                 CMaotaiServiceImpl.addDefaultAddress(password, Address.GUANGZHOU);
+            } else if (dongguan.isSelected()) {
+                CMaotaiServiceImpl.addDefaultAddress(password, Address.DONGGUAN);
+            } else if (shenzhen.isSelected()) {
+                CMaotaiServiceImpl.addDefaultAddress(password, Address.SHENZHEN);
             }
         }
         String end = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
@@ -298,6 +304,16 @@ public class GUIMain extends JFrame {
         guangzhou = new JRadioButton();
         guangzhou.setText("广州");
         panel1.add(guangzhou, new GridConstraints(4, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        dongguan = new JRadioButton();
+        dongguan.setText("东莞");
+        panel1.add(dongguan, new GridConstraints(4, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        shenzhen = new JRadioButton();
+        shenzhen.setText("深圳");
+        panel1.add(shenzhen, new GridConstraints(4, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
