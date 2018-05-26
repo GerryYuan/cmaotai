@@ -283,13 +283,15 @@
   </grid>
   <buttonGroups>
     <group name="invokeGroup">
-      <member id="7f060"/>
-      <member id="48d82"/>
-      <member id="633af"/>
       <member id="8e9a3"/>
       <member id="a113"/>
       <member id="be582"/>
       <member id="fd535"/>
+    </group>
+    <group name="invokeGroup">
+      <member id="7f060"/>
+      <member id="48d82"/>
+      <member id="633af"/>
       <member id="3451f"/>
       <member id="a4d13"/>
     </group>
