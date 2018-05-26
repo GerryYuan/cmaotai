@@ -417,8 +417,9 @@ public class GUIMain extends JFrame {
         buttonGroup = new ButtonGroup();
         buttonGroup.add(submit);
         buttonGroup.add(order);
-        buttonGroup.add(changePwd);
         buttonGroup.add(address);
+        buttonGroup.add(changePwd);
+        buttonGroup.add(isForEach);
     }
 
     /**
