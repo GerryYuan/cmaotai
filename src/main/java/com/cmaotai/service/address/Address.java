@@ -95,19 +95,15 @@ public class Address {
 //            "广东省广州市天河区光宝路",
 //            "广东省广州市天河区东圃小新塘合景路",
 //            "广东省广州市天河区火炉山蓝鹏高尔夫练习场",
-//            "广东省广州市天河区长兴路");
+//            "广东省广州市天河区长兴路", "广东省广州市南沙区进港大道",
+//            "广东省广州市增城区新塘镇府前路");
 
     private static List<String> GUANGZHOU_DISTRICTS = Lists
-        .newArrayList(
-            "广东省广州市白云区黄园路", "广东省广州市白云区黄园路",
-            "广东省广州市赵秀区环市中路", "广东省广州市赵秀区环市中路",
-            "广东省广州市赵秀区府前路", "广东省广州市赵秀区府前路",
-            "广东省广州市花都区凤凰北路", "广东省广州市花都区凤凰北路",
-            "广东省广州市天河区员村四横路蒲林街",
-            "广东省广州市天河区广州大道中", "广东省广州市天河区粤垦路", "广东省广州市天河区珠江新城猎德大道",
-            "广东省广州市增城区新塘镇府前路", "广东省广州市增城区荔乡路", "广东省广州市南沙区进港大道",
-            "广东省广州市白云区龙归镇", "广东省广州市白云区龙归镇南村龙河西路", "广东省广州市天河区五山街五山路",
-            "广东省广州市天河区光宝路", "广东省广州市天河区长兴路");
+        .newArrayList("广东省广州市白云区黄园路",
+            "广东省广州市赵秀区环市中路", "广东省广州市赵秀区环市中路", "广东省广州市天河区员村四横路蒲林街",
+            "广东省广州市赵秀区府前路", "广东省广州市白云区黄园路",
+            "广东省广州市花都区凤凰北路", "广东省广州市天河区员村四横路蒲林街",
+            "广东省广州市天河区广州大道中", "广东省广州市天河区粤垦路", "广东省广州市天河区珠江新城猎德大道");
 
     private static List<String> DONGGUAN_DISTRICTS = Lists
         .newArrayList(
@@ -145,7 +141,6 @@ public class Address {
             "广东省深圳市龙岗区欣景路",
             "广东省深圳市沙盐路",
             "广东省深圳市龙华区人民中路");
-
 
     private static List<String> WUXI_DISTRICTS = Lists
         .newArrayList("无锡市崇安区", "无锡市梁溪区", "无锡新区", "无锡锡山区", "无锡惠山区");
@@ -362,7 +357,6 @@ public class Address {
 
     public static String SHENZHEN = "shenzhen";
 
-
     public static CMotaiDefaultAddress getAddress(String from) {
         if (Strings.isBlank(from)) {
             return getGuiYangAddress();
@@ -375,9 +369,9 @@ public class Address {
             return getZunYiAddress();
         } else if (GUANGZHOU.equals(from)) {
             return getGuangZhouAddress();
-        } else if(DONGGUAN.equals(from)){
+        } else if (DONGGUAN.equals(from)) {
             return getDongGuanAddress();
-        }else if (SHENZHEN.equals(from)){
+        } else if (SHENZHEN.equals(from)) {
             return getShenZhenAddress();
         }
         return getGuiYangAddress();

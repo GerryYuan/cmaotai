@@ -532,4 +532,27 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         }
     }
 
+    public static void searchDefaultAddress(String path ,String pwd) throws IOException {
+        List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
+            .filter(Strings::isNotBlank).collect(
+                Collectors.toList());
+        AtomicInteger succ = new AtomicInteger(0);
+        List<String> failMobiles = Lists.newArrayList();
+        mobiles.forEach(s -> {
+            CMaotaiServiceImpl cMaotaiService = new CMaotaiServiceImpl();
+            cMaotaiService.loginBefore();
+            try {
+                cMaotaiService.login(s, pwd);
+                System.out.println("手机号【" + s + "】,默认地址：" + JSON.toJSONString(cMaotaiService.getDefualtAdd()));
+                succ.addAndGet(1);
+            } catch (Exception e) {
+                failMobiles.add(s);
+                System.err.println("手机号【" + s + "】异常！" + e.getMessage());
+            }
+        });
+        System.out.println("查询结果：总查询【" + mobiles.size() + "】，成功【" + succ.get() + "】,失败【" + failMobiles.size() + "】");
+        if (failMobiles.size() > 0) {
+            System.out.println("查询失败的手机号：" + failMobiles);
+        }
+    }
 }
