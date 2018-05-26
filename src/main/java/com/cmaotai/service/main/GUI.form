@@ -199,6 +199,22 @@
               <text value="添加发票"/>
             </properties>
           </component>
+          <component id="b875d" class="javax.swing.JRadioButton" binding="dongguan">
+            <constraints>
+              <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="东莞"/>
+            </properties>
+          </component>
+          <component id="bacd1" class="javax.swing.JRadioButton" binding="shenzhen">
+            <constraints>
+              <grid row="5" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="深圳"/>
+            </properties>
+          </component>
         </children>
       </grid>
       <grid id="8de94" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -316,6 +332,9 @@
   </grid>
   <buttonGroups>
     <group name="invokeGroup">
+      <member id="71044"/>
+    </group>
+    <group name="invokeGroup">
       <member id="8da31"/>
       <member id="24a37"/>
       <member id="6f1ab"/>
@@ -323,7 +342,8 @@
       <member id="462e5"/>
       <member id="40e11"/>
       <member id="2b9b9"/>
-      <member id="71044"/>
+      <member id="b875d"/>
+      <member id="bacd1"/>
     </group>
   </buttonGroups>
 </form>

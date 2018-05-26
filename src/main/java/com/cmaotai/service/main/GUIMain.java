@@ -61,6 +61,8 @@ public class GUIMain extends JFrame {
     private JPasswordField newPwd;
     private JRadioButton guangzhou;
     private JRadioButton invice;
+    private JRadioButton dongguan;
+    private JRadioButton shenzhen;
     ExecutorService newCachedThread = Executors.newCachedThreadPool();//创建一个缓冲线程池
 
     public GUIMain() {
@@ -115,48 +117,59 @@ public class GUIMain extends JFrame {
             show("上次操作正在执行");
             return;
         }
-        String password = new String(pwd.getPassword());
-        String start = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
-        if (submit.isSelected()) {
-            succ = false;
-            System.out.println(start + "，开始执行下单操作........");
-            int num = NumberUtils.parseNumber(qyt.getText(), Integer.class);
-            Address.initQty(num, num);
-            CMaotaiServiceImpl
-                .defaultSignup(password, path.getText(), NumberUtils.parseNumber(timer.getText(), Integer.class));
+        try {
+            String password = new String(pwd.getPassword());
+            String start = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
+            if (submit.isSelected()) {
+                succ = false;
+                System.out.println(start + "，开始执行下单操作........");
+                int num = NumberUtils.parseNumber(qyt.getText(), Integer.class);
+                Address.initQty(num, num);
+                CMaotaiServiceImpl
+                    .defaultSignup(password, path.getText(), NumberUtils.parseNumber(timer.getText(), Integer.class));
+            }
+            if (order.isSelected()) {
+                succ = false;
+                System.out.println(start + "，开始执行查询订单操作........");
+                CMaotaiServiceImpl.getOrderStatus(password, path.getText());
+            }
+            if (cancel.isSelected()) {
+                succ = false;
+                System.out.println(start + "，开始执行优化黑号操作........");
+                CMaotaiServiceImpl.cancel(password, path.getText());
+            }
+            if (guiyang.isSelected()) {
+                succ = false;
+                System.out.println(start + "，开始执行添加贵阳默认地址操作........");
+                CMaotaiServiceImpl.addDefaultAddress(path.getText(), password, Address.GUIYANG);
+            } else if (guangzhou.isSelected()) {
+                succ = false;
+                System.out.println(start + "，开始执行添加广州默认地址操作........");
+                CMaotaiServiceImpl.addDefaultAddress(path.getText(), password, Address.GUANGZHOU);
+            } else if (dongguan.isSelected()) {
+                succ = false;
+                System.out.println(start + "，开始执行添加东莞默认地址操作........");
+                CMaotaiServiceImpl.addDefaultAddress(path.getText(), password, Address.DONGGUAN);
+            } else if (shenzhen.isSelected()) {
+                succ = false;
+                System.out.println(start + "，开始执行添加深圳默认地址操作........");
+                CMaotaiServiceImpl.addDefaultAddress(path.getText(), password, Address.SHENZHEN);
+            }
+            if (changePwd.isSelected()) {
+                succ = false;
+                System.out.println(start + "，开始执行修改密码操作........");
+                CMaotaiServiceImpl.changePwd(path.getText(), password, new String(newPwd.getPassword()));
+            }
+            if (invice.isSelected()) {
+                succ = false;
+                System.out.println(start + "，开始执行添加发票操作........");
+                CMaotaiServiceImpl.addInvoice(path.getText(), password);
+            }
+            String end = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
+            System.out.println(end + "，结束");
+        } finally {
+            succ = true;
         }
-        if (order.isSelected()) {
-            succ = false;
-            System.out.println(start + "，开始执行查询订单操作........");
-            CMaotaiServiceImpl.getOrderStatus(password, path.getText());
-        }
-        if (cancel.isSelected()) {
-            succ = false;
-            System.out.println(start + "，开始执行优化黑号操作........");
-            CMaotaiServiceImpl.cancel(password, path.getText());
-        }
-        if (guiyang.isSelected()) {
-            succ = false;
-            System.out.println(start + "，开始执行添加贵阳默认地址操作........");
-            CMaotaiServiceImpl.addDefaultAddress(path.getText(), password, Address.GUIYANG);
-        } else if (guangzhou.isSelected()) {
-            succ = false;
-            System.out.println(start + "，开始执行添加广州默认地址操作........");
-            CMaotaiServiceImpl.addDefaultAddress(path.getText(), password, Address.GUANGZHOU);
-        }
-        if (changePwd.isSelected()) {
-            succ = false;
-            System.out.println(start + "，开始执行修改密码操作........");
-            CMaotaiServiceImpl.changePwd(path.getText(), password, new String(newPwd.getPassword()));
-        }
-        if (invice.isSelected()) {
-            succ = false;
-            System.out.println(start + "，开始执行添加发票操作........");
-            CMaotaiServiceImpl.addInvoice(path.getText(), password);
-        }
-        String end = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
-        System.out.println(end + "，结束");
-        succ = true;
     }
 
     private boolean succ = true;
@@ -339,6 +352,16 @@ public class GUIMain extends JFrame {
         panel1.add(invice, new GridConstraints(6, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        dongguan = new JRadioButton();
+        dongguan.setText("东莞");
+        panel1.add(dongguan, new GridConstraints(5, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        shenzhen = new JRadioButton();
+        shenzhen.setText("深圳");
+        panel1.add(shenzhen, new GridConstraints(5, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel2,
@@ -431,6 +454,8 @@ public class GUIMain extends JFrame {
         buttonGroup.add(guiyang);
         buttonGroup.add(guangzhou);
         buttonGroup.add(invice);
+        buttonGroup.add(dongguan);
+        buttonGroup.add(shenzhen);
     }
 
     /**

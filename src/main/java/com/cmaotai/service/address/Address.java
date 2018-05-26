@@ -109,6 +109,44 @@ public class Address {
             "广东省广州市白云区龙归镇", "广东省广州市白云区龙归镇南村龙河西路", "广东省广州市天河区五山街五山路",
             "广东省广州市天河区光宝路", "广东省广州市天河区长兴路");
 
+    private static List<String> DONGGUAN_DISTRICTS = Lists
+        .newArrayList(
+            "广东省东莞市宏图路", "广东省东莞市滨河路",
+            "广东省东莞市万江区坝头东江大道", "广东省东莞市坝新路",
+            "广东省东莞市莞太路", "广东省东莞市南城区鸿福路",
+            "广东省东莞市宝健二路", "广东省东莞市东城东泰新源南路与东骏路");
+
+    private static List<String> SHENZHEN_DISTRICTS = Lists
+        .newArrayList(
+            "广东省深圳市北环大道",
+            "广东省深圳市皇岗路",
+            "广东省深圳市红岭北路",
+            "广东省深圳市人民南路",
+            "广东省深圳市罗湖区凤凰路",
+            "广东省深圳市福田区笋岗西路",
+            "广东省深圳市罗湖区水贝一路",
+            "广东省深圳市罗湖区太安路",
+            "广东省深圳市福田区合正名园",
+            "广东省深圳市福田区民田路",
+            "广东省深圳市龙岗区长兴北路",
+            "广东省深圳市罗湖区新秀路",
+            "广东省深圳市罗湖区太宁路",
+            "广东省深圳市福田区梅林居",
+            "广东省深圳市宝安区翻身路",
+            "广东省深圳市红荔路",
+            "广东省深圳市龙华区梅龙大道",
+            "广东省深圳市龙华区梅坂大道",
+            "广东省深圳市南山区后海滨路",
+            "广东省深圳市华盛路",
+            "广东省深圳市雅园路",
+            "广东省深圳市桂园路",
+            "广东省深圳市宝安区裕安一路",
+            "广东省深圳市新安四路",
+            "广东省深圳市龙岗区欣景路",
+            "广东省深圳市沙盐路",
+            "广东省深圳市龙华区人民中路");
+
+
     private static List<String> WUXI_DISTRICTS = Lists
         .newArrayList("无锡市崇安区", "无锡市梁溪区", "无锡新区", "无锡锡山区", "无锡惠山区");
 
@@ -153,6 +191,16 @@ public class Address {
         return GUANGZHOU_DISTRICTS.get(random(max));
     }
 
+    public static String getDongGuanDistricts() {
+        int max = DONGGUAN_DISTRICTS.size();
+        return DONGGUAN_DISTRICTS.get(random(max));
+    }
+
+    public static String getShenZhenDistricts() {
+        int max = SHENZHEN_DISTRICTS.size();
+        return SHENZHEN_DISTRICTS.get(random(max));
+    }
+
     public static String getZunYiDistricts() {
         int max = ZUNYI_DISTRICTS.size();
         return ZUNYI_DISTRICTS.get(random(max));
@@ -192,6 +240,54 @@ public class Address {
             CMotaiDefaultAddress cMotaiDefaultAddress = new CMotaiDefaultAddress();
             cMotaiDefaultAddress.setProvinceId("440000");
             cMotaiDefaultAddress.setCityId("440100");
+            cMotaiDefaultAddress.setDistrictsId(aMapAddressTip.getAdcode());
+            cMotaiDefaultAddress.setAddressInfo(aMapAddressTip.getDistrict());
+            cMotaiDefaultAddress.setAddress(aMapAddressTip.getAddress());
+            cMotaiDefaultAddress.setShipTo(getCallName());
+            cMotaiDefaultAddress.setCallPhone(getCallPhone());
+            cMotaiDefaultAddress.setZipcode("000000");
+            cMotaiDefaultAddress.setIsDefault("1");
+            String[] ll = aMapAddressTip.getLocation().split(",");
+            cMotaiDefaultAddress.setLongitude(ll[0]);
+            cMotaiDefaultAddress.setLatitude(ll[1]);
+            return cMotaiDefaultAddress;
+        }).collect(Collectors.toList());
+    }
+
+    public static List<CMotaiDefaultAddress> dongGuanAddress(int num) {
+        List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getGuangZhouDistricts());
+        for (int i = aMapAddressTips.size(); i < num; i++) {
+            aMapAddressTips.addAll(AMapService.getAddress(getGuangZhouDistricts()));
+        }
+        System.out.println(aMapAddressTips.size() + "个东莞地址已生成");
+        return aMapAddressTips.stream().map(aMapAddressTip -> {
+            CMotaiDefaultAddress cMotaiDefaultAddress = new CMotaiDefaultAddress();
+            cMotaiDefaultAddress.setProvinceId("440000");
+            cMotaiDefaultAddress.setCityId("441900");
+            cMotaiDefaultAddress.setDistrictsId(aMapAddressTip.getAdcode());
+            cMotaiDefaultAddress.setAddressInfo(aMapAddressTip.getDistrict());
+            cMotaiDefaultAddress.setAddress(aMapAddressTip.getAddress());
+            cMotaiDefaultAddress.setShipTo(getCallName());
+            cMotaiDefaultAddress.setCallPhone(getCallPhone());
+            cMotaiDefaultAddress.setZipcode("000000");
+            cMotaiDefaultAddress.setIsDefault("1");
+            String[] ll = aMapAddressTip.getLocation().split(",");
+            cMotaiDefaultAddress.setLongitude(ll[0]);
+            cMotaiDefaultAddress.setLatitude(ll[1]);
+            return cMotaiDefaultAddress;
+        }).collect(Collectors.toList());
+    }
+
+    public static List<CMotaiDefaultAddress> shenZhenAddress(int num) {
+        List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getGuangZhouDistricts());
+        for (int i = aMapAddressTips.size(); i < num; i++) {
+            aMapAddressTips.addAll(AMapService.getAddress(getGuangZhouDistricts()));
+        }
+        System.out.println(aMapAddressTips.size() + "个深圳地址已生成");
+        return aMapAddressTips.stream().map(aMapAddressTip -> {
+            CMotaiDefaultAddress cMotaiDefaultAddress = new CMotaiDefaultAddress();
+            cMotaiDefaultAddress.setProvinceId("440000");
+            cMotaiDefaultAddress.setCityId("440300");
             cMotaiDefaultAddress.setDistrictsId(aMapAddressTip.getAdcode());
             cMotaiDefaultAddress.setAddressInfo(aMapAddressTip.getDistrict());
             cMotaiDefaultAddress.setAddress(aMapAddressTip.getAddress());
@@ -262,6 +358,11 @@ public class Address {
 
     public static String GUANGZHOU = "guangzhou";
 
+    public static String DONGGUAN = "dongguan";
+
+    public static String SHENZHEN = "shenzhen";
+
+
     public static CMotaiDefaultAddress getAddress(String from) {
         if (Strings.isBlank(from)) {
             return getGuiYangAddress();
@@ -274,6 +375,10 @@ public class Address {
             return getZunYiAddress();
         } else if (GUANGZHOU.equals(from)) {
             return getGuangZhouAddress();
+        } else if(DONGGUAN.equals(from)){
+            return getDongGuanAddress();
+        }else if (SHENZHEN.equals(from)){
+            return getShenZhenAddress();
         }
         return getGuiYangAddress();
     }
@@ -306,6 +411,22 @@ public class Address {
     private static CMotaiDefaultAddress getGuangZhouAddress() {
         if (ADDRESS.size() <= 0) {
             ADDRESS.addAll(guangzhouAddress(150));
+        }
+        int max = ADDRESS.size();
+        return ADDRESS.get(random(max));
+    }
+
+    private static CMotaiDefaultAddress getDongGuanAddress() {
+        if (ADDRESS.size() <= 0) {
+            ADDRESS.addAll(dongGuanAddress(100));
+        }
+        int max = ADDRESS.size();
+        return ADDRESS.get(random(max));
+    }
+
+    private static CMotaiDefaultAddress getShenZhenAddress() {
+        if (ADDRESS.size() <= 0) {
+            ADDRESS.addAll(shenZhenAddress(100));
         }
         int max = ADDRESS.size();
         return ADDRESS.get(random(max));
