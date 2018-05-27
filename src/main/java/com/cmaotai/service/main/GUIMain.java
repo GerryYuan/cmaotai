@@ -48,7 +48,6 @@ public class GUIMain extends JFrame {
     private JRadioButton submit;
     private JRadioButton order;
     private JPasswordField pwd;
-    private JTextField qyt;
     private JTextArea textArea;
     private JButton clean;
     private JTextField path;
@@ -65,6 +64,9 @@ public class GUIMain extends JFrame {
     private JRadioButton shenzhen;
     private JRadioButton seachDefaultAddress;
     private JRadioButton isForEach;
+    private JTextField qty1;
+    private JTextField qty2;
+    private JTextField qty3;
     ExecutorService newCachedThread = Executors.newCachedThreadPool();//创建一个缓冲线程池
 
     public GUIMain() {
@@ -125,8 +127,12 @@ public class GUIMain extends JFrame {
             if (submit.isSelected()) {
                 succ = false;
                 System.out.println(start + "，开始执行下单操作........");
-                int num = NumberUtils.parseNumber(qyt.getText(), Integer.class);
-                Address.initQty(num, num);
+                int num1 = NumberUtils.parseNumber(qty1.getText(), Integer.class);
+                int num2 = NumberUtils.parseNumber(qty2.getText(), Integer.class);
+                int num3 = NumberUtils.parseNumber(qty3.getText(), Integer.class);
+                Address.initQty(num1, num1);
+                Address.initQty(num2, num2);
+                Address.initQty(num3, num3);
                 CMaotaiServiceImpl
                     .defaultSignup(password, path.getText(), NumberUtils.parseNumber(timer.getText(), Integer.class));
             }
@@ -143,8 +149,12 @@ public class GUIMain extends JFrame {
                         System.out.println("当前时间【" + now.toString("yyyy-MM-dd HH:mm:ss") + "】超过18点，不执行循环下单操作");
                         break;
                     }
-                    int num = NumberUtils.parseNumber(qyt.getText(), Integer.class);
-                    Address.initQty(num, num);
+                    int num1 = NumberUtils.parseNumber(qty1.getText(), Integer.class);
+                    int num2 = NumberUtils.parseNumber(qty2.getText(), Integer.class);
+                    int num3 = NumberUtils.parseNumber(qty3.getText(), Integer.class);
+                    Address.initQty(num1, num1);
+                    Address.initQty(num2, num2);
+                    Address.initQty(num3, num3);
                     CMaotaiServiceImpl
                         .defaultSignup(password, path.getText(),
                             NumberUtils.parseNumber(timer.getText(), Integer.class));
@@ -286,7 +296,7 @@ public class GUIMain extends JFrame {
                 GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0,
                 false));
         final JLabel label1 = new JLabel();
-        label1.setText("下单瓶数（默认6）：");
+        label1.setText("下单瓶数（3个随机的瓶数）：");
         panel1.add(label1, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label2 = new JLabel();
@@ -300,11 +310,6 @@ public class GUIMain extends JFrame {
         pwd = new JPasswordField();
         pwd.setText("123456ygh");
         panel1.add(pwd, new GridConstraints(1, 1, 1, 4, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
-            GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null,
-            0, false));
-        qyt = new JTextField();
-        qyt.setText("6");
-        panel1.add(qyt, new GridConstraints(4, 1, 1, 4, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
             GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null,
             0, false));
         final JLabel label4 = new JLabel();
@@ -344,7 +349,7 @@ public class GUIMain extends JFrame {
         panel1.add(label7, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label8 = new JLabel();
-        label8.setText("新密码：");
+        label8.setText("新密码（修改密码用）：");
         panel1.add(label8, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         newPwd = new JPasswordField();
@@ -392,6 +397,11 @@ public class GUIMain extends JFrame {
             new GridConstraints(7, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
                 GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                 GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        isForEach = new JRadioButton();
+        isForEach.setText("循环下单");
+        panel1.add(isForEach, new GridConstraints(6, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         order = new JRadioButton();
         order.setEnabled(true);
         order.setSelected(true);
@@ -399,11 +409,21 @@ public class GUIMain extends JFrame {
         panel1.add(order, new GridConstraints(7, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(256, 26), null, 5, false));
-        isForEach = new JRadioButton();
-        isForEach.setText("循环下单");
-        panel1.add(isForEach, new GridConstraints(6, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        qty1 = new JTextField();
+        qty1.setText("2");
+        panel1.add(qty1, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
+            GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null,
+            0, false));
+        qty2 = new JTextField();
+        qty2.setText("4");
+        panel1.add(qty2, new GridConstraints(4, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
+            GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null,
+            0, false));
+        qty3 = new JTextField();
+        qty3.setText("5");
+        panel1.add(qty3, new GridConstraints(4, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
+            GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null,
+            0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel2,
