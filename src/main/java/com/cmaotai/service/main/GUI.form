@@ -219,6 +219,14 @@
               <text value="查询默认地址"/>
             </properties>
           </component>
+          <component id="91d2b" class="javax.swing.JRadioButton" binding="isForEach">
+            <constraints>
+              <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="循环下单"/>
+            </properties>
+          </component>
           <component id="6f1ab" class="javax.swing.JRadioButton" binding="order">
             <constraints>
               <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="5" use-parent-layout="false">
@@ -229,14 +237,6 @@
               <enabled value="true"/>
               <selected value="true"/>
               <text value="查询订单"/>
-            </properties>
-          </component>
-          <component id="91d2b" class="javax.swing.JRadioButton" binding="isForEach">
-            <constraints>
-              <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="循环下单"/>
             </properties>
           </component>
         </children>
