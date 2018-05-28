@@ -4,7 +4,6 @@ import com.cmaotai.service.address.Address;
 import com.cmaotai.service.service.CMaotaiServiceImpl;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -54,7 +53,7 @@ public class GUIMain extends JFrame {
     private JTextField timer;
     private JButton shutdown;
     private JScrollPane jscrollPane;
-    private JRadioButton cancel;
+    private JRadioButton cancelBlack;
     private JRadioButton guiyang;
     private JRadioButton changePwd;
     private JPasswordField newPwd;
@@ -67,6 +66,7 @@ public class GUIMain extends JFrame {
     private JTextField qty1;
     private JTextField qty2;
     private JTextField qty3;
+    private JRadioButton cancel;
     ExecutorService newCachedThread = Executors.newCachedThreadPool();//创建一个缓冲线程池
 
     public GUIMain() {
@@ -165,9 +165,14 @@ public class GUIMain extends JFrame {
                 System.out.println(start + "，开始执行查询订单操作........");
                 CMaotaiServiceImpl.getOrderStatus(password, path.getText());
             }
-            if (cancel.isSelected()) {
+            if (cancelBlack.isSelected()) {
                 succ = false;
                 System.out.println(start + "，开始执行优化黑号操作........");
+                CMaotaiServiceImpl.cancelBlack(password, path.getText());
+            }
+            if (cancel.isSelected()) {
+                succ = false;
+                System.out.println(start + "，开始执行取消订单操作........");
                 CMaotaiServiceImpl.cancel(password, path.getText());
             }
             if (guiyang.isSelected()) {
@@ -334,11 +339,12 @@ public class GUIMain extends JFrame {
         label6.setText("黑号处理：");
         panel1.add(label6, new GridConstraints(8, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        cancel = new JRadioButton();
-        cancel.setText("下单不了");
-        panel1.add(cancel, new GridConstraints(8, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-            GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(158, 26), null, 0, false));
+        cancelBlack = new JRadioButton();
+        cancelBlack.setText("下单不了");
+        panel1.add(cancelBlack,
+            new GridConstraints(8, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(158, 26), null, 0, false));
         submit = new JRadioButton();
         submit.setText("下单");
         panel1.add(submit, new GridConstraints(6, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
@@ -424,6 +430,11 @@ public class GUIMain extends JFrame {
         panel1.add(qty3, new GridConstraints(4, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
             GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null,
             0, false));
+        cancel = new JRadioButton();
+        cancel.setText("取消订单");
+        panel1.add(cancel, new GridConstraints(8, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel2,
@@ -509,7 +520,7 @@ public class GUIMain extends JFrame {
         jscrollPane.setViewportView(textArea);
         ButtonGroup buttonGroup;
         buttonGroup = new ButtonGroup();
-        buttonGroup.add(cancel);
+        buttonGroup.add(cancelBlack);
         buttonGroup.add(submit);
         buttonGroup.add(changePwd);
         buttonGroup.add(guiyang);
@@ -518,8 +529,9 @@ public class GUIMain extends JFrame {
         buttonGroup.add(dongguan);
         buttonGroup.add(shenzhen);
         buttonGroup.add(seachDefaultAddress);
-        buttonGroup.add(order);
         buttonGroup.add(isForEach);
+        buttonGroup.add(order);
+        buttonGroup.add(cancel);
     }
 
     /**

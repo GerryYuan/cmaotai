@@ -6,7 +6,6 @@ import com.cmaotai.service.address.Address;
 import com.cmaotai.service.list.CMaotaiList;
 import com.cmaotai.service.list.CMaotaiReturn;
 import com.cmaotai.service.mobile.Invoice;
-import com.cmaotai.service.mobile.Mobile;
 import com.cmaotai.service.model.CMaotaiOrderStatus;
 import com.cmaotai.service.model.CMaotaiOrderStatus.OrderStatus;
 import com.cmaotai.service.model.CMaotaiUser;
@@ -25,8 +24,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
-import javax.swing.JTextArea;
-import org.apache.commons.math3.analysis.function.Add;
 import org.apache.logging.log4j.util.Strings;
 import org.joda.time.DateTime;
 import org.springframework.http.HttpHeaders;
@@ -145,7 +142,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     }
 
     @Override
-    public CMaotaiList getList() throws Exception {
+    public List<CMaotaiList> getList() throws Exception {
         String action =
             "action=GrabSingleManager.getList&status=-1&index=1&size=10&timestamp121=" + new Date().getTime();
         ResponseEntity<String> response = post(action, headers);
@@ -158,9 +155,15 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         CMaotaiReturn<CMaotaiList> returns = JSON
             .parseObject(dataResult.getData(), new TypeReference<CMaotaiReturn<CMaotaiList>>() {
             });
-        List<CMaotaiList> cMaotaiLists = returns.getData().getData();
+        return  returns.getData().getData();
+    }
+
+    @Override
+    public boolean cancelBlack() throws Exception {
+        List<CMaotaiList> cMaotaiLists = getList();
         if (cMaotaiLists == null) {
-            return null;
+            System.out.println("取消失败！未查到相关下单信息");
+            return false;
         }
         CMaotaiList cMaotaiList = cMaotaiLists.stream().filter(s -> s.getOrderStatus() == 99)
             .findFirst().orElse(null);
@@ -168,12 +171,6 @@ public class CMaotaiServiceImpl implements CMaotaiService {
             cMaotaiList = cMaotaiLists.stream().filter(s -> s.getOrderStatus() == 6)
                 .findFirst().orElse(null);
         }
-        return cMaotaiList;
-    }
-
-    @Override
-    public boolean cancel() throws Exception {
-        CMaotaiList cMaotaiList = getList();
         if (cMaotaiList == null) {
             System.out.println("取消失败！未查到相关下单信息");
             return false;
@@ -200,6 +197,31 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     }
 
     @Override
+    public boolean cancel() throws Exception {
+        List<CMaotaiList> cMaotais = getList();
+        if (cMaotais == null) {
+            System.out.println("取消失败！未查到相关下单信息");
+            return false;
+        }
+        CMaotaiList cMaotaiList = cMaotais.stream().filter(s -> s.getOrderStatus() == 3)
+            .findFirst().orElse(null);
+        if (cMaotaiList == null) {
+            System.out.println("取消失败！未查到相关下单信息");
+            return false;
+        }
+        String action = "action=GrabSingleManager.cancel&id=" + cMaotaiList.getId() + "&pid=" + cMaotaiList.getGoodsId()
+            + "&timestamp121=" + new Date().getTime();
+        ResponseEntity<String> response = post(action, headers);
+        DataResult<String> dataResult = JSON.parseObject(response.getBody(), new TypeReference<DataResult<String>>() {
+        });
+        if (!dataResult.isState()) {
+            throw new Exception("取消失败！");
+        }
+        headers = parseHeader(response.getHeaders());
+        return true;
+    }
+
+    @Override
     public boolean cancel(Integer id) throws Exception {
         if (id == null) {
             System.out.println("取消失败！未查到相关下单信息");
@@ -213,13 +235,6 @@ public class CMaotaiServiceImpl implements CMaotaiService {
             throw new Exception("取消失败！");
         }
         headers = parseHeader(response.getHeaders());
-        CMaotaiReturn<CMaotaiList> returns = JSON
-            .parseObject(dataResult.getData(), new TypeReference<CMaotaiReturn<CMaotaiList>>() {
-            });
-        if (returns.getCount() != 1) {
-            System.out.println("取消失败，id+1继续尝试");
-            return cancel(id + 1);
-        }
         return true;
     }
 
@@ -503,6 +518,35 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         }
     }
 
+    public static void cancelBlack(String pwd, String path) throws IOException {
+        List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
+            .filter(Strings::isNotBlank).collect(
+                Collectors.toList());
+        AtomicInteger succ = new AtomicInteger(0);
+        List<String> failMobiles = Lists.newArrayList();
+        mobiles.forEach(s -> {
+            CMaotaiServiceImpl cMaotaiService = new CMaotaiServiceImpl();
+            cMaotaiService.loginBefore();
+            try {
+                cMaotaiService.login(s, pwd);
+                if (cMaotaiService.cancelBlack()) {
+                    succ.addAndGet(1);
+                    System.out.println("手机号【" + s + "】修复成功!");
+                } else {
+                    failMobiles.add(s);
+                    System.err.println("手机号【" + s + "】修复失败！");
+                }
+            } catch (Exception e) {
+                failMobiles.add(s);
+                System.err.println("手机号【" + s + "】异常！" + e.getMessage());
+            }
+        });
+        System.out.println("修复结果：总修复【" + mobiles.size() + "】，成功【" + succ.get() + "】,失败【" + failMobiles.size() + "】");
+        if (failMobiles.size() > 0) {
+            System.out.println("修复失败的手机号：" + failMobiles);
+        }
+    }
+
     public static void cancel(String pwd, String path) throws IOException {
         List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
             .filter(Strings::isNotBlank).collect(
@@ -554,5 +598,10 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         if (failMobiles.size() > 0) {
             System.out.println("查询失败的手机号：" + failMobiles);
         }
+    }
+
+    public static void main(String[] args) throws IOException {
+        defaultSignup("123456ygh","/Users/gerry/Downloads/maitai/all.txt", 0);
+        System.out.println();
     }
 }
