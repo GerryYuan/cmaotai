@@ -44,7 +44,7 @@ public class Address {
             "广东省广州市白云区新广从公路",
             "广东省广州市白云区龙归镇南村龙河西路",
             "广东省广州市白云区江仁路",
-            "广东省广州市天河区",
+            "广东省广州市天河区", "广东省广州市花都区凤凰北路",
             "广东省广州市天河区五山街五山路",
             "广东省广州市天河区汇景北路",
             "广东省广州市天河区光宝路",
@@ -159,7 +159,7 @@ public class Address {
 
     public static List<CMotaiAddress> wuXiAddress(int num) {
         List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getWuXiDistricts());
-        for (int i = aMapAddressTips.size(); i < num; i++) {
+        for (;aMapAddressTips.size() < num;) {
             aMapAddressTips.addAll(AMapService.getAddress(getWuXiDistricts()));
         }
         System.out.println(aMapAddressTips.size() + "个无锡地址已生成");
@@ -183,7 +183,7 @@ public class Address {
 
     public static List<CMotaiAddress> guangzhouAddress(int num) {
         List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getGuangZhouDistricts());
-        for (int i = aMapAddressTips.size(); i < num; i++) {
+        for (;aMapAddressTips.size() < num;) {
             aMapAddressTips.addAll(AMapService.getAddress(getGuangZhouDistricts()));
         }
         System.out.println(aMapAddressTips.size() + "个广州地址已生成");
@@ -207,7 +207,7 @@ public class Address {
 
     public static List<CMotaiAddress> dongGuanAddress(int num) {
         List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getDongGuanDistricts());
-        for (int i = aMapAddressTips.size(); i < num; i++) {
+        for (;aMapAddressTips.size() < num;) {
             aMapAddressTips.addAll(AMapService.getAddress(getDongGuanDistricts()));
         }
         System.out.println(aMapAddressTips.size() + "个东莞地址已生成");
@@ -231,7 +231,7 @@ public class Address {
 
     public static List<CMotaiAddress> shenZhenAddress(int num) {
         List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getShenZhenDistricts());
-        for (int i = aMapAddressTips.size(); i < num; i++) {
+        for (;aMapAddressTips.size() < num;) {
             aMapAddressTips.addAll(AMapService.getAddress(getShenZhenDistricts()));
         }
         System.out.println(aMapAddressTips.size() + "个深圳地址已生成");
@@ -255,7 +255,7 @@ public class Address {
 
     public static List<CMotaiAddress> zunYiAddress(int num) {
         List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getZunYiDistricts());
-        for (int i = aMapAddressTips.size(); i < num; i++) {
+        for (;aMapAddressTips.size() < num;) {
             aMapAddressTips.addAll(AMapService.getAddress(getZunYiDistricts()));
         }
         System.out.println(aMapAddressTips.size() + "个遵义地址已生成");
@@ -279,7 +279,7 @@ public class Address {
 
     public static List<CMotaiAddress> guiYangAddress(int num) {
         List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getGuiYangDistricts());
-        for (; aMapAddressTips.size() < num; ) {
+        for (;aMapAddressTips.size() < num;) {
             aMapAddressTips.addAll(AMapService.getAddress(getGuiYangDistricts()));
         }
         System.out.println(aMapAddressTips.size() + "个贵阳地址已生成");
@@ -360,7 +360,7 @@ public class Address {
 
     private static CMotaiAddress getGuangZhouAddress() {
         if (ADDRESS.size() <= 0) {
-            ADDRESS.addAll(guangzhouAddress(150));
+            ADDRESS.addAll(guangzhouAddress(200));
         }
         int max = ADDRESS.size();
         return ADDRESS.get(random(max));
