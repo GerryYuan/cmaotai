@@ -645,10 +645,16 @@ public class CMaotaiServiceImpl implements CMaotaiService {
                 if (cMotaiAddresses == null || cMotaiAddresses.size() == 0) {
                     System.out.println("手机号【" + s + "】没有查询到地址，不进行删除");
                 } else {
-                    cMotaiAddresses.stream().filter(c -> c.getIsDefault().equals("false")).forEach(ss->{
-                        cMaotaiService.deleteAddress(ss.getSId());
-                        System.out.println("手机号【" + s + "】删除地址【" + ss.getAddressInfo() + "】成功");
-                    });
+                    List<CMotaiAddress> addresses = cMotaiAddresses.stream()
+                        .filter(c -> c.getIsDefault().equals("false")).collect(Collectors.toList());
+                    if (addresses == null || addresses.size() == 0) {
+                        System.out.println("手机号【" + s + "】不需要删除地址");
+                    } else {
+                        addresses.forEach(ss -> {
+                            cMaotaiService.deleteAddress(ss.getSId());
+                            System.out.println("手机号【" + s + "】删除地址【" + ss.getAddressInfo() + "】成功");
+                        });
+                    }
                     succ.addAndGet(1);
                 }
             } catch (Exception e) {
