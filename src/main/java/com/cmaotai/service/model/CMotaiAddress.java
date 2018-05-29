@@ -4,7 +4,7 @@ import java.io.Serializable;
 import lombok.Data;
 
 @Data
-public class CMotaiDefaultAddress implements Serializable {
+public class CMotaiAddress implements Serializable {
 
     private int SId;
 

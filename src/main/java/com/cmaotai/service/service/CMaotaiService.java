@@ -2,11 +2,9 @@ package com.cmaotai.service.service;
 
 import com.cmaotai.service.address.Address;
 import com.cmaotai.service.list.CMaotaiList;
-import com.cmaotai.service.mobile.Invoice;
 import com.cmaotai.service.model.CMaotaiOrderStatus;
-import com.cmaotai.service.model.CMotaiDefaultAddress;
+import com.cmaotai.service.model.CMotaiAddress;
 import com.google.common.collect.Lists;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -41,11 +39,15 @@ public interface CMaotaiService {
 
     List<CMaotaiOrderStatus> getYsOrderStatusCount() throws Exception;
 
-    CMotaiDefaultAddress getDefualtAdd() throws Exception;
+    CMotaiAddress getDefualtAdd() throws Exception;
 
-    boolean defaultSubmit(CMotaiDefaultAddress cMotaiDefaultAddress) throws Exception;
+    List<CMotaiAddress> getAddessList();
 
-    boolean invoiceSubmit(CMotaiDefaultAddress cMotaiDefaultAddress) throws Exception;
+    boolean deleteAddress(int sId);
+
+    boolean defaultSubmit(CMotaiAddress cMotaiAddress) throws Exception;
+
+    boolean invoiceSubmit(CMotaiAddress cMotaiAddress) throws Exception;
 
     boolean logout() throws Exception;
 

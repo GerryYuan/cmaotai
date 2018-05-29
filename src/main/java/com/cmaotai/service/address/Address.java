@@ -2,7 +2,7 @@ package com.cmaotai.service.address;
 
 import com.cmaotai.service.address.AMapAddress.AMapAddressTip;
 import com.cmaotai.service.mobile.Mobile;
-import com.cmaotai.service.model.CMotaiDefaultAddress;
+import com.cmaotai.service.model.CMotaiAddress;
 import com.cmaotai.service.service.AMapService;
 import com.google.common.collect.Lists;
 import java.util.List;
@@ -12,7 +12,7 @@ import org.apache.logging.log4j.util.Strings;
 
 public class Address {
 
-    private static List<CMotaiDefaultAddress> ADDRESS = Lists.newArrayList();
+    private static List<CMotaiAddress> ADDRESS = Lists.newArrayList();
 
     private static List<String> GUIYANG_DISTRICTS = Lists
         .newArrayList(
@@ -157,147 +157,147 @@ public class Address {
         return ZUNYI_DISTRICTS.get(random(max));
     }
 
-    public static List<CMotaiDefaultAddress> wuXiAddress(int num) {
+    public static List<CMotaiAddress> wuXiAddress(int num) {
         List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getWuXiDistricts());
         for (int i = aMapAddressTips.size(); i < num; i++) {
             aMapAddressTips.addAll(AMapService.getAddress(getWuXiDistricts()));
         }
         System.out.println(aMapAddressTips.size() + "个无锡地址已生成");
         return aMapAddressTips.stream().map(aMapAddressTip -> {
-            CMotaiDefaultAddress cMotaiDefaultAddress = new CMotaiDefaultAddress();
-            cMotaiDefaultAddress.setProvinceId("320000");
-            cMotaiDefaultAddress.setCityId("320200");
-            cMotaiDefaultAddress.setDistrictsId(aMapAddressTip.getAdcode());
-            cMotaiDefaultAddress.setAddressInfo(aMapAddressTip.getDistrict());
-            cMotaiDefaultAddress.setAddress(aMapAddressTip.getAddress());
-            cMotaiDefaultAddress.setShipTo(getCallName());
-            cMotaiDefaultAddress.setCallPhone(getCallPhone());
-            cMotaiDefaultAddress.setZipcode("000000");
-            cMotaiDefaultAddress.setIsDefault("1");
+            CMotaiAddress cMotaiAddress = new CMotaiAddress();
+            cMotaiAddress.setProvinceId("320000");
+            cMotaiAddress.setCityId("320200");
+            cMotaiAddress.setDistrictsId(aMapAddressTip.getAdcode());
+            cMotaiAddress.setAddressInfo(aMapAddressTip.getDistrict());
+            cMotaiAddress.setAddress(aMapAddressTip.getAddress());
+            cMotaiAddress.setShipTo(getCallName());
+            cMotaiAddress.setCallPhone(getCallPhone());
+            cMotaiAddress.setZipcode("000000");
+            cMotaiAddress.setIsDefault("1");
             String[] ll = aMapAddressTip.getLocation().split(",");
-            cMotaiDefaultAddress.setLongitude(ll[0]);
-            cMotaiDefaultAddress.setLatitude(ll[1]);
-            return cMotaiDefaultAddress;
+            cMotaiAddress.setLongitude(ll[0]);
+            cMotaiAddress.setLatitude(ll[1]);
+            return cMotaiAddress;
         }).collect(Collectors.toList());
     }
 
-    public static List<CMotaiDefaultAddress> guangzhouAddress(int num) {
+    public static List<CMotaiAddress> guangzhouAddress(int num) {
         List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getGuangZhouDistricts());
         for (int i = aMapAddressTips.size(); i < num; i++) {
             aMapAddressTips.addAll(AMapService.getAddress(getGuangZhouDistricts()));
         }
         System.out.println(aMapAddressTips.size() + "个广州地址已生成");
         return aMapAddressTips.stream().map(aMapAddressTip -> {
-            CMotaiDefaultAddress cMotaiDefaultAddress = new CMotaiDefaultAddress();
-            cMotaiDefaultAddress.setProvinceId("440000");
-            cMotaiDefaultAddress.setCityId("440100");
-            cMotaiDefaultAddress.setDistrictsId(aMapAddressTip.getAdcode());
-            cMotaiDefaultAddress.setAddressInfo(aMapAddressTip.getDistrict());
-            cMotaiDefaultAddress.setAddress(aMapAddressTip.getAddress());
-            cMotaiDefaultAddress.setShipTo(getCallName());
-            cMotaiDefaultAddress.setCallPhone(getCallPhone());
-            cMotaiDefaultAddress.setZipcode("000000");
-            cMotaiDefaultAddress.setIsDefault("1");
+            CMotaiAddress cMotaiAddress = new CMotaiAddress();
+            cMotaiAddress.setProvinceId("440000");
+            cMotaiAddress.setCityId("440100");
+            cMotaiAddress.setDistrictsId(aMapAddressTip.getAdcode());
+            cMotaiAddress.setAddressInfo(aMapAddressTip.getDistrict());
+            cMotaiAddress.setAddress(aMapAddressTip.getAddress());
+            cMotaiAddress.setShipTo(getCallName());
+            cMotaiAddress.setCallPhone(getCallPhone());
+            cMotaiAddress.setZipcode("000000");
+            cMotaiAddress.setIsDefault("1");
             String[] ll = aMapAddressTip.getLocation().split(",");
-            cMotaiDefaultAddress.setLongitude(ll[0]);
-            cMotaiDefaultAddress.setLatitude(ll[1]);
-            return cMotaiDefaultAddress;
+            cMotaiAddress.setLongitude(ll[0]);
+            cMotaiAddress.setLatitude(ll[1]);
+            return cMotaiAddress;
         }).collect(Collectors.toList());
     }
 
-    public static List<CMotaiDefaultAddress> dongGuanAddress(int num) {
+    public static List<CMotaiAddress> dongGuanAddress(int num) {
         List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getDongGuanDistricts());
         for (int i = aMapAddressTips.size(); i < num; i++) {
             aMapAddressTips.addAll(AMapService.getAddress(getDongGuanDistricts()));
         }
         System.out.println(aMapAddressTips.size() + "个东莞地址已生成");
         return aMapAddressTips.stream().map(aMapAddressTip -> {
-            CMotaiDefaultAddress cMotaiDefaultAddress = new CMotaiDefaultAddress();
-            cMotaiDefaultAddress.setProvinceId("440000");
-            cMotaiDefaultAddress.setCityId("441900");
-            cMotaiDefaultAddress.setDistrictsId(aMapAddressTip.getAdcode());
-            cMotaiDefaultAddress.setAddressInfo(aMapAddressTip.getDistrict());
-            cMotaiDefaultAddress.setAddress(aMapAddressTip.getAddress());
-            cMotaiDefaultAddress.setShipTo(getCallName());
-            cMotaiDefaultAddress.setCallPhone(getCallPhone());
-            cMotaiDefaultAddress.setZipcode("000000");
-            cMotaiDefaultAddress.setIsDefault("1");
+            CMotaiAddress cMotaiAddress = new CMotaiAddress();
+            cMotaiAddress.setProvinceId("440000");
+            cMotaiAddress.setCityId("441900");
+            cMotaiAddress.setDistrictsId(aMapAddressTip.getAdcode());
+            cMotaiAddress.setAddressInfo(aMapAddressTip.getDistrict());
+            cMotaiAddress.setAddress(aMapAddressTip.getAddress());
+            cMotaiAddress.setShipTo(getCallName());
+            cMotaiAddress.setCallPhone(getCallPhone());
+            cMotaiAddress.setZipcode("000000");
+            cMotaiAddress.setIsDefault("1");
             String[] ll = aMapAddressTip.getLocation().split(",");
-            cMotaiDefaultAddress.setLongitude(ll[0]);
-            cMotaiDefaultAddress.setLatitude(ll[1]);
-            return cMotaiDefaultAddress;
+            cMotaiAddress.setLongitude(ll[0]);
+            cMotaiAddress.setLatitude(ll[1]);
+            return cMotaiAddress;
         }).collect(Collectors.toList());
     }
 
-    public static List<CMotaiDefaultAddress> shenZhenAddress(int num) {
+    public static List<CMotaiAddress> shenZhenAddress(int num) {
         List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getShenZhenDistricts());
         for (int i = aMapAddressTips.size(); i < num; i++) {
             aMapAddressTips.addAll(AMapService.getAddress(getShenZhenDistricts()));
         }
         System.out.println(aMapAddressTips.size() + "个深圳地址已生成");
         return aMapAddressTips.stream().map(aMapAddressTip -> {
-            CMotaiDefaultAddress cMotaiDefaultAddress = new CMotaiDefaultAddress();
-            cMotaiDefaultAddress.setProvinceId("440000");
-            cMotaiDefaultAddress.setCityId("440300");
-            cMotaiDefaultAddress.setDistrictsId(aMapAddressTip.getAdcode());
-            cMotaiDefaultAddress.setAddressInfo(aMapAddressTip.getDistrict());
-            cMotaiDefaultAddress.setAddress(aMapAddressTip.getAddress());
-            cMotaiDefaultAddress.setShipTo(getCallName());
-            cMotaiDefaultAddress.setCallPhone(getCallPhone());
-            cMotaiDefaultAddress.setZipcode("000000");
-            cMotaiDefaultAddress.setIsDefault("1");
+            CMotaiAddress cMotaiAddress = new CMotaiAddress();
+            cMotaiAddress.setProvinceId("440000");
+            cMotaiAddress.setCityId("440300");
+            cMotaiAddress.setDistrictsId(aMapAddressTip.getAdcode());
+            cMotaiAddress.setAddressInfo(aMapAddressTip.getDistrict());
+            cMotaiAddress.setAddress(aMapAddressTip.getAddress());
+            cMotaiAddress.setShipTo(getCallName());
+            cMotaiAddress.setCallPhone(getCallPhone());
+            cMotaiAddress.setZipcode("000000");
+            cMotaiAddress.setIsDefault("1");
             String[] ll = aMapAddressTip.getLocation().split(",");
-            cMotaiDefaultAddress.setLongitude(ll[0]);
-            cMotaiDefaultAddress.setLatitude(ll[1]);
-            return cMotaiDefaultAddress;
+            cMotaiAddress.setLongitude(ll[0]);
+            cMotaiAddress.setLatitude(ll[1]);
+            return cMotaiAddress;
         }).collect(Collectors.toList());
     }
 
-    public static List<CMotaiDefaultAddress> zunYiAddress(int num) {
+    public static List<CMotaiAddress> zunYiAddress(int num) {
         List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getZunYiDistricts());
         for (int i = aMapAddressTips.size(); i < num; i++) {
             aMapAddressTips.addAll(AMapService.getAddress(getZunYiDistricts()));
         }
         System.out.println(aMapAddressTips.size() + "个遵义地址已生成");
         return aMapAddressTips.stream().map(aMapAddressTip -> {
-            CMotaiDefaultAddress cMotaiDefaultAddress = new CMotaiDefaultAddress();
-            cMotaiDefaultAddress.setProvinceId("520000");
-            cMotaiDefaultAddress.setCityId("520300");
-            cMotaiDefaultAddress.setDistrictsId(aMapAddressTip.getAdcode());
-            cMotaiDefaultAddress.setAddressInfo(aMapAddressTip.getDistrict());
-            cMotaiDefaultAddress.setAddress(aMapAddressTip.getAddress());
-            cMotaiDefaultAddress.setShipTo(getCallName());
-            cMotaiDefaultAddress.setCallPhone(getCallPhone());
-            cMotaiDefaultAddress.setZipcode("000000");
-            cMotaiDefaultAddress.setIsDefault("1");
+            CMotaiAddress cMotaiAddress = new CMotaiAddress();
+            cMotaiAddress.setProvinceId("520000");
+            cMotaiAddress.setCityId("520300");
+            cMotaiAddress.setDistrictsId(aMapAddressTip.getAdcode());
+            cMotaiAddress.setAddressInfo(aMapAddressTip.getDistrict());
+            cMotaiAddress.setAddress(aMapAddressTip.getAddress());
+            cMotaiAddress.setShipTo(getCallName());
+            cMotaiAddress.setCallPhone(getCallPhone());
+            cMotaiAddress.setZipcode("000000");
+            cMotaiAddress.setIsDefault("1");
             String[] ll = aMapAddressTip.getLocation().split(",");
-            cMotaiDefaultAddress.setLongitude(ll[0]);
-            cMotaiDefaultAddress.setLatitude(ll[1]);
-            return cMotaiDefaultAddress;
+            cMotaiAddress.setLongitude(ll[0]);
+            cMotaiAddress.setLatitude(ll[1]);
+            return cMotaiAddress;
         }).collect(Collectors.toList());
     }
 
-    public static List<CMotaiDefaultAddress> guiYangAddress(int num) {
+    public static List<CMotaiAddress> guiYangAddress(int num) {
         List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getGuiYangDistricts());
         for (; aMapAddressTips.size() < num; ) {
             aMapAddressTips.addAll(AMapService.getAddress(getGuiYangDistricts()));
         }
         System.out.println(aMapAddressTips.size() + "个贵阳地址已生成");
         return aMapAddressTips.stream().map(aMapAddressTip -> {
-            CMotaiDefaultAddress cMotaiDefaultAddress = new CMotaiDefaultAddress();
-            cMotaiDefaultAddress.setProvinceId("520000");
-            cMotaiDefaultAddress.setCityId("520000");
-            cMotaiDefaultAddress.setDistrictsId(aMapAddressTip.getAdcode());
-            cMotaiDefaultAddress.setAddressInfo(aMapAddressTip.getDistrict());
-            cMotaiDefaultAddress.setAddress(aMapAddressTip.getAddress());
-            cMotaiDefaultAddress.setShipTo(getCallName());
-            cMotaiDefaultAddress.setCallPhone(getCallPhone());
-            cMotaiDefaultAddress.setZipcode("000000");
-            cMotaiDefaultAddress.setIsDefault("1");
+            CMotaiAddress cMotaiAddress = new CMotaiAddress();
+            cMotaiAddress.setProvinceId("520000");
+            cMotaiAddress.setCityId("520000");
+            cMotaiAddress.setDistrictsId(aMapAddressTip.getAdcode());
+            cMotaiAddress.setAddressInfo(aMapAddressTip.getDistrict());
+            cMotaiAddress.setAddress(aMapAddressTip.getAddress());
+            cMotaiAddress.setShipTo(getCallName());
+            cMotaiAddress.setCallPhone(getCallPhone());
+            cMotaiAddress.setZipcode("000000");
+            cMotaiAddress.setIsDefault("1");
             String[] ll = aMapAddressTip.getLocation().split(",");
-            cMotaiDefaultAddress.setLongitude(ll[0]);
-            cMotaiDefaultAddress.setLatitude(ll[1]);
-            return cMotaiDefaultAddress;
+            cMotaiAddress.setLongitude(ll[0]);
+            cMotaiAddress.setLatitude(ll[1]);
+            return cMotaiAddress;
         }).collect(Collectors.toList());
     }
 
@@ -313,7 +313,7 @@ public class Address {
 
     public static String SHENZHEN = "shenzhen";
 
-    public static CMotaiDefaultAddress getAddress(String from) {
+    public static CMotaiAddress getAddress(String from) {
         if (Strings.isBlank(from)) {
             return getGuiYangAddress();
         }
@@ -333,7 +333,7 @@ public class Address {
         return getGuiYangAddress();
     }
 
-    private static CMotaiDefaultAddress getGuiYangAddress() {
+    private static CMotaiAddress getGuiYangAddress() {
         if (ADDRESS.size() <= 0) {
             ADDRESS.addAll(guiYangAddress(300));
         }
@@ -341,7 +341,7 @@ public class Address {
         return ADDRESS.get(random(max));
     }
 
-    private static CMotaiDefaultAddress getWuXiAddress() {
+    private static CMotaiAddress getWuXiAddress() {
         if (ADDRESS.size() <= 0) {
             ADDRESS.addAll(wuXiAddress(42));
             System.out.println("42个无锡地址已生成，开始添加....");
@@ -350,7 +350,7 @@ public class Address {
         return ADDRESS.get(random(max));
     }
 
-    private static CMotaiDefaultAddress getZunYiAddress() {
+    private static CMotaiAddress getZunYiAddress() {
         if (ADDRESS.size() <= 0) {
             ADDRESS.addAll(zunYiAddress(100));
         }
@@ -358,7 +358,7 @@ public class Address {
         return ADDRESS.get(random(max));
     }
 
-    private static CMotaiDefaultAddress getGuangZhouAddress() {
+    private static CMotaiAddress getGuangZhouAddress() {
         if (ADDRESS.size() <= 0) {
             ADDRESS.addAll(guangzhouAddress(150));
         }
@@ -366,7 +366,7 @@ public class Address {
         return ADDRESS.get(random(max));
     }
 
-    private static CMotaiDefaultAddress getDongGuanAddress() {
+    private static CMotaiAddress getDongGuanAddress() {
         if (ADDRESS.size() <= 0) {
             ADDRESS.addAll(dongGuanAddress(100));
         }
@@ -374,7 +374,7 @@ public class Address {
         return ADDRESS.get(random(max));
     }
 
-    private static CMotaiDefaultAddress getShenZhenAddress() {
+    private static CMotaiAddress getShenZhenAddress() {
         if (ADDRESS.size() <= 0) {
             ADDRESS.addAll(shenZhenAddress(100));
         }

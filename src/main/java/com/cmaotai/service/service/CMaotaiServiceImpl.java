@@ -3,13 +3,14 @@ package com.cmaotai.service.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.cmaotai.service.address.Address;
+import com.cmaotai.service.address.Page;
 import com.cmaotai.service.list.CMaotaiList;
 import com.cmaotai.service.list.CMaotaiReturn;
 import com.cmaotai.service.mobile.Invoice;
 import com.cmaotai.service.model.CMaotaiOrderStatus;
 import com.cmaotai.service.model.CMaotaiOrderStatus.OrderStatus;
 import com.cmaotai.service.model.CMaotaiUser;
-import com.cmaotai.service.model.CMotaiDefaultAddress;
+import com.cmaotai.service.model.CMotaiAddress;
 import com.cmaotai.service.model.CMotaiProduct;
 import com.cmaotai.service.model.DataResult;
 import com.google.common.base.Splitter;
@@ -99,17 +100,46 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     }
 
     @Override
-    public CMotaiDefaultAddress getDefualtAdd() throws Exception {
+    public CMotaiAddress getDefualtAdd() throws Exception {
         String action = "action=GrabSingleManager.getDefualtAdd&timestamp121=" + new Date().getTime();
         ResponseEntity<String> response = post(action, headers);
         headers = parseHeader(response.getHeaders());
-        DataResult<CMotaiDefaultAddress> dataResult = JSON
-            .parseObject(response.getBody(), new TypeReference<DataResult<CMotaiDefaultAddress>>() {
+        DataResult<CMotaiAddress> dataResult = JSON
+            .parseObject(response.getBody(), new TypeReference<DataResult<CMotaiAddress>>() {
             });
         if (dataResult.getData() == null) {
             throw new Exception("获取默认地址失败！");
         }
         return dataResult.getData();
+    }
+
+    @Override
+    public List<CMotaiAddress> getAddessList() {
+        String action = "action=AddressManager.list&index=1&size=10&timestamp121=" + new Date().getTime();
+        ResponseEntity<String> response = ysPost(action, headers);
+        headers = parseHeader(response.getHeaders());
+        DataResult<Page<CMotaiAddress>> dataResult = JSON
+            .parseObject(response.getBody(), new TypeReference<DataResult<Page<CMotaiAddress>>>() {
+            });
+        if (dataResult.getData().getDatacount() <= 0) {
+            System.out.println("查询不到地址列表");
+            return null;
+        }
+        return dataResult.getData().getList();
+    }
+
+    @Override
+    public boolean deleteAddress(int sId) {
+        String action = "action=AddressManager.delete&SId=" + sId + "&timestamp121=" + new Date().getTime();
+        ResponseEntity<String> response = ysPost(action, headers);
+        headers = parseHeader(response.getHeaders());
+        DataResult<?> dataResult = JSON
+            .parseObject(response.getBody(), new TypeReference<DataResult<?>>() {
+            });
+        if (!dataResult.isState()) {
+            System.out.println("删除地址失败！" + dataResult.getMsg());
+        }
+        return true;
     }
 
     @Override
@@ -155,7 +185,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         CMaotaiReturn<CMaotaiList> returns = JSON
             .parseObject(dataResult.getData(), new TypeReference<CMaotaiReturn<CMaotaiList>>() {
             });
-        return  returns.getData().getData();
+        return returns.getData().getData();
     }
 
     @Override
@@ -239,10 +269,10 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     }
 
     @Override
-    public boolean defaultSubmit(CMotaiDefaultAddress cMotaiDefaultAddress) throws Exception {
+    public boolean defaultSubmit(CMotaiAddress cMotaiAddress) throws Exception {
         String action =
             "action=GrabSingleManager.submit&iid=-1&qty=" + Address.getQty() + "&express=14&timestamp121=" + new Date()
-                .getTime() + "&sid=" + cMotaiDefaultAddress.getSId() + "&remark=" + "&product=" + JSON
+                .getTime() + "&sid=" + cMotaiAddress.getSId() + "&remark=" + "&product=" + JSON
                 .toJSONString(new CMotaiProduct());
         ResponseEntity<String> response = post(action, headers);
         DataResult<Integer> result = JSON.parseObject(response.getBody(), new TypeReference<DataResult<Integer>>() {
@@ -255,12 +285,12 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     }
 
     @Override
-    public boolean invoiceSubmit(CMotaiDefaultAddress cMotaiDefaultAddress)
+    public boolean invoiceSubmit(CMotaiAddress cMotaiAddress)
         throws Exception {
         String action =
             "action=GrabSingleManager.submit&iid=" + getInvoiceId() + "&qty=2&express=14&timestamp121=" + new Date()
                 .getTime() + "&sid="
-                + cMotaiDefaultAddress.getSId() + "&remark=" + "&product=" + JSON.toJSONString(new CMotaiProduct());
+                + cMotaiAddress.getSId() + "&remark=" + "&product=" + JSON.toJSONString(new CMotaiProduct());
         ResponseEntity<String> response = post(action, headers);
         DataResult<Integer> result = JSON.parseObject(response.getBody(), new TypeReference<DataResult<Integer>>() {
         });
@@ -296,7 +326,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
 
     @Override
     public boolean addDefaultAddress(String from) {
-        CMotaiDefaultAddress address = Address.getAddress(from);
+        CMotaiAddress address = Address.getAddress(from);
         String action =
             "action=AddressManager.add&provinceId=" + address.getProvinceId()
                 + "&cityId=" + address.getCityId() + "&districtsId=" +
@@ -576,7 +606,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         }
     }
 
-    public static void searchDefaultAddress(String path ,String pwd) throws IOException {
+    public static void searchDefaultAddress(String path, String pwd) throws IOException {
         List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
             .filter(Strings::isNotBlank).collect(
                 Collectors.toList());
@@ -600,8 +630,36 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        defaultSignup("123456ygh","/Users/gerry/Downloads/maitai/all.txt", 0);
-        System.out.println();
+    public static void deleteAddress(String path, String pwd) throws IOException {
+        List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
+            .filter(Strings::isNotBlank).collect(
+                Collectors.toList());
+        AtomicInteger succ = new AtomicInteger(0);
+        List<String> failMobiles = Lists.newArrayList();
+        mobiles.forEach(s -> {
+            CMaotaiServiceImpl cMaotaiService = new CMaotaiServiceImpl();
+            cMaotaiService.loginBefore();
+            try {
+                cMaotaiService.login(s, pwd);
+                List<CMotaiAddress> cMotaiAddresses = cMaotaiService.getAddessList();
+                if (cMotaiAddresses == null || cMotaiAddresses.size() == 0) {
+                    System.out.println("手机号【" + s + "】没有查询到地址，不进行删除");
+                } else {
+                    cMotaiAddresses.stream().filter(c -> c.getIsDefault().equals("false")).forEach(ss->{
+                        cMaotaiService.deleteAddress(ss.getSId());
+                        System.out.println("手机号【" + s + "】删除地址【" + ss.getAddressInfo() + "】成功");
+                    });
+                    succ.addAndGet(1);
+                }
+            } catch (Exception e) {
+                failMobiles.add(s);
+                System.err.println("手机号【" + s + "】异常！" + e.getMessage());
+            }
+        });
+        System.out.println("删除结果：总删除【" + mobiles.size() + "】，成功【" + succ.get() + "】,失败【" + failMobiles.size() + "】");
+        if (failMobiles.size() > 0) {
+            System.out.println("删除失败的手机号：" + failMobiles);
+        }
     }
+
 }
