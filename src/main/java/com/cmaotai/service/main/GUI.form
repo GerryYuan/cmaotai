@@ -13,7 +13,7 @@
       <title-color color="-16777216"/>
     </border>
     <children>
-      <grid id="95c42" layout-manager="GridLayoutManager" row-count="9" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="95c42" layout-manager="GridLayoutManager" row-count="10" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -31,7 +31,7 @@
           </component>
           <component id="f74fd" class="javax.swing.JLabel">
             <constraints>
-              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="执行操作："/>
@@ -93,7 +93,7 @@
           </component>
           <component id="e6303" class="javax.swing.JLabel">
             <constraints>
-              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="号优化："/>
@@ -101,7 +101,7 @@
           </component>
           <component id="8da31" class="javax.swing.JRadioButton" binding="cancelBlack">
             <constraints>
-              <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
+              <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
                 <preferred-size width="158" height="26"/>
               </grid>
             </constraints>
@@ -111,7 +111,7 @@
           </component>
           <component id="24a37" class="javax.swing.JRadioButton" binding="submit">
             <constraints>
-              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
+              <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
                 <preferred-size width="158" height="26"/>
               </grid>
             </constraints>
@@ -147,7 +147,7 @@
           </component>
           <component id="17d15" class="javax.swing.JRadioButton" binding="changePwd">
             <constraints>
-              <grid row="6" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="7" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="修改密码"/>
@@ -171,7 +171,7 @@
           </component>
           <component id="2b9b9" class="javax.swing.JRadioButton" binding="invice">
             <constraints>
-              <grid row="6" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="7" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="添加发票"/>
@@ -195,7 +195,7 @@
           </component>
           <component id="af91c" class="javax.swing.JLabel">
             <constraints>
-              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="查询操作："/>
@@ -203,7 +203,7 @@
           </component>
           <component id="dc623" class="javax.swing.JRadioButton" binding="seachDefaultAddress">
             <constraints>
-              <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="查询默认地址"/>
@@ -211,7 +211,7 @@
           </component>
           <component id="91d2b" class="javax.swing.JRadioButton" binding="isForEach">
             <constraints>
-              <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="循环下单"/>
@@ -219,7 +219,7 @@
           </component>
           <component id="6f1ab" class="javax.swing.JRadioButton" binding="order">
             <constraints>
-              <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="5" use-parent-layout="false">
+              <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="5" use-parent-layout="false">
                 <preferred-size width="256" height="26"/>
               </grid>
             </constraints>
@@ -261,7 +261,7 @@
           </component>
           <component id="f0bc5" class="javax.swing.JRadioButton" binding="cancel">
             <constraints>
-              <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="9" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="取消订单"/>
@@ -269,10 +269,18 @@
           </component>
           <component id="49dde" class="javax.swing.JRadioButton" binding="deleteAddress">
             <constraints>
-              <grid row="8" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="9" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="删除多余地址"/>
+            </properties>
+          </component>
+          <component id="5f58a" class="javax.swing.JRadioButton" binding="foshan">
+            <constraints>
+              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="佛山"/>
             </properties>
           </component>
         </children>
@@ -395,6 +403,10 @@
       <member id="71044"/>
     </group>
     <group name="invokeGroup">
+      <member id="dc623"/>
+      <member id="91d2b"/>
+    </group>
+    <group name="invokeGroup">
       <member id="8da31"/>
       <member id="24a37"/>
       <member id="17d15"/>
@@ -403,11 +415,10 @@
       <member id="2b9b9"/>
       <member id="b875d"/>
       <member id="bacd1"/>
-      <member id="dc623"/>
-      <member id="91d2b"/>
       <member id="6f1ab"/>
       <member id="f0bc5"/>
       <member id="49dde"/>
+      <member id="5f58a"/>
     </group>
   </buttonGroups>
 </form>

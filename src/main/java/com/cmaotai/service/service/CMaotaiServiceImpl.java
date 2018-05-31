@@ -348,9 +348,15 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         AtomicInteger atomicInteger = new AtomicInteger(0);
         AtomicInteger num = new AtomicInteger(mobiles.size());
         List<String> failMobiles = Lists.newArrayList();
+        DateTime clock18 = new DateTime().withHourOfDay(18);
         mobiles.forEach(s -> {
             CMaotaiServiceImpl cMaotaiService = new CMaotaiServiceImpl();
             try {
+                DateTime _now = DateTime.now();
+                if (_now.isAfter(clock18)) {
+                    System.out.println("当前时间【" + _now.toString("yyyy-MM-dd HH:mm:ss") + "】在18点之后，不执行下单操作!");
+                    return;
+                }
                 System.out.println("开始下单，手机号【" + s + "】，剩余【" + num.addAndGet(-1) + "】个");
                 if (cMaotaiService.defaultSignup(s, pwd)) {
                     System.out.println("手机号【" + s + "】等记成功！");

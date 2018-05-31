@@ -68,6 +68,7 @@ public class GUIMain extends JFrame {
     private JTextField qty3;
     private JRadioButton cancel;
     private JRadioButton deleteAddress;
+    private JRadioButton foshan;
     ExecutorService newCachedThread = Executors.newCachedThreadPool();//创建一个缓冲线程池
 
     public GUIMain() {
@@ -192,6 +193,10 @@ public class GUIMain extends JFrame {
                 succ = false;
                 System.out.println(start + "，开始执行添加深圳默认地址操作........");
                 CMaotaiServiceImpl.addDefaultAddress(path.getText(), password, Address.SHENZHEN);
+            } else if (foshan.isSelected()) {
+                succ = false;
+                System.out.println(start + "，开始执行添加佛山默认地址操作........");
+                CMaotaiServiceImpl.addDefaultAddress(path.getText(), password, Address.FOSHAN);
             }
             if (changePwd.isSelected()) {
                 succ = false;
@@ -304,7 +309,7 @@ public class GUIMain extends JFrame {
             .createTitledBorder(null, "茅台云商操作系统", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION,
                 this.$$$getFont$$$("Ayuthaya", -1, 16, contentPane.getFont()), new Color(-16777216)));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(9, 5, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(10, 5, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel1,
             new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
                 GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -316,7 +321,7 @@ public class GUIMain extends JFrame {
             GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label2 = new JLabel();
         label2.setText("执行操作：");
-        panel1.add(label2, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+        panel1.add(label2, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label3 = new JLabel();
         label3.setText("密码（必填）：");
@@ -347,17 +352,17 @@ public class GUIMain extends JFrame {
             0, false));
         final JLabel label6 = new JLabel();
         label6.setText("号优化：");
-        panel1.add(label6, new GridConstraints(8, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+        panel1.add(label6, new GridConstraints(9, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         cancelBlack = new JRadioButton();
         cancelBlack.setText("下单不了");
         panel1.add(cancelBlack,
-            new GridConstraints(8, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            new GridConstraints(9, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
                 GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                 GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(158, 26), null, 0, false));
         submit = new JRadioButton();
         submit.setText("下单");
-        panel1.add(submit, new GridConstraints(6, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+        panel1.add(submit, new GridConstraints(7, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(158, 26), null, 0, false));
         final JLabel label7 = new JLabel();
@@ -375,7 +380,7 @@ public class GUIMain extends JFrame {
             0, false));
         changePwd = new JRadioButton();
         changePwd.setText("修改密码");
-        panel1.add(changePwd, new GridConstraints(6, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+        panel1.add(changePwd, new GridConstraints(7, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         guiyang = new JRadioButton();
@@ -390,7 +395,7 @@ public class GUIMain extends JFrame {
             GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         invice = new JRadioButton();
         invice.setText("添加发票");
-        panel1.add(invice, new GridConstraints(6, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+        panel1.add(invice, new GridConstraints(7, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         dongguan = new JRadioButton();
@@ -405,24 +410,24 @@ public class GUIMain extends JFrame {
             GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label9 = new JLabel();
         label9.setText("查询操作：");
-        panel1.add(label9, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+        panel1.add(label9, new GridConstraints(8, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         seachDefaultAddress = new JRadioButton();
         seachDefaultAddress.setText("查询默认地址");
         panel1.add(seachDefaultAddress,
-            new GridConstraints(7, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            new GridConstraints(8, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
                 GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                 GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         isForEach = new JRadioButton();
         isForEach.setText("循环下单");
-        panel1.add(isForEach, new GridConstraints(6, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+        panel1.add(isForEach, new GridConstraints(7, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         order = new JRadioButton();
         order.setEnabled(true);
         order.setSelected(true);
         order.setText("查询订单");
-        panel1.add(order, new GridConstraints(7, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+        panel1.add(order, new GridConstraints(8, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(256, 26), null, 5, false));
         qty1 = new JTextField();
@@ -442,15 +447,20 @@ public class GUIMain extends JFrame {
             0, false));
         cancel = new JRadioButton();
         cancel.setText("取消订单");
-        panel1.add(cancel, new GridConstraints(8, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+        panel1.add(cancel, new GridConstraints(9, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         deleteAddress = new JRadioButton();
         deleteAddress.setText("删除多余地址");
         panel1.add(deleteAddress,
-            new GridConstraints(8, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            new GridConstraints(9, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
                 GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                 GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        foshan = new JRadioButton();
+        foshan.setText("佛山");
+        panel1.add(foshan, new GridConstraints(6, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel2,
@@ -536,6 +546,9 @@ public class GUIMain extends JFrame {
         jscrollPane.setViewportView(textArea);
         ButtonGroup buttonGroup;
         buttonGroup = new ButtonGroup();
+        buttonGroup.add(seachDefaultAddress);
+        buttonGroup.add(isForEach);
+        buttonGroup = new ButtonGroup();
         buttonGroup.add(cancelBlack);
         buttonGroup.add(submit);
         buttonGroup.add(changePwd);
@@ -544,11 +557,10 @@ public class GUIMain extends JFrame {
         buttonGroup.add(invice);
         buttonGroup.add(dongguan);
         buttonGroup.add(shenzhen);
-        buttonGroup.add(seachDefaultAddress);
-        buttonGroup.add(isForEach);
         buttonGroup.add(order);
         buttonGroup.add(cancel);
         buttonGroup.add(deleteAddress);
+        buttonGroup.add(foshan);
     }
 
     /**

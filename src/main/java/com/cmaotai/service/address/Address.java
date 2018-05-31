@@ -13,24 +13,28 @@ import org.apache.logging.log4j.util.Strings;
 public class Address {
 
     private static List<CMotaiAddress> ADDRESS = Lists.newArrayList();
-
     private static List<String> GUIYANG_DISTRICTS = Lists
-        .newArrayList(
-            "贵州省贵阳市观山湖区",
-            "贵州省贵阳市花溪区碧云窝",
-            "贵州省贵阳市花溪区黄河路",
-            "贵州省贵阳市花溪区田园北路",
-            "贵州省贵阳市花溪区小河香江路",
-            "贵州省贵阳市南明区宝山南路",
-            "贵州省贵阳市南明区机场路",
-            "贵州省贵阳市南明区狮峰路",
-            "贵州省贵阳市南明区西湖路",
-            "贵州省贵阳市南明区新华路",
-            "贵州省贵阳市云岩区北京路",
-            "贵州省贵阳市云岩区黔春路",
-            "贵州省贵阳市云岩区盐务街",
-            "贵州省贵阳市云岩区友谊路",
-            "贵州省贵阳市云岩区中华中路");
+        .newArrayList("贵州省贵阳市云岩区北京路", "贵阳市云岩区黔春路", "贵阳市云岩区中华中路",
+            "贵州省贵阳市南明区狮峰路", "贵州省贵阳市南明区新华路",
+            "贵阳市云岩区北京路", "贵阳市云岩区盐务街", "贵阳市南明区花果园", "贵阳市云岩区紫林庵",
+            "贵阳市南明区南厂路", "贵阳市白云区白云南路", "贵阳市南明区西湖路");
+    //    private static List<String> GUIYANG_DISTRICTS = Lists
+//        .newArrayList(
+//            "贵州省贵阳市观山湖区",
+//            "贵州省贵阳市花溪区碧云窝",
+//            "贵州省贵阳市花溪区黄河路",
+//            "贵州省贵阳市花溪区田园北路",
+//            "贵州省贵阳市花溪区小河香江路",
+//            "贵州省贵阳市南明区宝山南路",
+//            "贵州省贵阳市南明区机场路",
+//            "贵州省贵阳市南明区狮峰路",
+//            "贵州省贵阳市南明区西湖路",
+//            "贵州省贵阳市南明区新华路",
+//            "贵州省贵阳市云岩区北京路",
+//            "贵州省贵阳市云岩区黔春路",
+//            "贵州省贵阳市云岩区盐务街",
+//            "贵州省贵阳市云岩区友谊路",
+//            "贵州省贵阳市云岩区中华中路");
     //天河区 ，白云区
     private static List<String> GUANGZHOU_DISTRICTS = Lists
         .newArrayList(
@@ -47,7 +51,6 @@ public class Address {
             "广东省广州市天河区火炉山蓝鹏高尔夫练习场",
             "广东省广州市天河区长兴路", "广东省广州市南沙区进港大道",
             "广东省广州市增城区新塘镇府前路");
-
 //    private static List<String> GUANGZHOU_DISTRICTS = Lists
 //        .newArrayList("广东省广州市白云区黄园路",
 //            "广东省广州市赵秀区环市中路", "广东省广州市天河区五山街五山路","广东省广州市天河区长兴路",
@@ -58,17 +61,28 @@ public class Address {
 
     private static List<String> DONGGUAN_DISTRICTS = Lists
         .newArrayList(
-            "广东省东莞市宏图路", "广东省东莞市滨河路",
-            "广东省东莞市万江区坝头东江大道", "广东省东莞市坝新路",
-            "广东省东莞市莞太路", "广东省东莞市南城区鸿福路",
-            "广东省东莞市宝健二路", "广东省东莞市东城东泰新源南路与东骏路");
+            "广东省东莞市宏图路", "广东省东莞市滨河路", "广东省东莞市虎门镇","广东省东莞市石排镇石排大道",
+            "广东省东莞市大朗镇松佛路","广东省东莞市长安镇横安路","广东省东莞市长安镇莲峰北路",
+            "广东省东莞市万江区坝头东江大道", "广东省东莞市坝新路", "广东省东莞市大岭山镇玉兰街",
+            "广东省东莞市莞太路", "广东省东莞市南城区鸿福路","东莞市莞城区运河东一路",
+            "广东省东莞市宝健二路", "广东省东莞市东城东泰新源南路与东骏路","广东省东莞市南城区御泉山庄");
 
     private static List<String> SHENZHEN_DISTRICTS = Lists
         .newArrayList(
             "广东省深圳市北环大道",
+            "广东省深圳市皇岗路","广东省深圳市龙岗区布沙路",
+            "广东省深圳市龙岗区龙岗街道深业紫麟山花园",
+            "广东省深圳市龙岗区布吉街道金运路",
+            "广东省深圳市龙岗区坂田街道雪岗大道",
             "广东省深圳市皇岗路",
             "广东省深圳市红岭北路",
-            "广东省深圳市人民南路",
+            "广东省深圳市罗湖区银湖路金湖山庄",
+            "广东省深圳市盐田区沙盐路",
+            "广东省深圳市龙岗区坂田雅园路",
+            "广东省深圳市盐田区沙盐路",
+            "广东省深圳市人民南路","广东省深圳市龙岗区龙城街道",
+            "广东省深圳市龙华区大浪街道",
+            "广东省深圳市罗湖区泥岗东路",
             "广东省深圳市罗湖区凤凰路",
             "广东省深圳市福田区笋岗西路",
             "广东省深圳市罗湖区水贝一路",
@@ -88,10 +102,19 @@ public class Address {
             "广东省深圳市雅园路",
             "广东省深圳市桂园路",
             "广东省深圳市宝安区裕安一路",
+            "广东省深圳市宝安区68区隆昌路",
+            "广东省深圳市宝安区新安街道办翻身大道常福楼",
+            "广东省深圳市宝安区海秀路熙龙湾花园",
             "广东省深圳市新安四路",
             "广东省深圳市龙岗区欣景路",
             "广东省深圳市沙盐路",
             "广东省深圳市龙华区人民中路");
+
+    private static List<String> FOSHAN_DISTRICTS = Lists
+        .newArrayList("佛山市顺德区", "佛山市高明区", "佛山市南海区", "佛山禅城区",
+            "佛山市南海大道北", "佛山市南海区大沥镇渤海路中", "佛山市顺德区南源路", "佛山市禅城区季华六路",
+            "佛山市南海区大沥镇", "佛山市南海区桂城街道东平路", "佛山市禅城区佛山大道北", "佛山市南海区狮山镇",
+            "佛山市南海区桂城石龙南路", "佛山市顺德区乐从镇", "佛山市顺德区容桂风华路", "佛山市高明区中山路");
 
     private static List<String> WUXI_DISTRICTS = Lists
         .newArrayList("无锡市崇安区", "无锡市梁溪区", "无锡新区", "无锡锡山区", "无锡惠山区");
@@ -147,6 +170,11 @@ public class Address {
         return SHENZHEN_DISTRICTS.get(random(max));
     }
 
+    public static String getFoShanDistricts() {
+        int max = FOSHAN_DISTRICTS.size();
+        return FOSHAN_DISTRICTS.get(random(max));
+    }
+
     public static String getZunYiDistricts() {
         int max = ZUNYI_DISTRICTS.size();
         return ZUNYI_DISTRICTS.get(random(max));
@@ -154,7 +182,7 @@ public class Address {
 
     public static List<CMotaiAddress> wuXiAddress(int num) {
         List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getWuXiDistricts());
-        for (;aMapAddressTips.size() < num;) {
+        for (; aMapAddressTips.size() < num; ) {
             aMapAddressTips.addAll(AMapService.getAddress(getWuXiDistricts()));
         }
         System.out.println(aMapAddressTips.size() + "个无锡地址已生成");
@@ -178,7 +206,7 @@ public class Address {
 
     public static List<CMotaiAddress> guangzhouAddress(int num) {
         List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getGuangZhouDistricts());
-        for (;aMapAddressTips.size() < num;) {
+        for (; aMapAddressTips.size() < num; ) {
             aMapAddressTips.addAll(AMapService.getAddress(getGuangZhouDistricts()));
         }
         System.out.println(aMapAddressTips.size() + "个广州地址已生成");
@@ -202,7 +230,7 @@ public class Address {
 
     public static List<CMotaiAddress> dongGuanAddress(int num) {
         List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getDongGuanDistricts());
-        for (;aMapAddressTips.size() < num;) {
+        for (; aMapAddressTips.size() < num; ) {
             aMapAddressTips.addAll(AMapService.getAddress(getDongGuanDistricts()));
         }
         System.out.println(aMapAddressTips.size() + "个东莞地址已生成");
@@ -226,7 +254,7 @@ public class Address {
 
     public static List<CMotaiAddress> shenZhenAddress(int num) {
         List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getShenZhenDistricts());
-        for (;aMapAddressTips.size() < num;) {
+        for (; aMapAddressTips.size() < num; ) {
             aMapAddressTips.addAll(AMapService.getAddress(getShenZhenDistricts()));
         }
         System.out.println(aMapAddressTips.size() + "个深圳地址已生成");
@@ -248,9 +276,33 @@ public class Address {
         }).collect(Collectors.toList());
     }
 
+    public static List<CMotaiAddress> foShanAddress(int num) {
+        List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getFoShanDistricts());
+        for (; aMapAddressTips.size() < num; ) {
+            aMapAddressTips.addAll(AMapService.getAddress(getFoShanDistricts()));
+        }
+        System.out.println(aMapAddressTips.size() + "个佛山地址已生成");
+        return aMapAddressTips.stream().map(aMapAddressTip -> {
+            CMotaiAddress cMotaiAddress = new CMotaiAddress();
+            cMotaiAddress.setProvinceId("440000");
+            cMotaiAddress.setCityId("440600");
+            cMotaiAddress.setDistrictsId(aMapAddressTip.getAdcode());
+            cMotaiAddress.setAddressInfo(aMapAddressTip.getDistrict());
+            cMotaiAddress.setAddress(aMapAddressTip.getAddress());
+            cMotaiAddress.setShipTo(getCallName());
+            cMotaiAddress.setCallPhone(getCallPhone());
+            cMotaiAddress.setZipcode("000000");
+            cMotaiAddress.setIsDefault("1");
+            String[] ll = aMapAddressTip.getLocation().split(",");
+            cMotaiAddress.setLongitude(ll[0]);
+            cMotaiAddress.setLatitude(ll[1]);
+            return cMotaiAddress;
+        }).collect(Collectors.toList());
+    }
+
     public static List<CMotaiAddress> zunYiAddress(int num) {
         List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getZunYiDistricts());
-        for (;aMapAddressTips.size() < num;) {
+        for (; aMapAddressTips.size() < num; ) {
             aMapAddressTips.addAll(AMapService.getAddress(getZunYiDistricts()));
         }
         System.out.println(aMapAddressTips.size() + "个遵义地址已生成");
@@ -274,7 +326,7 @@ public class Address {
 
     public static List<CMotaiAddress> guiYangAddress(int num) {
         List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getGuiYangDistricts());
-        for (;aMapAddressTips.size() < num;) {
+        for (; aMapAddressTips.size() < num; ) {
             aMapAddressTips.addAll(AMapService.getAddress(getGuiYangDistricts()));
         }
         System.out.println(aMapAddressTips.size() + "个贵阳地址已生成");
@@ -308,6 +360,8 @@ public class Address {
 
     public static String SHENZHEN = "shenzhen";
 
+    public static String FOSHAN = "foshan";
+
     public static CMotaiAddress getAddress(String from) {
         if (Strings.isBlank(from)) {
             return getGuiYangAddress();
@@ -324,6 +378,8 @@ public class Address {
             return getDongGuanAddress();
         } else if (SHENZHEN.equals(from)) {
             return getShenZhenAddress();
+        }  else if(FOSHAN.equals(from)){
+             return getFoShanAddress();
         }
         return getGuiYangAddress();
     }
@@ -355,7 +411,7 @@ public class Address {
 
     private static CMotaiAddress getGuangZhouAddress() {
         if (ADDRESS.size() <= 0) {
-            ADDRESS.addAll(guangzhouAddress(200));
+            ADDRESS.addAll(guangzhouAddress(300));
         }
         int max = ADDRESS.size();
         return ADDRESS.get(random(max));
@@ -363,7 +419,7 @@ public class Address {
 
     private static CMotaiAddress getDongGuanAddress() {
         if (ADDRESS.size() <= 0) {
-            ADDRESS.addAll(dongGuanAddress(100));
+            ADDRESS.addAll(dongGuanAddress(500));
         }
         int max = ADDRESS.size();
         return ADDRESS.get(random(max));
@@ -371,7 +427,15 @@ public class Address {
 
     private static CMotaiAddress getShenZhenAddress() {
         if (ADDRESS.size() <= 0) {
-            ADDRESS.addAll(shenZhenAddress(100));
+            ADDRESS.addAll(shenZhenAddress(800));
+        }
+        int max = ADDRESS.size();
+        return ADDRESS.get(random(max));
+    }
+
+    private static CMotaiAddress getFoShanAddress() {
+        if (ADDRESS.size() <= 0) {
+            ADDRESS.addAll(foShanAddress(400));
         }
         int max = ADDRESS.size();
         return ADDRESS.get(random(max));
