@@ -325,8 +325,9 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     }
 
     @Override
-    public boolean addDefaultAddress(String from) {
+    public boolean addDefaultAddress(String mobile, String from) {
         CMotaiAddress address = Address.getAddress(from);
+        address.setCallPhone(mobile);
         String action =
             "action=AddressManager.add&provinceId=" + address.getProvinceId()
                 + "&cityId=" + address.getCityId() + "&districtsId=" +
@@ -508,7 +509,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
             cMaotaiService.loginBefore();
             try {
                 cMaotaiService.login(s, pwd);
-                if (cMaotaiService.addDefaultAddress(from)) {
+                if (cMaotaiService.addDefaultAddress(s, from)) {
                     succ.addAndGet(1);
                     System.out.println("手机号【" + s + "】默认地址添加成功!");
                 } else {
