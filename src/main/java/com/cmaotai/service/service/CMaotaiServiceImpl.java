@@ -348,13 +348,16 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         AtomicInteger atomicInteger = new AtomicInteger(0);
         AtomicInteger num = new AtomicInteger(mobiles.size());
         List<String> failMobiles = Lists.newArrayList();
-        DateTime clock18 = new DateTime().withHourOfDay(18);
+        DateTime today = DateTime.now();
+        DateTime clock_18 = new DateTime(today.getYear(), today.getMonthOfYear(), today.getDayOfMonth(), 18, 0,
+            0,
+            0);
         mobiles.forEach(s -> {
             CMaotaiServiceImpl cMaotaiService = new CMaotaiServiceImpl();
             try {
                 DateTime _now = DateTime.now();
-                if (_now.isAfter(clock18)) {
-                    System.out.println("当前时间【" + _now.toString("yyyy-MM-dd HH:mm:ss") + "】在18点之后，不执行下单操作!");
+                if (_now.toDate().getTime() >= clock_18.toDate().getTime()) {
+                    System.out.println("当前时间【" + _now.toString("yyyy-MM-dd HH:mm:ss") + "】超过18点，不执行单个手机号下单操作!");
                     return;
                 }
                 System.out.println("开始下单，手机号【" + s + "】，剩余【" + num.addAndGet(-1) + "】个");
