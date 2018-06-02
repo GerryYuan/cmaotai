@@ -82,25 +82,19 @@ public interface CMaotaiService {
     }
 
     default ResponseEntity<String> post(String action, HttpHeaders httpHeaders) {
-        if (restTemplate.getRequestFactory() == null) {
-            restTemplate.setRequestFactory(getHttpRequestFactory());
-        }
+        restTemplate.setRequestFactory(getHttpRequestFactory());
         return restTemplate
             .exchange(CMAOTAI_URL + action, HttpMethod.POST, new HttpEntity<String>(httpHeaders), String.class);
     }
 
     default ResponseEntity<String> ysPost(String action, HttpHeaders httpHeaders) {
-        if (restTemplate.getRequestFactory() == null) {
-            restTemplate.setRequestFactory(getHttpRequestFactory());
-        }
+        restTemplate.setRequestFactory(getHttpRequestFactory());
         return restTemplate
             .exchange(CMAOTAI_YSAPP_URL + action, HttpMethod.POST, new HttpEntity<String>(httpHeaders), String.class);
     }
 
     default ResponseEntity<String> get(String action) {
-        if (restTemplate.getRequestFactory() == null) {
-            restTemplate.setRequestFactory(getHttpRequestFactory());
-        }
+        restTemplate.setRequestFactory(getHttpRequestFactory());
         return restTemplate.getForEntity(CMAOTAI_URL + action, String.class);
     }
 }
