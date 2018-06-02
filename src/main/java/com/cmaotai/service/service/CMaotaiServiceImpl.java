@@ -465,9 +465,9 @@ public class CMaotaiServiceImpl implements CMaotaiService {
             } catch (Exception e) {
                 System.err.println("手机号【" + s + "】登录异常！" + e.getMessage());
             }
-            if (num.get() == 500) {
+            if (num.get() % 500 == 0) {
                 System.out.println(
-                    "前" + num.get() + "个查询订单结果，总账号数：【" + mobiles.size() + "】：待支付【" + WAIT_PAY.get() + "】，待发货【"
+                    num.get() + "个查询订单结果，总账号数：【" + mobiles.size() + "】：待支付【" + WAIT_PAY.get() + "】，待发货【"
                         + WAIT_DELIVER_GOODS.get()
                         + "】,待确认收货【" + WAIT_CONFIRMATION_GOODS.get() + "】");
                 System.out.println("待支付手机号：" + WAIT_PAYMobile);
