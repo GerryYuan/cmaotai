@@ -438,6 +438,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         List<String> WAIT_DELIVER_GOODSMobile = Lists.newArrayList();
         List<String> WAIT_CONFIRMATION_GOODSMobile = Lists.newArrayList();
         System.out.println("开始查单操作，需要花费一段时间，请等待......");
+        List<String> failMobiles = Lists.newArrayList();
         mobiles.forEach(s -> {
             System.out.println("【" + s + "】查单中，剩余【" + num.addAndGet(-1) + "】个。");
             CMaotaiServiceImpl cMaotaiService = new CMaotaiServiceImpl();
@@ -463,6 +464,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
                     }
                 });
             } catch (Exception e) {
+                failMobiles.add(s);
                 System.err.println("手机号【" + s + "】登录异常！" + e.getMessage());
             }
             if (num.get() % 500 == 0) {
@@ -473,6 +475,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
                 System.out.println("待支付手机号：" + WAIT_PAYMobile);
                 System.out.println("待发货手机号：" + WAIT_DELIVER_GOODSMobile);
                 System.out.println("待确认收货：" + WAIT_CONFIRMATION_GOODSMobile);
+                System.out.println("失败收号：" + failMobiles);
             }
         });
         System.out.println(
@@ -481,6 +484,9 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         System.out.println("待支付手机号：" + WAIT_PAYMobile);
         System.out.println("待发货手机号：" + WAIT_DELIVER_GOODSMobile);
         System.out.println("待确认收货：" + WAIT_CONFIRMATION_GOODSMobile);
+        if(failMobiles.size() > 0){
+            System.out.println("失败收好：" + failMobiles);
+        }
     }
 
     public static void changePwd(String path, String pwd, String newPwd) throws IOException {
