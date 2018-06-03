@@ -477,7 +477,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
                 System.out.println("待支付手机号：" + WAIT_PAYMobile);
                 System.out.println("待发货手机号：" + WAIT_DELIVER_GOODSMobile);
                 System.out.println("待确认收货：" + WAIT_CONFIRMATION_GOODSMobile);
-                System.out.println("失败收号：" + failMobiles);
+                System.out.println("失败手机号：" + failMobiles);
             }
         });
         System.out.println(
