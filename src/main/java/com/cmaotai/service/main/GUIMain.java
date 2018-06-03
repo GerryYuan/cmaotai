@@ -69,6 +69,7 @@ public class GUIMain extends JFrame {
     private JRadioButton cancel;
     private JRadioButton deleteAddress;
     private JRadioButton foshan;
+    private JRadioButton dongCheng;
     ExecutorService newCachedThread = Executors.newCachedThreadPool();//创建一个缓冲线程池
 
     public GUIMain() {
@@ -196,6 +197,10 @@ public class GUIMain extends JFrame {
                 succ = false;
                 System.out.println(start + "，开始执行添加佛山默认地址操作........");
                 CMaotaiServiceImpl.addDefaultAddress(path.getText(), password, Address.FOSHAN);
+            } else if (dongCheng.isSelected()) {
+                succ = false;
+                System.out.println(start + "，开始执行添加东城默认地址操作........");
+                CMaotaiServiceImpl.addDefaultAddress(path.getText(), password, Address.DONGCHENG);
             }
             if (changePwd.isSelected()) {
                 succ = false;
@@ -460,6 +465,11 @@ public class GUIMain extends JFrame {
         panel1.add(foshan, new GridConstraints(6, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        dongCheng = new JRadioButton();
+        dongCheng.setText("北京东城");
+        panel1.add(dongCheng, new GridConstraints(6, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel2,
@@ -559,6 +569,7 @@ public class GUIMain extends JFrame {
         buttonGroup.add(cancel);
         buttonGroup.add(deleteAddress);
         buttonGroup.add(foshan);
+        buttonGroup.add(dongCheng);
     }
 
     /**

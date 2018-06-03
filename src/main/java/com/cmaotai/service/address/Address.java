@@ -59,18 +59,25 @@ public class Address {
 //            "广东省广州市花都区凤凰北路", "广东省广州市天河区员村四横路蒲林街",
 //            "广东省广州市天河区广州大道中", "广东省广州市天河区粤垦路", "广东省广州市天河区珠江新城猎德大道");
 
+    //东城
+    private static List<String> DONGCHENG_DISTRICTS = Lists
+        .newArrayList("北京市东城区王府井大街", "北京市东城区金宝街",
+            "北京市东城区后圆恩寺胡同", "北京市东城区崇文门外大街", "北京市东城区中鲜鱼巷",
+            "北京市东城区前门东大街", "北京市东城区天坛路", "北京市东城区工人文化宫幸福大街",
+            "北京市东城区安定门外大街","北京市东城区前鼓楼苑胡同","北京市东城区东中街");
+
     private static List<String> DONGGUAN_DISTRICTS = Lists
         .newArrayList(
-            "广东省东莞市宏图路", "广东省东莞市滨河路", "广东省东莞市虎门镇","广东省东莞市石排镇石排大道",
-            "广东省东莞市大朗镇松佛路","广东省东莞市长安镇横安路","广东省东莞市长安镇莲峰北路",
+            "广东省东莞市宏图路", "广东省东莞市滨河路", "广东省东莞市虎门镇", "广东省东莞市石排镇石排大道",
+            "广东省东莞市大朗镇松佛路", "广东省东莞市长安镇横安路", "广东省东莞市长安镇莲峰北路",
             "广东省东莞市万江区坝头东江大道", "广东省东莞市坝新路", "广东省东莞市大岭山镇玉兰街",
-            "广东省东莞市莞太路", "广东省东莞市南城区鸿福路","东莞市莞城区运河东一路",
-            "广东省东莞市宝健二路", "广东省东莞市东城东泰新源南路与东骏路","广东省东莞市南城区御泉山庄");
+            "广东省东莞市莞太路", "广东省东莞市南城区鸿福路", "东莞市莞城区运河东一路",
+            "广东省东莞市宝健二路", "广东省东莞市东城东泰新源南路与东骏路", "广东省东莞市南城区御泉山庄");
 
     private static List<String> SHENZHEN_DISTRICTS = Lists
         .newArrayList(
             "广东省深圳市北环大道",
-            "广东省深圳市皇岗路","广东省深圳市龙岗区布沙路",
+            "广东省深圳市皇岗路", "广东省深圳市龙岗区布沙路",
             "广东省深圳市龙岗区龙岗街道深业紫麟山花园",
             "广东省深圳市龙岗区布吉街道金运路",
             "广东省深圳市龙岗区坂田街道雪岗大道",
@@ -80,7 +87,7 @@ public class Address {
             "广东省深圳市盐田区沙盐路",
             "广东省深圳市龙岗区坂田雅园路",
             "广东省深圳市盐田区沙盐路",
-            "广东省深圳市人民南路","广东省深圳市龙岗区龙城街道",
+            "广东省深圳市人民南路", "广东省深圳市龙岗区龙城街道",
             "广东省深圳市龙华区大浪街道",
             "广东省深圳市罗湖区泥岗东路",
             "广东省深圳市罗湖区凤凰路",
@@ -143,6 +150,11 @@ public class Address {
         } else {
             return qtys.get(random(max));
         }
+    }
+
+    public static String getDongChengDistricts() {
+        int max = DONGCHENG_DISTRICTS.size();
+        return DONGCHENG_DISTRICTS.get(random(max));
     }
 
     public static String getGuiYangDistricts() {
@@ -238,6 +250,31 @@ public class Address {
             CMotaiAddress cMotaiAddress = new CMotaiAddress();
             cMotaiAddress.setProvinceId("440000");
             cMotaiAddress.setCityId("441900");
+            cMotaiAddress.setDistrictsId(aMapAddressTip.getAdcode());
+            cMotaiAddress.setAddressInfo(aMapAddressTip.getDistrict());
+            cMotaiAddress.setAddress(aMapAddressTip.getAddress());
+            cMotaiAddress.setShipTo(getCallName());
+            cMotaiAddress.setCallPhone(getCallPhone());
+            cMotaiAddress.setZipcode("000000");
+            cMotaiAddress.setIsDefault("1");
+            String[] ll = aMapAddressTip.getLocation().split(",");
+            cMotaiAddress.setLongitude(ll[0]);
+            cMotaiAddress.setLatitude(ll[1]);
+            return cMotaiAddress;
+        }).collect(Collectors.toList());
+    }
+
+    //    110000
+    public static List<CMotaiAddress> dongChengAddress(int num) {
+        List<AMapAddressTip> aMapAddressTips = AMapService.getAddress(getDongChengDistricts());
+        for (; aMapAddressTips.size() < num; ) {
+            aMapAddressTips.addAll(AMapService.getAddress(getDongChengDistricts()));
+        }
+        System.out.println(aMapAddressTips.size() + "个东城地址已生成");
+        return aMapAddressTips.stream().map(aMapAddressTip -> {
+            CMotaiAddress cMotaiAddress = new CMotaiAddress();
+            cMotaiAddress.setProvinceId("110000");
+            cMotaiAddress.setCityId("110100");
             cMotaiAddress.setDistrictsId(aMapAddressTip.getAdcode());
             cMotaiAddress.setAddressInfo(aMapAddressTip.getDistrict());
             cMotaiAddress.setAddress(aMapAddressTip.getAddress());
@@ -362,6 +399,9 @@ public class Address {
 
     public static String FOSHAN = "foshan";
 
+    public static String DONGCHENG = "dongcheng";
+
+
     public static CMotaiAddress getAddress(String from) {
         if (Strings.isBlank(from)) {
             return getGuiYangAddress();
@@ -378,10 +418,20 @@ public class Address {
             return getDongGuanAddress();
         } else if (SHENZHEN.equals(from)) {
             return getShenZhenAddress();
-        }  else if(FOSHAN.equals(from)){
-             return getFoShanAddress();
+        } else if (FOSHAN.equals(from)) {
+            return getFoShanAddress();
+        } else if(DONGCHENG.equals(from)){
+             return getDongChengAddress();
         }
         return getGuiYangAddress();
+    }
+
+    private static CMotaiAddress getDongChengAddress() {
+        if (ADDRESS.size() <= 0) {
+            ADDRESS.addAll(dongChengAddress(500));
+        }
+        int max = ADDRESS.size();
+        return ADDRESS.get(random(max));
     }
 
     private static CMotaiAddress getGuiYangAddress() {
