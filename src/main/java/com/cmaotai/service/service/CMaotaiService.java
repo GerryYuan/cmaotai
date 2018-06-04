@@ -8,6 +8,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 public interface CMaotaiService {
@@ -43,17 +45,27 @@ public interface CMaotaiService {
 
     RestTemplate restTemplate = new RestTemplate();
 
+    default ClientHttpRequestFactory getRequestFactory() {
+        SimpleClientHttpRequestFactory clientHttpRequestFactory = new SimpleClientHttpRequestFactory();
+        clientHttpRequestFactory.setReadTimeout(10000);
+        clientHttpRequestFactory.setConnectTimeout(10000);
+        return clientHttpRequestFactory;
+    }
+
     default ResponseEntity<String> post(String action, HttpHeaders httpHeaders) {
+        restTemplate.setRequestFactory(getRequestFactory());
         return restTemplate
             .exchange(CMAOTAI_URL + action, HttpMethod.POST, new HttpEntity<String>(httpHeaders), String.class);
     }
 
     default ResponseEntity<String> ysPost(String action, HttpHeaders httpHeaders) {
+        restTemplate.setRequestFactory(getRequestFactory());
         return restTemplate
             .exchange(CMAOTAI_YSAPP_URL + action, HttpMethod.POST, new HttpEntity<String>(httpHeaders), String.class);
     }
 
     default ResponseEntity<String> get(String action) {
+        restTemplate.setRequestFactory(getRequestFactory());
         return restTemplate.getForEntity(CMAOTAI_URL + action, String.class);
     }
 }
