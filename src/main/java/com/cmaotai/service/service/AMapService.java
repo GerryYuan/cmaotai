@@ -3,6 +3,7 @@ package com.cmaotai.service.service;
 import com.alibaba.fastjson.JSON;
 import com.cmaotai.service.address.AMapAddress;
 import com.cmaotai.service.address.AMapAddress.AMapAddressTip;
+import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.apache.logging.log4j.util.Strings;
@@ -10,6 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 public class AMapService {
+
+    private static List<String> blacks = Lists
+        .newArrayList("49路;73路",
+            "5路;6路;7路;19路;32路;33路;35路;41路;47路;52路;53路;69路;75路;81路;82路;202路;203路;248路;307路;601路;夜间9路",
+            "34路;46路;221路;261路;308路;312路;313路;320路", "57路;292路;B1路;B2路;B3路;B4路;B224路;B236路;B259路;B267路", "(在建2号线",
+            "4路;8路;14路;27路;39路;63路");
 
     public static List<AMapAddressTip> getAddress(String keywords) {
         RestTemplate restTemplate = new RestTemplate();
@@ -20,7 +27,9 @@ public class AMapService {
         String address = response.getBody().replace("jsonp_90668_(", "").replace(")", "");
         return JSON.parseObject(address, AMapAddress.class).getTips().stream()
             .filter(tip -> Strings.isNotBlank(tip.getAddress()) && !"[]".equals(tip.getAddress())
-                && tip.getAddress().length() < 100).collect(
+                && tip.getAddress().length() < 100)
+            .filter(s -> !blacks.contains(s.getAddress()))
+            .filter(s -> s.getAddress().indexOf(";") == -1).collect(
                 Collectors.toList());
     }
 }
