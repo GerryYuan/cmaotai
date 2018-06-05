@@ -547,7 +547,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         List<String> failMobiles = Lists.newArrayList();
         AtomicInteger sum = new AtomicInteger(0);
         mobiles.forEach(s -> {
-            System.out.println("【" + s + "】查单中，剩余【" + num.addAndGet(-1) + "】个。");
+//            System.out.println("【" + s + "】查单中，剩余【" + num.addAndGet(-1) + "】个。");
             CMaotaiServiceImpl cMaotaiService = new CMaotaiServiceImpl();
             try {
                 cMaotaiService.loginBefore();
