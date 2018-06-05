@@ -5,7 +5,10 @@ import com.alibaba.fastjson.TypeReference;
 import com.cmaotai.service.address.Address;
 import com.cmaotai.service.address.Page;
 import com.cmaotai.service.list.CMaotaiList;
+import com.cmaotai.service.list.CMaotaiOrderDetail;
+import com.cmaotai.service.list.CMaotaiOrderReturn;
 import com.cmaotai.service.list.CMaotaiReturn;
+import com.cmaotai.service.list.CMaotaiUserOrderInfo;
 import com.cmaotai.service.mobile.Invoice;
 import com.cmaotai.service.model.CMaotaiOrderStatus;
 import com.cmaotai.service.model.CMaotaiOrderStatus.OrderStatus;
@@ -20,6 +23,7 @@ import com.google.common.collect.Maps;
 import com.google.common.io.Files;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.List;
@@ -80,7 +84,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
     }
 
     @Override
-    public void login(String mobile, String pwd) throws Exception {
+    public CMaotaiUser login(String mobile, String pwd) throws Exception {
         long now = new Date().getTime();
         String action =
             "action=UserManager.login&tel=" + mobile + "&pwd=" + pwd + "&timestamp121=" + now;
@@ -92,6 +96,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
             throw new Exception("登录失败!" + result.getMsg());
         }
         headers = parseHeader(response.getHeaders());
+        return result.getData();
     }
 
     @Override
@@ -181,11 +186,9 @@ public class CMaotaiServiceImpl implements CMaotaiService {
 
     @Override
     public List<CMaotaiList> getList() throws Exception {
-        Stopwatch stopwatch = Stopwatch.createStarted();
         String action =
             "action=GrabSingleManager.getList&status=-1&index=1&size=10&timestamp121=" + new Date().getTime();
         ResponseEntity<String> response = post(action, headers);
-        System.out.println("获取订单耗时：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
         DataResult<String> dataResult = JSON.parseObject(response.getBody(), new TypeReference<DataResult<String>>() {
         });
         if (!dataResult.isState()) {
@@ -196,6 +199,44 @@ public class CMaotaiServiceImpl implements CMaotaiService {
             .parseObject(dataResult.getData(), new TypeReference<CMaotaiReturn<CMaotaiList>>() {
             });
         return returns.getData().getData();
+    }
+
+    @Override
+    public int getUserOrderInfo(int userId) throws Exception {
+        String action =
+            "action=OrdersManager.GetUserOrderInfo&userId=" + userId + "&index=1&status=1&size=10&timestamp121="
+                + new Date().getTime();
+        ResponseEntity<String> response = ysPost(action, headers);
+        DataResult<CMaotaiOrderReturn<CMaotaiUserOrderInfo>> dataResult = JSON
+            .parseObject(response.getBody(), new TypeReference<DataResult<CMaotaiOrderReturn<CMaotaiUserOrderInfo>>>() {
+            });
+        if (dataResult.getData() == null) {
+            return 0;
+        }
+        headers = parseHeader(response.getHeaders());
+        dataResult.getData().getData().forEach(s -> {
+            String action2 =
+                "action=OrderManager.OrderDetails&oid=" + s.getOrderId() + "&timestamp121="
+                    + new Date().getTime();
+            ResponseEntity<String> response2 = post(action2, headers);
+            DataResult<String> dataResult2 = JSON
+                .parseObject(response2.getBody(), new TypeReference<DataResult<String>>() {
+                });
+            if (!dataResult2.isState()) {
+                System.out.println("获取中单详情失败！");
+            }
+            CMaotaiOrderDetail returns2 = JSON
+                .parseObject(dataResult2.getData(), new TypeReference<CMaotaiOrderDetail>() {
+                });
+            if (response2 != null) {
+                System.out.println(
+                    "手机号：【" + returns2.getDelivery().getTelPhone() + "】，姓名：【" + returns2.getDelivery().getName()
+                        + "】中单啦！！！订单号：【" + s.getOrderId() + "】时间：【" + s.getOrderDate() + "】瓶数：【" + s.getQuantity()
+                        + "】地点：【" + returns2.getNetwork().getAddress() + "】网点联系电话：【" + returns2.getNetwork()
+                        .getLinkTel() + "】");
+            }
+        });
+        return dataResult.getData().getCount();
     }
 
     @Override
@@ -494,6 +535,34 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         System.out.println("待确认收货：" + WAIT_CONFIRMATION_GOODSMobile);
         if (failMobiles.size() > 0) {
             System.out.println("失败手机号：" + failMobiles);
+        }
+    }
+
+    public static void getOrderInfo(String pwd, String path) throws IOException {
+        List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
+            .filter(Strings::isNotBlank).collect(
+                Collectors.toList());
+        AtomicInteger num = new AtomicInteger(mobiles.size());
+        System.out.println("开始查看中单操作，需要花费一段时间，请等待......");
+        List<String> failMobiles = Lists.newArrayList();
+        AtomicInteger sum = new AtomicInteger(0);
+        mobiles.forEach(s -> {
+            System.out.println("【" + s + "】查单中，剩余【" + num.addAndGet(-1) + "】个。");
+            CMaotaiServiceImpl cMaotaiService = new CMaotaiServiceImpl();
+            try {
+                cMaotaiService.loginBefore();
+                int count = cMaotaiService.getUserOrderInfo(cMaotaiService.login(s, pwd).getUserId());
+                sum.addAndGet(count);
+            } catch (Exception e) {
+                failMobiles.add(s);
+                System.err.println("手机号【" + s + "】登录异常！" + e.getMessage());
+            }
+        });
+        System.out.println(
+            "查询中单结果，总账号数：【" + mobiles.size() + "】：中单【" + sum.get() + "】，中单率【" + (new BigDecimal(sum.get())
+                .divide(new BigDecimal(mobiles.size()), 2, BigDecimal.ROUND_HALF_UP)).doubleValue() * 100 + "%】");
+        if (failMobiles.size() > 0) {
+            System.out.println("查询失败手机号：" + failMobiles);
         }
     }
 

@@ -70,6 +70,7 @@ public class GUIMain extends JFrame {
     private JRadioButton deleteAddress;
     private JRadioButton foshan;
     private JRadioButton dongCheng;
+    private JRadioButton searchOrderInfo;
     ExecutorService newCachedThread = Executors.newCachedThreadPool();//创建一个缓冲线程池
 
     public GUIMain() {
@@ -166,6 +167,10 @@ public class GUIMain extends JFrame {
                 succ = false;
                 System.out.println(start + "，开始执行查询订单操作........");
                 CMaotaiServiceImpl.getOrderStatus(password, path.getText());
+            } else if (searchOrderInfo.isSelected()) {
+                succ = false;
+                System.out.println(start + "，开始执行查询中单操作........");
+                CMaotaiServiceImpl.getOrderInfo(password, path.getText());
             }
             if (cancelBlack.isSelected()) {
                 succ = false;
@@ -470,6 +475,12 @@ public class GUIMain extends JFrame {
         panel1.add(dongCheng, new GridConstraints(6, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        searchOrderInfo = new JRadioButton();
+        searchOrderInfo.setText("查询中单详细");
+        panel1.add(searchOrderInfo,
+            new GridConstraints(8, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel2,
@@ -570,6 +581,7 @@ public class GUIMain extends JFrame {
         buttonGroup.add(deleteAddress);
         buttonGroup.add(foshan);
         buttonGroup.add(dongCheng);
+        buttonGroup.add(searchOrderInfo);
     }
 
     /**

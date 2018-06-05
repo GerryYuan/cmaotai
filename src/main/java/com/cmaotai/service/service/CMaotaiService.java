@@ -3,6 +3,7 @@ package com.cmaotai.service.service;
 import com.cmaotai.service.address.Address;
 import com.cmaotai.service.list.CMaotaiList;
 import com.cmaotai.service.model.CMaotaiOrderStatus;
+import com.cmaotai.service.model.CMaotaiUser;
 import com.cmaotai.service.model.CMotaiAddress;
 import com.cmaotai.service.util.UriUtils;
 import com.google.common.collect.Lists;
@@ -40,7 +41,7 @@ public interface CMaotaiService {
 
     void loginBefore();
 
-    void login(String mobile, String pwd) throws Exception;
+    CMaotaiUser login(String mobile, String pwd) throws Exception;
 
     List<CMaotaiOrderStatus> getYsOrderStatusCount() throws Exception;
 
@@ -59,6 +60,8 @@ public interface CMaotaiService {
     boolean changePassword(String oldPwd, String newPwd);
 
     boolean addDefaultAddress(String mobile, String from);
+
+    int getUserOrderInfo(int userId) throws Exception;
 
     int getInvoiceId() throws Exception;
 
