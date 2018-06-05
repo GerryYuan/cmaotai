@@ -2,18 +2,18 @@ package com.cmaotai.service.service;
 
 import com.cmaotai.service.address.Address;
 import com.cmaotai.service.list.CMaotaiList;
-import com.cmaotai.service.mobile.Mobile;
 import com.cmaotai.service.model.CMaotaiOrderStatus;
 import com.cmaotai.service.model.CMotaiAddress;
+import com.cmaotai.service.util.UriUtils;
 import com.google.common.collect.Lists;
 import java.util.List;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
-import org.springframework.web.client.RestClientException;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 public interface CMaotaiService {
@@ -82,20 +82,23 @@ public interface CMaotaiService {
     }
 
     default ResponseEntity<String> post(String action, HttpHeaders httpHeaders) {
+        httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(UriUtils.parse(action), httpHeaders);
         restTemplate.setRequestFactory(getHttpRequestFactory());
-        return restTemplate
-            .exchange(CMAOTAI_URL + action, HttpMethod.POST, new HttpEntity<String>(httpHeaders), String.class);
+        return restTemplate.exchange(CMAOTAI_URL , HttpMethod.POST, request, String.class);
     }
 
     default ResponseEntity<String> ysPost(String action, HttpHeaders httpHeaders) {
+        httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(UriUtils.parse(action), httpHeaders);
         restTemplate.setRequestFactory(getHttpRequestFactory());
-        return restTemplate
-            .exchange(CMAOTAI_YSAPP_URL + action, HttpMethod.POST, new HttpEntity<String>(httpHeaders), String.class);
+        return restTemplate.exchange(CMAOTAI_YSAPP_URL , HttpMethod.POST, request, String.class);
     }
 
     default ResponseEntity<String> get(String action) {
         restTemplate.setRequestFactory(getHttpRequestFactory());
         return restTemplate.getForEntity(CMAOTAI_URL + action, String.class);
     }
+
 }
 

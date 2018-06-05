@@ -14,6 +14,7 @@ import com.cmaotai.service.model.CMotaiAddress;
 import com.cmaotai.service.model.CMotaiProduct;
 import com.cmaotai.service.model.DataResult;
 import com.google.common.base.Splitter;
+import com.google.common.base.Stopwatch;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.io.Files;
@@ -23,6 +24,7 @@ import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import org.apache.logging.log4j.util.Strings;
@@ -179,9 +181,11 @@ public class CMaotaiServiceImpl implements CMaotaiService {
 
     @Override
     public List<CMaotaiList> getList() throws Exception {
+        Stopwatch stopwatch = Stopwatch.createStarted();
         String action =
             "action=GrabSingleManager.getList&status=-1&index=1&size=10&timestamp121=" + new Date().getTime();
         ResponseEntity<String> response = post(action, headers);
+        System.out.println("获取订单耗时：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
         DataResult<String> dataResult = JSON.parseObject(response.getBody(), new TypeReference<DataResult<String>>() {
         });
         if (!dataResult.isState()) {
@@ -263,8 +267,10 @@ public class CMaotaiServiceImpl implements CMaotaiService {
             System.out.println("取消失败！未查到相关下单信息");
             return false;
         }
+        Stopwatch stopwatch = Stopwatch.createStarted();
         String action = "action=GrabSingleManager.cancel&id=" + id + "&pid=391&timestamp121=" + new Date().getTime();
         ResponseEntity<String> response = post(action, headers);
+        System.out.println("取消订单耗时：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
         DataResult<String> dataResult = JSON.parseObject(response.getBody(), new TypeReference<DataResult<String>>() {
         });
         if (!dataResult.isState()) {
@@ -487,7 +493,7 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         System.out.println("待发货手机号：" + WAIT_DELIVER_GOODSMobile);
         System.out.println("待确认收货：" + WAIT_CONFIRMATION_GOODSMobile);
         if (failMobiles.size() > 0) {
-            System.out.println("失败收好：" + failMobiles);
+            System.out.println("失败手机号：" + failMobiles);
         }
     }
 

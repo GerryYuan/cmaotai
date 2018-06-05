@@ -70,7 +70,7 @@
               </grid>
             </constraints>
             <properties>
-              <text value="/Users/gerry/Downloads/maitai/all.txt"/>
+              <text value="/Users/gerry/Downloads/maotai/all.txt"/>
             </properties>
           </component>
           <component id="3cef5" class="javax.swing.JLabel">

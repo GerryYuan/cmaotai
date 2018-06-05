@@ -341,7 +341,7 @@ public class GUIMain extends JFrame {
         panel1.add(label4, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         path = new JTextField();
-        path.setText("/Users/gerry/Downloads/maitai/all.txt");
+        path.setText("/Users/gerry/Downloads/maotai/all.txt");
         panel1.add(path, new GridConstraints(0, 1, 1, 4, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
             GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null,
             0, false));

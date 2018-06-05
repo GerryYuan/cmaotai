@@ -1,66 +1,51 @@
 package com.cmaotai.service.httpproxy;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.List;
-import java.util.Map;
+import com.google.common.hash.Hashing;
+import java.nio.charset.Charset;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
+import java.util.Date;
+import javax.net.ssl.SSLContext;
+import org.apache.http.HttpHost;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.TrustStrategy;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 
 public class ProxyIp {
-    public static void main(String[] args) throws IOException {
-        // 如果不设置，只要代理IP和代理端口正确,此项不设置也可以
-        System.getProperties().setProperty("http.proxyHost", "115.203.164.67");
-        System.getProperties().setProperty("http.proxyPort", "38079");
 
-        //确定代理是否设置成功
-        System.out.println(sendGet("http://www.baidu.com","wd=网盘搜索"));
-
+    public static String authHeader() {
+        String orderno = "ZF2018653868BkaoGn";
+        String secret = "3eccb1c266c4407abdd8a2e17d02f5cd";
+        long timestamp = new Date().getTime() / 1000;
+        //拼装签名字符串
+        String planText = String.format("orderno=%s,secret=%s,timestamp=%d", orderno, secret, timestamp);
+        //计算签名
+        String sign = Hashing.md5().newHasher().putString(planText, Charset.defaultCharset()).hash().toString()
+            .toUpperCase();
+        //拼装请求头Proxy-Authorization的值
+        String authHeader = String.format("sign=%s&orderno=%s&timestamp=%d", sign, orderno, timestamp);
+        return authHeader;
     }
 
-    public static String sendGet(String url, String param) {
-        String result = "";
-        BufferedReader in = null;
-        try {
-            String urlNameString = url + "?" + param;
-            URL realUrl = new URL(urlNameString);
-            // 打开和URL之间的连接
-            URLConnection connection = realUrl.openConnection();
-            // 设置通用的请求属性
-            connection.setRequestProperty("accept", "*/*");
-            connection.setRequestProperty("connection", "Keep-Alive");
-            connection.setRequestProperty("user-agent",
-                "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-            // 建立实际的连接
-            connection.connect();
-            // 获取所有响应头字段
-            Map<String, List<String>> map = connection.getHeaderFields();
-            // 遍历所有的响应头字段
-            for (String key : map.keySet()) {
-                System.out.println(key + "--->" + map.get(key));
-            }
-            // 定义 BufferedReader输入流来读取URL的响应
-            in = new BufferedReader(new InputStreamReader(
-                connection.getInputStream()));
-            String line;
-            while ((line = in.readLine()) != null) {
-                result += line;
-            }
-        } catch (Exception e) {
-            System.out.println("发送GET请求出现异常！" + e);
-            e.printStackTrace();
-        }
-        // 使用finally块来关闭输入流
-        finally {
-            try {
-                if (in != null) {
-                    in.close();
-                }
-            } catch (Exception e2) {
-                e2.printStackTrace();
-            }
-        }
-        return result;
+    public static HttpComponentsClientHttpRequestFactory getHttpRequestFactory()
+        throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
+        TrustStrategy acceptingTrustStrategy = (X509Certificate[] chain, String authType) -> true;
+        SSLContext sslContext = org.apache.http.ssl.SSLContexts.custom()
+            .loadTrustMaterial(null, acceptingTrustStrategy)
+            .build();
+        SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext);
+        CloseableHttpClient httpClient = HttpClients.custom()
+//            .setSSLSocketFactory(csf).setProxy(new HttpHost("forward.xdaili.cn", 80, "http"))
+            .setSSLSocketFactory(csf).setProxy(new HttpHost("127.0.0.1", 8888, "http"))
+            .build();
+        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+        requestFactory.setReadTimeout(10000);
+        requestFactory.setConnectTimeout(10000);
+        requestFactory.setHttpClient(httpClient);
+        return requestFactory;
     }
 }
