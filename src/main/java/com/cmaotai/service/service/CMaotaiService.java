@@ -2,14 +2,17 @@ package com.cmaotai.service.service;
 
 import com.cmaotai.service.model.CMaotaiOrderStatus;
 import com.cmaotai.service.model.CMotaiDefaultAddress;
+import com.cmaotai.service.util.UriUtils;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 public interface CMaotaiService {
@@ -53,15 +56,18 @@ public interface CMaotaiService {
     }
 
     default ResponseEntity<String> post(String action, HttpHeaders httpHeaders) {
+        httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(UriUtils.parse(action), httpHeaders);
         restTemplate.setRequestFactory(getRequestFactory());
-        return restTemplate
-            .exchange(CMAOTAI_URL + action, HttpMethod.POST, new HttpEntity<String>(httpHeaders), String.class);
+        return restTemplate.exchange(CMAOTAI_URL, HttpMethod.POST, request, String.class);
     }
 
     default ResponseEntity<String> ysPost(String action, HttpHeaders httpHeaders) {
+        httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(UriUtils.parse(action), httpHeaders);
         restTemplate.setRequestFactory(getRequestFactory());
         return restTemplate
-            .exchange(CMAOTAI_YSAPP_URL + action, HttpMethod.POST, new HttpEntity<String>(httpHeaders), String.class);
+            .exchange(CMAOTAI_YSAPP_URL, HttpMethod.POST, request, String.class);
     }
 
     default ResponseEntity<String> get(String action) {
