@@ -230,9 +230,9 @@ public class CMaotaiServiceImpl implements CMaotaiService {
                 });
             if (response2 != null) {
                 System.out.println(
-                    "手机号：【" + returns2.getDelivery().getTelPhone() + "】，姓名：【" + returns2.getDelivery().getName()
+                    "收货信息：【" + returns2.getDelivery().getTelPhone() + "】【" + returns2.getDelivery().getName()
                         + "】中单啦！！！订单号：【" + s.getOrderId() + "】时间：【" + s.getOrderDate() + "】瓶数：【" + s.getQuantity()
-                        + "】地点：【" + returns2.getNetwork().getAddress() + "】网点联系电话：【" + returns2.getNetwork()
+                        + "】【" + returns2.getNetwork().getAddress() + "】网点电话：【" + returns2.getNetwork()
                         .getLinkTel() + "】");
             }
         });
@@ -542,17 +542,18 @@ public class CMaotaiServiceImpl implements CMaotaiService {
         List<String> mobiles = Files.readLines(new File(path), Charset.defaultCharset()).stream()
             .filter(Strings::isNotBlank).collect(
                 Collectors.toList());
-        AtomicInteger num = new AtomicInteger(mobiles.size());
         System.out.println("开始查看中单操作，需要花费一段时间，请等待......");
         List<String> failMobiles = Lists.newArrayList();
         AtomicInteger sum = new AtomicInteger(0);
         mobiles.forEach(s -> {
-//            System.out.println("【" + s + "】查单中，剩余【" + num.addAndGet(-1) + "】个。");
             CMaotaiServiceImpl cMaotaiService = new CMaotaiServiceImpl();
             try {
                 cMaotaiService.loginBefore();
                 int count = cMaotaiService.getUserOrderInfo(cMaotaiService.login(s, pwd).getUserId());
                 sum.addAndGet(count);
+                if (count > 0) {
+                    System.out.println("中单手机号：【" + s + "】");
+                }
             } catch (Exception e) {
                 failMobiles.add(s);
                 System.err.println("手机号【" + s + "】登录异常！" + e.getMessage());
