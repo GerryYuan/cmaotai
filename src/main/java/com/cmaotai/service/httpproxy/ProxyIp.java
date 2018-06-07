@@ -2,9 +2,6 @@ package com.cmaotai.service.httpproxy;
 
 import com.google.common.hash.Hashing;
 import java.nio.charset.Charset;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.util.Date;
 import javax.net.ssl.SSLContext;
@@ -13,7 +10,9 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.TrustStrategy;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 
 public class ProxyIp {
 
@@ -31,21 +30,33 @@ public class ProxyIp {
         return authHeader;
     }
 
-    public static HttpComponentsClientHttpRequestFactory getHttpRequestFactory()
-        throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
-        TrustStrategy acceptingTrustStrategy = (X509Certificate[] chain, String authType) -> true;
-        SSLContext sslContext = org.apache.http.ssl.SSLContexts.custom()
-            .loadTrustMaterial(null, acceptingTrustStrategy)
-            .build();
-        SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext);
-        CloseableHttpClient httpClient = HttpClients.custom()
-//            .setSSLSocketFactory(csf).setProxy(new HttpHost("forward.xdaili.cn", 80, "http"))
-            .setSSLSocketFactory(csf).setProxy(new HttpHost("127.0.0.1", 8888, "http"))
-            .build();
-        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+//    public static HttpComponentsClientHttpRequestFactory getHttpRequestFactory(HttpHeaders httpHeaders) {
+//        TrustStrategy acceptingTrustStrategy = (X509Certificate[] chain, String authType) -> true;
+//        try {
+//            SSLContext sslContext = org.apache.http.ssl.SSLContexts.custom()
+//                .loadTrustMaterial(null, acceptingTrustStrategy)
+//                .build();
+//            SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext);
+//            CloseableHttpClient httpClient = HttpClients.custom()
+//                .setSSLSocketFactory(csf).setProxy(new HttpHost("forward.xdaili.cn", 80, "http"))
+//                .build();
+//            HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+//            requestFactory.setReadTimeout(10000);
+//            requestFactory.setConnectTimeout(10000);
+//            requestFactory.setHttpClient(httpClient);
+//            httpHeaders.add("Proxy-Authorization", authHeader());
+//            return requestFactory;
+//        } catch (Exception e) {
+//            throw new RuntimeException(e.getMessage());
+//        }
+//    }
+
+
+    public static SimpleClientHttpRequestFactory getHttpRequestFactory(HttpHeaders httpHeaders) {
+        SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
         requestFactory.setReadTimeout(10000);
         requestFactory.setConnectTimeout(10000);
-        requestFactory.setHttpClient(httpClient);
         return requestFactory;
     }
+
 }
