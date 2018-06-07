@@ -44,33 +44,12 @@ public class GUIMain extends JFrame {
 
     private JPanel contentPane;
     private JButton invoke;
-    private JRadioButton submit;
     private JRadioButton order;
     private JPasswordField pwd;
     private JTextArea textArea;
     private JButton clean;
     private JTextField path;
-    private JTextField timer;
-    private JButton shutdown;
     private JScrollPane jscrollPane;
-    private JRadioButton cancelBlack;
-    private JRadioButton guiyang;
-    private JRadioButton changePwd;
-    private JPasswordField newPwd;
-    private JRadioButton guangzhou;
-    private JRadioButton invice;
-    private JRadioButton dongguan;
-    private JRadioButton shenzhen;
-    private JRadioButton seachDefaultAddress;
-    private JRadioButton isForEach;
-    private JTextField qty1;
-    private JTextField qty2;
-    private JTextField qty3;
-    private JRadioButton cancel;
-    private JRadioButton deleteAddress;
-    private JRadioButton foshan;
-    private JRadioButton dongCheng;
-    private JRadioButton searchOrderInfo;
     ExecutorService newCachedThread = Executors.newCachedThreadPool();//创建一个缓冲线程池
 
     public GUIMain() {
@@ -111,9 +90,6 @@ public class GUIMain extends JFrame {
         textArea.setLineWrap(true);//激活自动换行功能
         textArea.setWrapStyleWord(true);
         outputUI();
-        shutdown.addActionListener(e -> {
-            show("确定关闭正在执行的操作？");
-        });
     }
 
     private void show(String msg) {
@@ -128,104 +104,10 @@ public class GUIMain extends JFrame {
         try {
             String password = new String(pwd.getPassword());
             String start = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
-            if (submit.isSelected()) {
-                succ = false;
-                System.out.println(start + "，开始执行下单操作........");
-                int num1 = NumberUtils.parseNumber(qty1.getText(), Integer.class);
-                int num2 = NumberUtils.parseNumber(qty2.getText(), Integer.class);
-                int num3 = NumberUtils.parseNumber(qty3.getText(), Integer.class);
-                Address.initQty(num1, num1);
-                Address.initQty(num2, num2);
-                Address.initQty(num3, num3);
-                CMaotaiServiceImpl
-                    .defaultSignup(password, path.getText(), NumberUtils.parseNumber(timer.getText(), Integer.class));
-            } else if (isForEach.isSelected()) {
-                succ = false;
-                System.out.println(start + "，开始执行循环下单操作........");
-                DateTime today = DateTime.now();
-                DateTime clock_18 = new DateTime(today.getYear(), today.getMonthOfYear(), today.getDayOfMonth(), 18, 0,
-                    0,
-                    0);
-                for (; ; ) {
-                    DateTime now = new DateTime();
-                    if (now.toDate().getTime() >= clock_18.toDate().getTime()) {
-                        System.out.println("当前时间【" + now.toString("yyyy-MM-dd HH:mm:ss") + "】超过18点，不执行循环下单操作");
-                        break;
-                    }
-                    int num1 = NumberUtils.parseNumber(qty1.getText(), Integer.class);
-                    int num2 = NumberUtils.parseNumber(qty2.getText(), Integer.class);
-                    int num3 = NumberUtils.parseNumber(qty3.getText(), Integer.class);
-                    Address.initQty(num1, num1);
-                    Address.initQty(num2, num2);
-                    Address.initQty(num3, num3);
-                    CMaotaiServiceImpl
-                        .defaultSignup(password, path.getText(),
-                            NumberUtils.parseNumber(timer.getText(), Integer.class));
-                }
-            }
             if (order.isSelected()) {
                 succ = false;
                 System.out.println(start + "，开始执行查询订单操作........");
                 CMaotaiServiceImpl.getOrderStatus(password, path.getText());
-            } else if (searchOrderInfo.isSelected()) {
-                succ = false;
-                System.out.println(start + "，开始执行查询中单操作........");
-                CMaotaiServiceImpl.getOrderInfo(password, path.getText());
-            }
-            if (cancelBlack.isSelected()) {
-                succ = false;
-                System.out.println(start + "，开始执行优化黑号操作........");
-                CMaotaiServiceImpl.cancelBlack(password, path.getText());
-            }
-            if (cancel.isSelected()) {
-                succ = false;
-                System.out.println(start + "，开始执行取消订单操作........");
-                CMaotaiServiceImpl.cancel(password, path.getText());
-            }
-            if (guiyang.isSelected()) {
-                succ = false;
-                System.out.println(start + "，开始执行添加贵阳默认地址操作........");
-                CMaotaiServiceImpl.addDefaultAddress(path.getText(), password, Address.GUIYANG);
-            } else if (guangzhou.isSelected()) {
-                succ = false;
-                System.out.println(start + "，开始执行添加广州默认地址操作........");
-                CMaotaiServiceImpl.addDefaultAddress(path.getText(), password, Address.GUANGZHOU);
-            } else if (dongguan.isSelected()) {
-                succ = false;
-                System.out.println(start + "，开始执行添加东莞默认地址操作........");
-                CMaotaiServiceImpl.addDefaultAddress(path.getText(), password, Address.DONGGUAN);
-            } else if (shenzhen.isSelected()) {
-                succ = false;
-                System.out.println(start + "，开始执行添加深圳默认地址操作........");
-                CMaotaiServiceImpl.addDefaultAddress(path.getText(), password, Address.SHENZHEN);
-            } else if (foshan.isSelected()) {
-                succ = false;
-                System.out.println(start + "，开始执行添加佛山默认地址操作........");
-                CMaotaiServiceImpl.addDefaultAddress(path.getText(), password, Address.FOSHAN);
-            } else if (dongCheng.isSelected()) {
-                succ = false;
-                System.out.println(start + "，开始执行添加东城默认地址操作........");
-                CMaotaiServiceImpl.addDefaultAddress(path.getText(), password, Address.DONGCHENG);
-            }
-            if (changePwd.isSelected()) {
-                succ = false;
-                System.out.println(start + "，开始执行修改密码操作........");
-                CMaotaiServiceImpl.changePwd(path.getText(), password, new String(newPwd.getPassword()));
-            }
-            if (invice.isSelected()) {
-                succ = false;
-                System.out.println(start + "，开始执行添加发票操作........");
-                CMaotaiServiceImpl.addInvoice(path.getText(), password);
-            }
-            if (seachDefaultAddress.isSelected()) {
-                succ = false;
-                System.out.println(start + "，开始执行查询默认地址操作........");
-                CMaotaiServiceImpl.searchDefaultAddress(path.getText(), password);
-            }
-            if (deleteAddress.isSelected()) {
-                succ = false;
-                System.out.println(start + "，开始执行删除地址操作........");
-                CMaotaiServiceImpl.deleteAddress(path.getText(), password);
             }
             String end = DateTime.now().toString("yyyy-MM-dd HH:mm:ss");
             System.out.println(end + "，结束");
@@ -306,7 +188,8 @@ public class GUIMain extends JFrame {
     }
 
     /**
-     * Method generated by IntelliJ IDEA GUI Designer >>> IMPORTANT!! <<< DO NOT edit this method OR call it in your code!
+     * Method generated by IntelliJ IDEA GUI Designer >>> IMPORTANT!! <<< DO NOT edit this method OR call it in your
+     * code!
      *
      * @noinspection ALL
      */
@@ -318,171 +201,41 @@ public class GUIMain extends JFrame {
             .createTitledBorder(null, "茅台云商操作系统", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION,
                 this.$$$getFont$$$("Ayuthaya", -1, 16, contentPane.getFont()), new Color(-16777216)));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(10, 5, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(3, 2, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel1,
             new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
                 GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                 GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0,
                 false));
         final JLabel label1 = new JLabel();
-        label1.setText("下单瓶数（3个随机的瓶数）：");
-        panel1.add(label1, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+        label1.setText("密码（必填）：");
+        panel1.add(label1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label2 = new JLabel();
-        label2.setText("执行操作：");
-        panel1.add(label2, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+        label2.setText("手机号保存路劲：");
+        panel1.add(label2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label3 = new JLabel();
-        label3.setText("密码（必填）：");
-        panel1.add(label3, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+        label3.setText("查询操作：");
+        panel1.add(label3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        pwd = new JPasswordField();
-        pwd.setText("123456ygh");
-        panel1.add(pwd, new GridConstraints(1, 1, 1, 4, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
-            GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null,
-            0, false));
-        final JLabel label4 = new JLabel();
-        label4.setText("手机号保存路劲：");
-        panel1.add(label4, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-            GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        path = new JTextField();
-        path.setText("/Users/gerry/Downloads/maotai/all.txt");
-        panel1.add(path, new GridConstraints(0, 1, 1, 4, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
-            GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null,
-            0, false));
-        final JLabel label5 = new JLabel();
-        label5.setText("登记下单时间间隔（秒）:");
-        panel1.add(label5, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-            GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        timer = new JTextField();
-        timer.setText("10");
-        panel1.add(timer, new GridConstraints(3, 1, 1, 4, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
-            GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null,
-            0, false));
-        final JLabel label6 = new JLabel();
-        label6.setText("号优化：");
-        panel1.add(label6, new GridConstraints(9, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-            GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        cancelBlack = new JRadioButton();
-        cancelBlack.setText("下单不了");
-        panel1.add(cancelBlack,
-            new GridConstraints(9, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(158, 26), null, 0, false));
-        submit = new JRadioButton();
-        submit.setText("下单");
-        panel1.add(submit, new GridConstraints(7, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-            GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(158, 26), null, 0, false));
-        final JLabel label7 = new JLabel();
-        label7.setText("添加地址：");
-        panel1.add(label7, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-            GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label8 = new JLabel();
-        label8.setText("新密码（修改密码用）：");
-        panel1.add(label8, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-            GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        newPwd = new JPasswordField();
-        newPwd.setText("");
-        panel1.add(newPwd, new GridConstraints(2, 1, 1, 4, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
-            GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null,
-            0, false));
-        changePwd = new JRadioButton();
-        changePwd.setText("修改密码");
-        panel1.add(changePwd, new GridConstraints(7, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        guiyang = new JRadioButton();
-        guiyang.setText("贵阳");
-        panel1.add(guiyang, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        guangzhou = new JRadioButton();
-        guangzhou.setText("广州");
-        panel1.add(guangzhou, new GridConstraints(5, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        invice = new JRadioButton();
-        invice.setText("添加发票");
-        panel1.add(invice, new GridConstraints(7, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        dongguan = new JRadioButton();
-        dongguan.setText("东莞");
-        panel1.add(dongguan, new GridConstraints(5, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        shenzhen = new JRadioButton();
-        shenzhen.setText("深圳");
-        panel1.add(shenzhen, new GridConstraints(5, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label9 = new JLabel();
-        label9.setText("查询操作：");
-        panel1.add(label9, new GridConstraints(8, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-            GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        seachDefaultAddress = new JRadioButton();
-        seachDefaultAddress.setText("查询默认地址");
-        panel1.add(seachDefaultAddress,
-            new GridConstraints(8, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        isForEach = new JRadioButton();
-        isForEach.setText("循环下单");
-        panel1.add(isForEach, new GridConstraints(7, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         order = new JRadioButton();
         order.setEnabled(true);
         order.setSelected(true);
         order.setText("查询订单");
-        panel1.add(order, new GridConstraints(8, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+        panel1.add(order, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(256, 26), null, 5, false));
-        qty1 = new JTextField();
-        qty1.setText("2");
-        panel1.add(qty1, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
+        path = new JTextField();
+        panel1.add(path, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
             GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null,
             0, false));
-        qty2 = new JTextField();
-        qty2.setText("4");
-        panel1.add(qty2, new GridConstraints(4, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
+        pwd = new JPasswordField();
+        panel1.add(pwd, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
             GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null,
             0, false));
-        qty3 = new JTextField();
-        qty3.setText("5");
-        panel1.add(qty3, new GridConstraints(4, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
-            GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null,
-            0, false));
-        cancel = new JRadioButton();
-        cancel.setText("取消订单");
-        panel1.add(cancel, new GridConstraints(9, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        deleteAddress = new JRadioButton();
-        deleteAddress.setText("删除多余地址");
-        panel1.add(deleteAddress,
-            new GridConstraints(9, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        foshan = new JRadioButton();
-        foshan.setText("佛山");
-        panel1.add(foshan, new GridConstraints(6, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        dongCheng = new JRadioButton();
-        dongCheng.setText("北京东城");
-        panel1.add(dongCheng, new GridConstraints(6, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        searchOrderInfo = new JRadioButton();
-        searchOrderInfo.setText("查询中单详细");
-        panel1.add(searchOrderInfo,
-            new GridConstraints(8, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
-        panel2.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
+        panel2.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel2,
             new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_SOUTHEAST, GridConstraints.FILL_NONE,
                 GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -495,16 +248,7 @@ public class GUIMain extends JFrame {
             invoke.setFont(invokeFont);
         }
         invoke.setText("开始执行");
-        panel2.add(invoke, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-            GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        shutdown = new JButton();
-        Font shutdownFont = this.$$$getFont$$$(null, -1, 16, shutdown.getFont());
-        if (shutdownFont != null) {
-            shutdown.setFont(shutdownFont);
-        }
-        shutdown.setText("中断执行");
-        panel2.add(shutdown, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+        panel2.add(invoke, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
             GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         clean = new JButton();
@@ -530,22 +274,22 @@ public class GUIMain extends JFrame {
                 GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null,
                 new Dimension(486, 147), null, 0, false));
         panel3.setBorder(BorderFactory.createTitledBorder("注意事项："));
-        final JLabel label10 = new JLabel();
-        label10.setForeground(new Color(-63428));
-        label10.setText("1、云商系统稍微差点，大家轻点，下单、查单不要太频繁");
-        panel3.add(label10, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
+        final JLabel label4 = new JLabel();
+        label4.setForeground(new Color(-63428));
+        label4.setText("1、云商系统稍微差点，查单不要太频繁");
+        panel3.add(label4, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label11 = new JLabel();
-        label11.setForeground(new Color(-1301708));
-        label11.setText("2、由于网点接单规则不定，软件会不定时更新，大家关注群");
-        panel3.add(label11, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
+        final JLabel label5 = new JLabel();
+        label5.setForeground(new Color(-1301708));
+        label5.setText("2、由于网点接单规则不定，软件会不定时更新，大家关注群");
+        panel3.add(label5, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label12 = new JLabel();
-        label12.setBackground(new Color(-1));
-        label12.setEnabled(true);
-        label12.setForeground(new Color(-1301708));
-        label12.setText("3、最后祝大家赚钱，有什么软件问题可以联系我，或者有什么需求可以提给我");
-        panel3.add(label12, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
+        final JLabel label6 = new JLabel();
+        label6.setBackground(new Color(-1));
+        label6.setEnabled(true);
+        label6.setForeground(new Color(-1301708));
+        label6.setText("3、最后祝大家赚钱，有什么软件问题可以联系我，或者有什么需求可以提给我");
+        panel3.add(label6, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
             GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
@@ -566,22 +310,7 @@ public class GUIMain extends JFrame {
         jscrollPane.setViewportView(textArea);
         ButtonGroup buttonGroup;
         buttonGroup = new ButtonGroup();
-        buttonGroup.add(cancelBlack);
-        buttonGroup.add(submit);
-        buttonGroup.add(changePwd);
-        buttonGroup.add(guiyang);
-        buttonGroup.add(guangzhou);
-        buttonGroup.add(invice);
-        buttonGroup.add(dongguan);
-        buttonGroup.add(shenzhen);
-        buttonGroup.add(seachDefaultAddress);
-        buttonGroup.add(isForEach);
         buttonGroup.add(order);
-        buttonGroup.add(cancel);
-        buttonGroup.add(deleteAddress);
-        buttonGroup.add(foshan);
-        buttonGroup.add(dongCheng);
-        buttonGroup.add(searchOrderInfo);
     }
 
     /**
