@@ -18,6 +18,18 @@ public class AMapService {
             "34路;46路;221路;261路;308路;312路;313路;320路", "57路;292路;B1路;B2路;B3路;B4路;B224路;B236路;B259路;B267路", "(在建2号线",
             "4路;8路;14路;27路;39路;63路");
 
+    private static List<String> whiteBlack = Lists.newArrayList(
+        "福田黄祠巷48号,中康路西侧",
+        "银湖路6号金湖山庄D1栋",
+        "黄祠巷48号",
+        "皇岗路2001-2号高科利大厦A栋1、3层",
+        "民田路与福华一路交叉口",
+        "罗湖泥岗东路1104号",
+        "红荔路1011号",
+        "后海滨路与蓝天路交汇处东南侧",
+        "银湖路金湖山庄西门",
+        "欣景路110号", "文锦渡沿河北路1002号","梅坂大道91号","坂田街道坂雪岗大道4026号维也纳酒店","坂田街道坂雪岗大道4026号维也纳酒店");
+
     public static List<AMapAddressTip> getAddress(String keywords) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(
