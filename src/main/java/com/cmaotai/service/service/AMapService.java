@@ -42,6 +42,18 @@ public class AMapService {
         "虎门镇环岛路66号",
         "鸿福路90号",
         "鸿福路92号",
+        "南城街道鸿福路82号",
+        "南城街道鸿福路200号",
+        "鸿福路盒汇商业街区3层",
+        "南城街道胜和路",
+        "长安镇沙头滨河路46号",
+        "滨河路17号",
+        "宏图路88号福威大厦601室",
+        "宏图路88号福威大厦201号",
+        "莞太路37号",
+        "莞城街道东一路183号经贸中心",
+        "南城区新基社区滨河路28号",
+        "南城街道胜和路",
         "鸿福路200号",
         "运河东一路184号",
         "莞太路胜和路段18号工行大厦",
@@ -61,7 +73,9 @@ public class AMapService {
                 && tip.getAddress().length() < 100)
             .filter(s -> !blacks.contains(s.getAddress()))
             .filter(s -> s.getAddress().indexOf(";") == -1)
-            .filter(s -> s.getAddress().indexOf("附近") == -1).collect(
+            .filter(s -> s.getAddress().indexOf("附近") == -1)
+//            .filter(s -> dogguanWhiteBlack.contains(s.getAddress()))
+            .collect(
                 Collectors.toList());
     }
 
