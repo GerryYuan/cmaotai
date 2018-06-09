@@ -18,7 +18,7 @@ public class AMapService {
             "34路;46路;221路;261路;308路;312路;313路;320路", "57路;292路;B1路;B2路;B3路;B4路;B224路;B236路;B259路;B267路", "(在建2号线",
             "4路;8路;14路;27路;39路;63路");
 
-    private static List<String> shenzhenWhiteBlack = Lists.newArrayList(
+    private static List<String> shenzhenWhite = Lists.newArrayList(
         "福田黄祠巷48号,中康路西侧",
         "银湖路6号金湖山庄D1栋",
         "黄祠巷48号",
@@ -42,7 +42,7 @@ public class AMapService {
         "宝安北路4008号",
         "北环大道10020号");
 
-    private static List<String> dogguanWhiteBlack = Lists.newArrayList(
+    private static List<String> dogguanWhite = Lists.newArrayList(
         "长安镇横安路62号",
         "博美村前路16号附近",
         "虎门镇环岛路66号",
@@ -65,7 +65,8 @@ public class AMapService {
         "莞太路胜和路段18号工行大厦",
         "南城滨河路28号",
         "南城区鸿福路滨河路28号景湖湾畔1区商铺127号(沿河路与新基路交界处",
-        "莞城街道东一路183号经贸中心");
+        "莞城街道东一路183号经贸中心",
+        "石排镇石排大道中198号");
 
     public static List<AMapAddressTip> getAddress(String keywords) {
         RestTemplate restTemplate = new RestTemplate();
@@ -80,7 +81,7 @@ public class AMapService {
             .filter(s -> !blacks.contains(s.getAddress()))
             .filter(s -> s.getAddress().indexOf(";") == -1)
             .filter(s -> s.getAddress().indexOf("附近") == -1)
-//            .filter(s -> dogguanWhiteBlack.contains(s.getAddress()))
+//            .filter(s -> shenzhenWhite.contains(s.getAddress()))
             .collect(
                 Collectors.toList());
     }
