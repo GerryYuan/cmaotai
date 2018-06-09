@@ -36,7 +36,11 @@ public class AMapService {
         "大浪街道华盛路134号",
         "长安镇横安路62号",
         "新秀路168号",
-        "新秀路18号");
+        "新秀路18号",
+        "人民南路2008号深圳嘉里中心B1层",
+        "龙华街道梅龙路与东环一路交汇处",
+        "宝安北路4008号",
+        "北环大道10020号");
 
     private static List<String> dogguanWhiteBlack = Lists.newArrayList(
         "长安镇横安路62号",
