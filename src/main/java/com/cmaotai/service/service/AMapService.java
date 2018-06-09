@@ -34,7 +34,9 @@ public class AMapService {
         "坂田街道坂雪岗大道4026号维也纳酒店",
         "坂田街道坂雪岗大道4026号维也纳酒店",
         "大浪街道华盛路134号",
-        "长安镇横安路62号");
+        "长安镇横安路62号",
+        "新秀路168号",
+        "新秀路18号");
 
     private static List<String> dogguanWhiteBlack = Lists.newArrayList(
         "长安镇横安路62号",
