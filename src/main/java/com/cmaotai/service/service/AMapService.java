@@ -41,7 +41,10 @@ public class AMapService {
         "龙华街道梅龙路与东环一路交汇处",
         "宝安北路4008号",
         "北环大道10020号",
-        "新安街道隆昌路10号美生创谷秋谷四楼");
+        "新安街道隆昌路10号美生创谷秋谷四楼",
+        "新闻路29号",
+        "沙盐路3020号",
+        "桂园路果园东8号(仁济大药房旁入10米");
 
     private static List<String> dogguanWhite = Lists.newArrayList(
         "长安镇横安路62号",
